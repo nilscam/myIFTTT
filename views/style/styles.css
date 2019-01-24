@@ -1,0 +1,78 @@
+body {
+	font-family: Nunito;
+	margin: 0;
+}
+nav {
+	background: #34495e;
+	padding: 20px 10px;
+}
+nav ul {
+	max-width: 960px;
+	margin: 0 auto;
+	padding: 0;
+}
+nav li {
+	list-style-type: none;
+	display: inline-block;
+	margin: 0 10px 0 0;
+}
+nav a {
+	color: #fff;
+	font-size: 18px;
+	background: rgba(255, 255, 255, 0.2);
+	text-decoration: nonde;
+	padding: 10px;
+	display: block;
+}
+main header {
+	max-width: 960px;
+	margin: 30px auto;
+	padding: 0 10px;
+	color: #333;
+}
+.google-btn {
+	color: #fff;
+	text-decoration: none;
+	font-size: 18px;
+	padding: 10px;
+	background: #ff5353;
+}
+.container {
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+  }
+.roundedImage{
+	overflow:hidden;
+	-webkit-border-radius:50px;
+	-moz-border-radius:50px;
+	border-radius:50px;
+	width:68px;
+	height:68px;
+}
+  @media (min-width: 768px) {
+	.container {
+	  width: 750px;
+	}
+  }
+  @media (min-width: 992px) {
+	.container {
+	  width: 970px;
+	}
+  }
+  @media (min-width: 1200px) {
+	.container {
+	  width: 1170px;
+	}
+  }
+  body {
+	padding-top: 10px;
+  }
+  /* [class*="col-"], footer {
+	background-color: lightgreen;
+	border: 2px solid black;
+	border-radius: 6px;
+	line-height: 40px;
+	text-align: center;
+  } */
