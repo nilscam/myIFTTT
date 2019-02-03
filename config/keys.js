@@ -13,5 +13,6 @@ module.exports = {
     },
     nasa: {
 		api_key: "4UTvkS80md4NTgLKJLFTRo9g5XMnFCpqXi7BPJQr"
-	},
+    },
+    jwtSecret: "werkfdzxcvbnm"
 }

@@ -1,36 +1,16 @@
 const express = require('express');
-// Routes
-const authRoutes = require('./routes/auth-routes');
-const profileRoutes = require('./routes/profile-routes');
-const servicesRoutes = require('./routes/services-routes');
-const settingsRoutes = require('./routes/settings-routes');
-const triggersRoutes = require('./routes/triggers-routes');
-const reactionsRoutes = require('./routes/reactions-routes');
+var bodyParser = require('body-parser');
+// Routes API
+const triggersRoutes = require('./api/routes/triggers');
+const reactionsRoutes = require('./api/routes/reactions');
+const userRoutes = require('./api/routes/user');
 
-const passportSetup = require('./config/passport-setup');
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
-const cookieSession = require('cookie-session');
-const passport = require('passport');
-//var expressVue = require("express-vue");
 
 const app = express();
-
-// const expressVueMiddleware = expressVue.init();
-// app.use(expressVueMiddleware);
-
-// set up view engine
-app.set('view engine', 'ejs');
-app.use(express.static(__dirname + '/views/'));
-
-app.use(cookieSession({
-	maxAge: 24 * 60 * 60 * 1000,
-	keys: [keys.session.cookieKey]
-}));
-
-// initialize passport
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 // connect to mongodb
 mongoose.connect(keys.mongodb.dbURL, () => {
@@ -38,16 +18,23 @@ mongoose.connect(keys.mongodb.dbURL, () => {
 });
 
 // set up routes
-app.use('/auth', authRoutes);
-app.use('/profile', profileRoutes);
-app.use('/services', servicesRoutes);
-app.use('/settings', settingsRoutes);
-app.use('/triggers', triggersRoutes);
-app.use('/reactions', reactionsRoutes);
+app.use('/api/triggers', triggersRoutes);
+app.use('/api/reactions', reactionsRoutes);
+app.use('/api/user', userRoutes);
 
-// create home route
-app.get('/', (req, res) => {
-	res.render('home', {user: req.user});
+app.use((req, res, next) => {
+    const error = new Error('Not found');
+    error.status = 404;
+    next(error);
+});
+
+app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    res.json({
+        error: {
+            message: error.message
+        }
+    })
 });
 
 app.listen(8080, () => {

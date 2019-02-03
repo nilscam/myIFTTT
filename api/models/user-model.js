@@ -2,10 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-	username: String,
-    googleID: String,
+    _id: mongoose.Schema.Types.ObjectId,
+    username: String,
+    password: String,
     _services: {
         _twitter: {
+            _triggers: [Schema.Types.Mixed]
+        },
+        _dateAndTime: {
             _triggers: [Schema.Types.Mixed]
         }
     }
