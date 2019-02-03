@@ -23,34 +23,36 @@ passport.use(
 	}, (accessToken, refreshToken, profile, done) => {
 		// passport callback function
 		User.findOne({googleID: profile.id}).exec((err, currentUser) => {
-			if (err) return handleError(err);
-
+            if (err) return handleError(err);
 			if (currentUser) {
 				done(null, currentUser);
 			} else {
 				
 				var user = new User({
 					username: profile.displayName,
-					googleID: profile.id,
-				});
-				user.save(function (err) {
-					if (err) console.log(err);
+                    googleID: profile.id,
+                    // services: {
 
-					var services = new Services({
-						user: user,
-						timer: 1,
-						meteo: {
-							isActive: false,
-							place: "Marseille, France",
-							daysToAff: 5,
-						},
-					});
-					services.save((err) => {
-						user.services = services;
-						user.save().then((newUser) => {
-							done(null, newUser);
-						});
-					});
+                    // }
+                });
+				user.save(function (err) {
+                    if (err) console.log(err);
+                    done(null, user);
+					// var services = new Services({
+					// 	user: user,
+					// 	timer: 1,
+					// 	meteo: {
+					// 		isActive: false,
+					// 		place: "Marseille, France",
+					// 		daysToAff: 5,
+					// 	},
+					// });
+					// services.save((err) => {
+					// 	user.services = services;
+					// 	user.save().then((newUser) => {
+					// 		done(null, newUser);
+					// 	});
+					// });
 				});
 			}
 		});

@@ -10,5 +10,8 @@ module.exports = {
 	},
 	session: {
 		cookieKey: 'ghuwiejfsdbcsbhdbhe'
+    },
+    nasa: {
+		api_key: "4UTvkS80md4NTgLKJLFTRo9g5XMnFCpqXi7BPJQr"
 	},
 }

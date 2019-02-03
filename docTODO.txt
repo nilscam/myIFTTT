@@ -1,0 +1,13 @@
+API ENDCALL
+
+GET /services
+--> Return all services available with name, descritpion, photo, mainColor
+
+GET /triggers/{nameService}
+--> Return all triggers available for {nameService} with name, descritpion + infos depends on the triggers
+
+POST /triggers/{nameService}/{nameTrigger}
+
+GET /reactions/{nameService}
+--> Return all reactions available for {nameService} with name, descritpion + infos depends on the reactions
+

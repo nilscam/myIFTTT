@@ -2,6 +2,10 @@ const express = require('express');
 // Routes
 const authRoutes = require('./routes/auth-routes');
 const profileRoutes = require('./routes/profile-routes');
+const servicesRoutes = require('./routes/services-routes');
+const settingsRoutes = require('./routes/settings-routes');
+const triggersRoutes = require('./routes/triggers-routes');
+const reactionsRoutes = require('./routes/reactions-routes');
 
 const passportSetup = require('./config/passport-setup');
 const mongoose = require('mongoose');
@@ -36,6 +40,10 @@ mongoose.connect(keys.mongodb.dbURL, () => {
 // set up routes
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
+app.use('/services', servicesRoutes);
+app.use('/settings', settingsRoutes);
+app.use('/triggers', triggersRoutes);
+app.use('/reactions', reactionsRoutes);
 
 // create home route
 app.get('/', (req, res) => {
