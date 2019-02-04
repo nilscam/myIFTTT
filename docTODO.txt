@@ -4,6 +4,16 @@ TODO
 --> Front client that uses the api
 --> Automate triggers and reactions
 
+- dateAndTime Cyril
+- Twitter Cyril
+- Instagram Boris
+- Outlook Boris
+- Youtube Alex
+- Reddit Alex
+- (iot)
+- Github Boris / Cyril
+- Nasa Cyril
+
 API ENDCALL
 
 GET /services TODO
