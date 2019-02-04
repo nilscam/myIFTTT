@@ -34,12 +34,12 @@ router.post('/sendTweet/:triggerServiceName/:trigger', checkAuth, (req, res) => 
                 functionName: "sendTweet"};
             if (addReaction(currentUser, req, objToAdd)) {
                 currentUser.save();
-                res.send({code: 200, error: null, reactionAdd: objToAdd});
+                res.status(200).send({code: 200, error: null, reactionAdd: objToAdd});
             } else {
-                res.send({code: 500, error: "No trigger for "+req.params.triggerServiceName+" available."});
+                res.status(500).send({code: 500, error: "No trigger for "+req.params.triggerServiceName+" available."});
             }
         } else {
-            res.send({code: 500, error: "User not found"});
+            res.status(500).send({code: 500, error: "User not found"});
         }
 	});
 });
