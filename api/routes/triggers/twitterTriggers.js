@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const keys = require('../../../config/keys');
+const keys = require('../../config/keys');
 const checkAuth = require('../../middleware/check-auth');
 
 router.get('/', checkAuth, (req, res) => {

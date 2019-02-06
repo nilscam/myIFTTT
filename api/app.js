@@ -6,7 +6,7 @@ const reactionsRoutes = require('./routes/reactions');
 const userRoutes = require('./routes/user');
 
 const mongoose = require('mongoose');
-const keys = require('../config/keys');
+const keys = require('./config/keys');
 
 module.exports = {
     launch_api: function(port) {

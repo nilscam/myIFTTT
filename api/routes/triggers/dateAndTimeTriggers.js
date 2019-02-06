@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const keys = require('../../../config/keys');
+const keys = require('../../config/keys');
 const User = require('../../models/user-model').User;
 const checkAuth = require('../../middleware/check-auth');
 
