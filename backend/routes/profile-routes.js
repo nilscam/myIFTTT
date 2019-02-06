@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const keys = require('../config/keys');
 
 const authCheck = (req, res, next) => {
 	if (!req.user) {

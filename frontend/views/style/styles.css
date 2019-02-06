@@ -50,6 +50,13 @@ a {
 	padding: 10px;
 	background: #ff5353;
 }
+.twitter-btn {
+	color: #fff;
+	text-decoration: none;
+	font-size: 18px;
+	padding: 10px;
+	background: #5353ff;
+}
 .container {
 	padding-right: 15px;
 	padding-left: 15px;

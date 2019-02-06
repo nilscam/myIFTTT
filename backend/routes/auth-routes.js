@@ -1,6 +1,14 @@
 const router = require('express').Router();
 const passport = require('passport');
 
+passport.serializeUser((user, done) => {
+	done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+	done(null, user);
+});
+
 // auth login
 router.get('/login', (req, res) => {
 	res.render('login', {user: req.user});

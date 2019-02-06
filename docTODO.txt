@@ -1,0 +1,55 @@
+TODO
+
+--> Manage identification oauth2 between api and client
+--> Front client that uses the api
+--> Automate triggers and reactions
+
+- dateAndTime Cyril
+- Twitter Cyril
+- Instagram Boris
+- Outlook Boris
+- Youtube Alex
+- Reddit Alex
+- (iot)
+- Github Boris / Cyril
+- Nasa Cyril
+
+API ENDCALL
+
+GET /services TODO
+--> Return all services available with name, descritpion, photo, mainColor
+
+GET /triggers OK
+--> Return all triggers available with name, descritpion + infos depends on the triggers
+
+GET /triggers/{nameService} TODO
+--> Return all triggers available for {nameService} with name, descritpion + infos depends on the triggers
+
+POST /triggers/{nameService}/{nameTrigger}
+Ex: /api/triggers/dateAndTime/addEveryDay
+headers: {
+    authorizathion: bearer {token}
+}
+body: {
+    hour: {hour},
+    minute: {minute}
+}
+
+GET /reactions/{nameService}
+--> Return all reactions available for {nameService} with name, descritpion + infos depends on the reactions
+
+User management
+POST /api/user/signup OK
+body: {
+    username: {username},
+    password: {password}
+}
+
+POST /api/user/login OK
+body: {
+    username: {username},
+    password: {password}
+}
+
+DELETE /api/user/:userId OK
+Remove {userId}
