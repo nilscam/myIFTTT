@@ -1,7 +1,6 @@
 const appApi = require('./api/app');
 const appClient = require('./backend/app');
 
-<<<<<<< HEAD
 const passportSetup = require('./config/passport-setup');
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
@@ -46,7 +45,5 @@ app.get('/', (req, res) => {
 app.listen(8080, () => {
 	console.log('App now listening for request on port 8080');
 });
-=======
 appApi.launch_api(8080);
 appClient.launch_client(3000);
->>>>>>> 6466a968e76c1eb588219ef752c316fa2ed98a59
