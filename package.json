@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-	"test": "echo \"Error: no test specified\" && exit 1",
-	"dev": "nodemon app.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "allocine-api": "^0.1.9",
+    "bootstrap": "^4.2.1",
     "cookie-session": "^2.0.0-beta.3",
     "crypto-price": "0.0.6",
     "currency-convert": "^2.0.0",

@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const path = require('path')
 //var expressVue = require("express-vue");
 
 const app = express();
@@ -18,6 +19,7 @@ const app = express();
 // set up view engine
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/views/'));
+app.use(express.static(path.join(__dirname, 'node_modules')));
 
 app.use(cookieSession({
 	maxAge: 24 * 60 * 60 * 1000,
