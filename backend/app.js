@@ -39,5 +39,8 @@ module.exports = {
         app.listen(port, () => {
             console.log('App now listening for request on port '+port);
         });
+
+        app.use(express.static(__dirname + '/views/'));
+        app.use(express.static(__dirname + "/../node_modules"));
     }
 }

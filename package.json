@@ -13,6 +13,7 @@
     "allocine-api": "^0.1.9",
     "bcrypt": "^3.0.3",
     "body-parser": "^1.18.3",
+    "bootstrap": "^4.2.1",
     "cookie-session": "^2.0.0-beta.3",
     "crypto-price": "0.0.6",
     "currency-convert": "^2.0.0",
