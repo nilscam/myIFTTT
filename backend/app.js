@@ -3,8 +3,10 @@ var path = require('path');
 // Routes
 const authRoutes = require('./routes/auth-routes');
 const profileRoutes = require('./routes/profile-routes');
+const instaRoutes = require('./routes/insta-routes');
 
 const passportSetup = require('./config/passport-setup');
+const passportSetupInsta = require('./config/passport-instagram');
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
@@ -30,6 +32,7 @@ module.exports = {
         // set up routes
         app.use('/auth', authRoutes);
         app.use('/profile', profileRoutes);
+        app.use('/instagram', instaRoutes);
 
         // create home route
         app.get('/', (req, res) => {
