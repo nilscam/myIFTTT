@@ -15,10 +15,7 @@ module.exports = {
     launch_client: function(port) {
         const app = express();
 
-        // set up view engine
-        app.set('view engine', 'ejs');
-        app.set('views', path.join(__dirname, '/../frontend/views'));
-        app.use(express.static(__dirname + '/../frontend/views/'));
+        app.use(express.static(__dirname + '/../frontend/vue/dist/'));
 
         app.use(cookieSession({
             maxAge: 24 * 60 * 60 * 1000,
@@ -30,13 +27,19 @@ module.exports = {
         app.use(passport.session());
 
         // set up routes
-        app.use('/auth', authRoutes);
-        app.use('/profile', profileRoutes);
-        app.use('/instagram', instaRoutes);
+        // app.use('/auth', authRoutes);
+        // app.use('/profile', profileRoutes);
+        // app.use('/instagram', instaRoutes);
 
         // create home route
-        app.get('/', (req, res) => {
-            res.render('home', {user: req.user});
+        // app.get('/', (req, res) => {
+        //     res.render('home', {user: req.user});
+        // });
+
+        app.get('/', function (req, res) {
+            res.sendFile(path.join(__dirname + "/../frontend/vue/dist/index.html"));
+            // secretCode = "u5wk_XkNVPBLztwgW1ZhhhPe";
+            // idClient = "163173170605-aea5m9jtdlp10dqplb4eq76vl5ru9t0h.apps.googleusercontent.com";
         });
 
         app.listen(port, () => {
