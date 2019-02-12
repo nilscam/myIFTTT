@@ -1,6 +1,8 @@
 const passport = require('passport');
 const TwitterStrategy = require('passport-twitter').Strategy;
 const keys = require('./keys');
+const request = require('request')
+const axios = require('axios');
 
 passport.use(
 	new TwitterStrategy({
@@ -10,16 +12,18 @@ passport.use(
 		passReqToCallback: true
 	},
 	function(req, token, tokenSecret, profile, cb) {
-        //console.log('Profile =' + JSON.stringify(profile, null, 2));
-        console.log(token);
-        console.log(profile.id);
-        console.log(profile.username);
-        console.log(profile.displayName);
-        console.log(profile.photos[0].value);
-        console.log(profile._json.description);
-        console.log(profile._json.followers_count);
-        console.log(profile._json.friends_count);
-        console.log(profile._json.statuses_count);
-        // console.log(profile);
+        request.post( {
+            url : 'http://localhost:8080/api/triggers/twitter/connect',
+            headers : {
+                "Authorization" : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImN5cmlsIiwidXNlcklkIjoiNWM2MmE0ZDllY2NkZDNhOTRmMTZlMTgwIiwiaWF0IjoxNTQ5OTY4NjE0LCJleHAiOjE1NTAwMDQ2MTR9.YPqg3GjBbbFi1OPTb8pLZBaw_nX1nWtjujBeSs2LB5k'
+            },
+            form : {
+                token: token,
+                token_secret: tokenSecret
+            }
+          }, function(error, response, body) {
+              console.log(body);
+              console.log(response.statusCode);
+          } );
         return cb(null, req.user);
 	}));
