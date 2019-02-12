@@ -5,17 +5,16 @@
         <span>AREA</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn
-        flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
+      <router-link :to="{ name: 'home' }">
         <span class="mr-2">Home</span>
-      </v-btn>
+      </router-link>
+      <router-link :to="{ name: 'login' }">
+        <span class="mr-2">Login</span>
+      </router-link>
     </v-toolbar>
 
     <v-content>
-      <HelloWorld/>
+      <router-view/>
     </v-content>
   </v-app>
 </template>
