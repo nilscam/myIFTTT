@@ -12,7 +12,9 @@ let router = new Router({
     { path: '/', name: 'home', component: Home },
     { path: '/login', name: 'login', component: Login },
     { path: '/register', name: 'register', component: Register },
-    { path: '/about', name: 'about', component: () => import('./views/About.vue'), meta: { requiresAuth: true } }
+    { path: '/about', name: 'about', component: () => import('./views/About.vue'), meta: { requiresAuth: true } },
+    { path: '/services', name: 'services', component: () => import('./views/ListServices.vue'), meta: { requiresAuth: true } },
+    { path: '/service/:serviceName', name: 'service', component: () => import('./views/Service.vue'), meta: { requiresAuth: true } }
   ]
 })
 

@@ -20,6 +20,10 @@ class Api {
   removeAuthorisationToken() {
     delete axios.defaults.headers.common['Authorization']
   }
+
+  getServices() {
+    return axios.get(this.ApiURL + "/services");
+  }
 }
 
 export default new Api();
