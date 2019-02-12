@@ -7,6 +7,7 @@ const instaRoutes = require('./routes/insta-routes');
 
 const passportSetup = require('./config/passport-setup');
 const passportSetupInsta = require('./config/passport-instagram');
+const passportSetupTwitter = require('./config/passport-twitter');
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
@@ -15,6 +16,11 @@ module.exports = {
     launch_client: function(port) {
         const app = express();
 
+        app.use(function(req, res, next) {
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+          next();
+        });
         app.use(express.static(__dirname + '/../frontend/vue/dist/'));
 
         app.use(cookieSession({
