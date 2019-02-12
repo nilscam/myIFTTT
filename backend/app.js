@@ -7,6 +7,7 @@ const instaRoutes = require('./routes/insta-routes');
 
 const passportSetup = require('./config/passport-setup');
 const passportSetupInsta = require('./config/passport-instagram');
+const passportSetupTwitter = require('./config/passport-twitter');
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 const passport = require('passport');

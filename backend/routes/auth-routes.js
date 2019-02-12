@@ -31,5 +31,11 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
 	res.redirect('/profile/');
 });
 
+router.get('/twitter', passport.authorize('twitter'));
+
+router.get('/twitter/return', passport.authorize('twitter'), (req, res) => {
+	res.redirect('/profile');
+});
+
 
 module.exports = router;
