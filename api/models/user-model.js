@@ -9,6 +9,9 @@ const userSchema = new Schema({
         _twitter: {
             _triggers: [Schema.Types.Mixed]
         },
+        _instagram: {
+            _triggers: [Schema.Types.Mixed]
+        },
         _dateAndTime: {
             _triggers: [Schema.Types.Mixed]
         }
