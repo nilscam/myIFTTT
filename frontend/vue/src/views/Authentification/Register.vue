@@ -4,12 +4,7 @@
     <form @submit.prevent="register">
       <label for="name">Name</label>
       <div>
-          <input id="name" type="text" v-model="name" required autofocus>
-      </div>
-
-      <label for="email" >E-Mail Address</label>
-      <div>
-          <input id="email" type="email" v-model="email" required>
+          <input id="name" type="text" v-model="username" required autofocus>
       </div>
 
       <label for="password">Password</label>
@@ -34,23 +29,23 @@
 export default {
   data() {
     return {
-      name : "",
-      email : "",
+      username : "",
       password : "",
       password_confirmation : ""
     }
   },
+  mounted() {
+    console.log(process.env.VUE_APP_API_URL);
+  },
   methods: {
     register() {
-      let data = {
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        is_admin: this.is_admin
+      if (this.password == this.password_confirmation) {
+        let username = this.username
+        let password = this.password
+        this.$store.dispatch('register', { username, password })
+        .then(() => this.$router.push('/'))
+        .catch(err => console.log(err))
       }
-      this.$store.dispatch('register', data)
-      .then(() => this.$router.push('/'))
-      .catch(err => console.log(err))
     }
   }
 }
