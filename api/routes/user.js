@@ -27,8 +27,15 @@ router.post('/signup', (req, res, next) => {
                     user
                       .save()
                       .then(result => {
+                          const token = jwt.sign({
+                              username: user.username,
+                              userId: user._id,
+                          }, keys.jwtSecret, {
+                              expiresIn: "10h"
+                          });
                           res.status(201).json({
-                              message: 'User created'
+                              message: 'User created',
+                              token: token
                           });
                       })
                       .catch(err => {
