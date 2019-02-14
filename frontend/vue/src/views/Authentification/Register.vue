@@ -34,9 +34,6 @@ export default {
       password_confirmation : ""
     }
   },
-  mounted() {
-    console.log(process.env.VUE_APP_API_URL);
-  },
   methods: {
     register() {
       if (this.password == this.password_confirmation) {

@@ -7,6 +7,7 @@
           <v-layout row wrap>
             <v-flex
               v-for="service in services"
+              :key="service.id"
               xs4
               sm3
               md2

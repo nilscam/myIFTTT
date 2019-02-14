@@ -34,7 +34,7 @@ export default new Vuex.Store({
         Api.login(data)
         .then(resp => {
           const token = resp.data.token
-          const user = data.username
+          let user = { username: data.username }
           localStorage.setItem('token', token)
           Api.setAuthorisationToken(token)
           commit('auth_success', token, user)
@@ -53,7 +53,7 @@ export default new Vuex.Store({
         Api.register(data)
         .then(resp => {
           const token = resp.data.token
-          const user = data.username
+          let user = { username: data.username }
           localStorage.setItem('token', token)
           Api.setAuthorisationToken(token)
           commit('auth_success', token, user)
@@ -78,5 +78,6 @@ export default new Vuex.Store({
   getters : {
     isLoggedIn: state => !!state.token,
     authStatus: state => state.status,
+    userName: state => state.user,
   }
 })

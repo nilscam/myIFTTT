@@ -2,15 +2,15 @@ import axios from 'axios'
 
 class Api {
   constructor() {
-    this.ApiURL = process.env.VUE_APP_API_URL
+    this.ApiURL = process.env.VUE_APP_API_URL + '/api'
   }
 
   login(data) {
-    return axios.post(this.ApiURL + "/api/user/login", data);
+    return axios.post(this.ApiURL + "/user/login", data);
   }
 
   register(data) {
-    return axios.post(this.ApiURL + "/api/user/signup", data);
+    return axios.post(this.ApiURL + "/user/signup", data);
   }
 
   setAuthorisationToken(token) {
