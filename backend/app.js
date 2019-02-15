@@ -4,9 +4,13 @@ var path = require('path');
 const authRoutes = require('./routes/auth-routes');
 const profileRoutes = require('./routes/profile-routes');
 const instaRoutes = require('./routes/insta-routes');
+const office365Routes = require('./routes/office365-routes');
+const facebookRoutes = require('./routes/facebook-routes');
 
 const passportSetup = require('./config/passport-setup');
 const passportSetupInsta = require('./config/passport-instagram');
+const passportSetupOffice365 = require('./config/passport-office365');
+const passportSetupFacebook = require('./config/passport-facebook');
 const passportSetupTwitter = require('./config/passport-twitter');
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
@@ -40,6 +44,8 @@ module.exports = {
         app.use('/auth', authRoutes);
         app.use('/profile', profileRoutes);
         app.use('/instagram', instaRoutes);
+        app.use('/facebook', facebookRoutes);
+        app.use('/office365', office365Routes);
 
         // create home route
         app.get('/', (req, res) => {
