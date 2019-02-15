@@ -20,16 +20,8 @@ module.exports = {
     launch_client: function(port) {
         const app = express();
 
-        app.use(function(req, res, next) {
-          res.header("Access-Control-Allow-Origin", "*");
-          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-          next();
-        });
-
-        // set up view engine
-        app.set('view engine', 'ejs');
-        app.set('views', path.join(__dirname, '/../frontend/views'));
-        app.use(express.static(__dirname + '/../frontend/views/'));
+        app.use(express.static(__dirname + '/../frontend/vue/dist/'));
+        app.use(express.static(__dirname + '/../frontend/vue/src/assets/'));
 
         app.use(cookieSession({
             maxAge: 24 * 60 * 60 * 1000,
@@ -48,8 +40,14 @@ module.exports = {
         app.use('/office365', office365Routes);
 
         // create home route
-        app.get('/', (req, res) => {
-            res.render('home', {user: req.user});
+        // app.get('/', (req, res) => {
+        //     res.render('home', {user: req.user});
+        // });
+
+        app.get('/', function (req, res) {
+            res.sendFile(path.join(__dirname + "/../frontend/vue/dist/index.html"));
+            // secretCode = "u5wk_XkNVPBLztwgW1ZhhhPe";
+            // idClient = "163173170605-aea5m9jtdlp10dqplb4eq76vl5ru9t0h.apps.googleusercontent.com";
         });
 
         app.listen(port, () => {
