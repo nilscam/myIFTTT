@@ -7,16 +7,16 @@ const userSchema = new Schema({
     password: String,
     _services: {
         _twitter: {
-            id: Number,
-            username: String,
-            photo: String,
-            token: String,
-            token_secret: String,
-            last_tweet: Schema.Types.Mixed,
-            last_mention: Schema.Types.Mixed,
-            last_tweet_hashtag: Schema.Types.Mixed,
-            last_follower: Number,
-            last_like: Number,
+            _id: Number,
+            _username: String,
+            _photo: String,
+            _token: String,
+            _token_secret: String,
+            _last_tweet: { type: String, default: '0' },
+            _last_mention: { type: String, default: '0' },
+            _last_tweet_hashtag: { type: String, default: '0' },
+            _last_follower: { type: String, default: '0' },
+            _last_like: { type: String, default: '0' },
             _triggers: [Schema.Types.Mixed]
         },
         _instagram: {

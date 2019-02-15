@@ -5,6 +5,7 @@ var cors = require('cors')
 const triggersRoutes = require('./routes/triggers');
 const reactionsRoutes = require('./routes/reactions');
 const userRoutes = require('./routes/user');
+const servicesRoutes = require('./routes/services');
 
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
@@ -27,6 +28,7 @@ module.exports = {
         app.use('/api/triggers', triggersRoutes);
         app.use('/api/reactions', reactionsRoutes);
         app.use('/api/user', userRoutes);
+        app.use('/api/services', servicesRoutes);
 
         app.use((req, res, next) => {
             const error = new Error('Not found');

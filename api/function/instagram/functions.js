@@ -23,8 +23,6 @@ var instaFunc = {
                     objToReturn.location = result['data'][0].location;
                     objToReturn.attribution = result['data'][0].attribution;
                     objToReturn.downloadImage = result['data'][0].link + 'media/?size=m';
-                    // Check avec le groupe si telechargement ici, ou dans le post direct
-                    // sinon un return de tout l'objet + la dite image.
                 };
                 console.log(objToReturn);
                 return objToReturn;
