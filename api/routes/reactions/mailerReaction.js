@@ -4,20 +4,30 @@ const checkAuth = require('../../middleware/check-auth');
 const addReaction = require('./twitterReaction').addReaction;
 const request = require('request-promise');
 
-const func = require('../../function/instagram/functions');
+const func = require('../../function/mailer/functions');
 
 router.get('/', checkAuth, (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({ Instagram: "OK" }));
+    res.send(JSON.stringify({ Mailer: "OK" }));
 });
 
-router.get('/testCheck', checkAuth, (req, res) => {
-    func.getLatestPicture(req).then(value => {
-        console.log(value);
-    })
+router.get('/', checkAuth, (req, res) => {
+
 });
 
-router.get('/checkNewPost', checkAuth, (req, res) => {
+router.post('/sendMail', checkAuth, (req, res) => {
+    //var mailUser = req.userData.mail;
+    // Mettre mailUser en premier params;
+    func.sendMailer(req, req.body.service, req.body.text).then(value => {
+        if (value) {
+            res.send(JSON.stringify({ Mailer: "OK" }));
+        } else {
+            res.send(JSON.stringify({ Mailer: "KO" }));
+        }
+    });
+});
+
+router.get('/', checkAuth, (req, res) => {
     User.findOne({ _id: req.userData.userId }).then((currentUser) => {
         if (currentUser) {
             //var access_token = currentUser._services._instagram.access_token;
@@ -44,27 +54,6 @@ router.get('/checkNewPost', checkAuth, (req, res) => {
                 };
             })
         };
-    });
-});
-
-router.post('/latestPicture/:triggerServiceName/:trigger', checkAuth, (req, res) => {
-    User.findOne({ _id: req.userData.userId }).then((currentUser) => {
-        if (currentUser) {
-            objToAdd = {
-                nameService: "instagram",
-                reaction: "latestPicture",
-                picture: req.body.picture ? req.body.picture : null,
-                functionName: "latestPicture"
-            };
-            if (addReaction(currentUser, req, objToAdd)) {
-                currentUser.save();
-                res.status(200).send({ code: 200, error: null, reactionAdd: objToAdd });
-            } else {
-                res.status(500).send({ code: 500, error: "No trigger for " + req.params.triggerServiceName + " available." });
-            }
-        } else {
-            res.status(500).send({ code: 500, error: "User not found" });
-        }
     });
 });
 
