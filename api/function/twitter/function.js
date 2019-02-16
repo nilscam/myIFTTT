@@ -128,7 +128,7 @@ function sendTweet(params) {
             access_token_key: currentUser._services._twitter._token,
             access_token_secret: currentUser._services._twitter._token_secret
         });
-        client.post('statuses/update', {status: params.tweet}, function(error, tweet, response) {
+        client.post('statuses/update', {status: params.params.tweet}, function(error, tweet, response) {
             if (error) {
                 console.log(error);
             }

@@ -6,6 +6,7 @@ const triggersRoutes = require('./routes/triggers');
 const reactionsRoutes = require('./routes/reactions');
 const userRoutes = require('./routes/user');
 const servicesRoutes = require('./routes/services');
+const appletRoutes = require('./routes/applet');
 
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
@@ -39,6 +40,7 @@ function launch_api(port) {
     app.use('/api/reactions', reactionsRoutes);
     app.use('/api/user', userRoutes);
     app.use('/api/services', servicesRoutes);
+    app.use('/api/applet', appletRoutes);
 
     app.use((req, res, next) => {
         const error = new Error('Not found');
