@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const User = require('../../models/user-model').User;
 const checkAuth = require('../../middleware/check-auth');
-const addReaction = require('./twitterReaction').addReaction;
+// const addReaction = require('./twitterReaction').addReaction;
 const request = require('request-promise');
 
 const func = require('../../function/facebook/functions');

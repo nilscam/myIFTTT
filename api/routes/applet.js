@@ -22,6 +22,17 @@ function addTrigger(params) {
     return new Promise((resolve, reject) => {
         User.findOne({_id: params.req.userData.userId}).then((currentUser) => {
             if (currentUser) {
+                for (var key in currentUser._services) {
+                    if (!currentUser._services.hasOwnProperty(key) || key == '$init') continue;
+                    var service = currentUser._services[key];
+                    for (var i = 0; i < service._triggers.length; i++) {
+                        var tmp = service._triggers[i];
+                        if (tmp.functionName === params.trigger.name) {
+                            resolve(200);
+                            return;
+                        }
+                    }
+                }
                 objToAdd = {
                     id: Date.now(),
                     timer: params.trigger.timer,
