@@ -23,11 +23,10 @@ router.get('/auth/azureadoauth2',
 router.get('/authorize_user', 
   passport.authenticate('azure_ad_oauth2', { failureRedirect: '/login' }),
   function (req, res) {
-    
+
     // Successful authentication, redirect home.
     res.send(res.query.code);
     res.redirect('/');
   });
-
 
 module.exports = router;
