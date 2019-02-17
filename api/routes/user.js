@@ -33,7 +33,7 @@ router.post('/signup', (req, res, next) => {
                               username: user.username,
                               userId: user._id,
                           }, keys.jwtSecret, {
-                              expiresIn: "10h"
+                              expiresIn: "10d"
                           });
                           res.status(201).json({
                               message: 'User created',
@@ -65,7 +65,7 @@ router.post('/login', (req, res, next) => {
                         username: currentUser.username,
                         userId: currentUser._id,
                     }, keys.jwtSecret, {
-                        expiresIn: "10h"
+                        expiresIn: "10d"
                     });
                     return res.status(200).json({
                         message: "Auth successful",

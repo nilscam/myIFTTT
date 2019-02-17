@@ -27,7 +27,6 @@ var infosApplet = {
         params: {}
     },
     sendTweet : {
-        name: "sendTweet",
         title: "Post a tweet",
         description: "This action will post a new tweet on your account.",
         params: {
