@@ -1,6 +1,7 @@
 const User = require('../../models/user-model').User;
 const keys = require('../../config/keys');
 const Twitter = require('twitter');
+const sortParams = require('../sortParams').sortParams;
 
 // ! Triggers
 
@@ -20,7 +21,12 @@ function checkNewTweet(params) {
                 } else if (tweets.length > 0 && currentUser._services._twitter._last_tweet != tweets[0].id_str) {
                     currentUser._services._twitter._last_tweet = tweets[0].id_str;
                     currentUser.save();
-                    tg.sendEvent(params.id, "checkNewTweet");
+                    var paramToSend = {
+                        twitter: {
+                            tweet: tweets[0],
+                        }
+                    }
+                    tg.sendEvent(params.id, "checkNewTweet", paramToSend);
                 }
             }
         });
@@ -43,7 +49,12 @@ function checkNewMention(params) {
                 } else if (tweets.length > 0 && currentUser._services._twitter._last_mention != tweets[0].id_str) {
                     currentUser._services._twitter._last_mention = tweets[0].id_str;
                     currentUser.save();
-                    tg.sendEvent(params.id, "checkNewMention");
+                    var paramToSend = {
+                        twitter: {
+                            tweet: tweets[0],
+                        }
+                    }
+                    tg.sendEvent(params.id, "checkNewMention", paramToSend);
                 }
             }
         });
@@ -64,7 +75,12 @@ function checkNewTweetHashtag(params) {
                     if (value.indexOf(params.hashtag) > -1 && currentUser._services._twitter._last_tweet_hashtag != value.id_str) {
                         currentUser._services._twitter._last_tweet_hashtag = value.id_str;
                         currentUser.save();
-                        tg.sendEvent(params.id, "checkNewTweetHashtag");
+                        var paramToSend = {
+                            twitter: {
+                                tweet: tweets[0],
+                            }
+                        }
+                        tg.sendEvent(params.id, "checkNewTweetHashtag", paramToSend);
                     }
                 });
             }
@@ -88,7 +104,12 @@ function checkNewFollower(params) {
                 } else if (followers.ids.length > 0 && currentUser._services._twitter._last_follower != followers.ids[0]) {
                     currentUser._services._twitter._last_follower = followers.ids[0];
                     currentUser.save();
-                    tg.sendEvent(params.id, "checkNewFollower");
+                    var paramToSend = {
+                        twitter: {
+                            follower: followers.ids[0],
+                        }
+                    }
+                    tg.sendEvent(params.id, "checkNewFollower", paramToSend);
                 }
             }
         });
@@ -111,7 +132,12 @@ function checkNewLike(params) {
                 } else if (tweets.length > 0 && currentUser._services._twitter._last_like != tweets[0].id_str) {
                     currentUser._services._twitter._last_mention = tweets[0].id_str;
                     currentUser.save();
-                    tg.sendEvent(params.id, "checkNewMention");
+                    var paramToSend = {
+                        twitter: {
+                            tweet: tweets[0],
+                        }
+                    }
+                    tg.sendEvent(params.id, "checkNewMention", paramToSend);
                 }
             }
         });
@@ -121,6 +147,7 @@ function checkNewLike(params) {
 // ! Reactions
 
 function sendTweet(params) {
+    params = sortParams(params);
     User.findOne({_id: params.id}).then((currentUser) => {
         var client = new Twitter({
             consumer_key: keys.twitter.consumer_key,
@@ -128,7 +155,7 @@ function sendTweet(params) {
             access_token_key: currentUser._services._twitter._token,
             access_token_secret: currentUser._services._twitter._token_secret
         });
-        client.post('statuses/update', {status: params.params.tweet}, function(error, tweet, response) {
+        client.post('statuses/update', {status: params.text}, function(error, tweet, response) {
             if (error) {
                 console.log(error);
             }
@@ -137,6 +164,7 @@ function sendTweet(params) {
 }
 
 function sendTweetImage(params) {
+    params = sortParams(params);
     User.findOne({_id: params.id}).then((currentUser) => {
         var client = new Twitter({
             consumer_key: keys.twitter.consumer_key,
@@ -144,7 +172,7 @@ function sendTweetImage(params) {
             access_token_key: currentUser._services._twitter._token,
             access_token_secret: currentUser._services._twitter._token_secret
         });
-        client.post('statuses/update', {status: params.params.tweet}, function(error, tweet, response) {
+        client.post('statuses/update', {status: params.text}, function(error, tweet, response) {
             if (error) {
                 console.log(error);
             }
@@ -153,6 +181,7 @@ function sendTweetImage(params) {
 }
 
 function updateBio(params) {
+    params = sortParams(params);
     User.findOne({_id: params.id}).then((currentUser) => {
         var client = new Twitter({
             consumer_key: keys.twitter.consumer_key,
@@ -160,7 +189,7 @@ function updateBio(params) {
             access_token_key: currentUser._services._twitter._token,
             access_token_secret: currentUser._services._twitter._token_secret
         });
-        client.post('account/update_profile', {description: params.params.description}, function(error, tweet, response) {
+        client.post('account/update_profile', {description: params.text}, function(error, tweet, response) {
             if (error) {
                 console.log(error);
             }

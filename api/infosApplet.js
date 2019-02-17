@@ -41,7 +41,7 @@ var infosApplet = {
         description: "This action will post a new tweet on your account.",
         color: servicesColor['twitter'],
         params: {
-            tweet: "String"
+            text: "String"
         }
     },
     sendTweetImage : {
@@ -49,7 +49,7 @@ var infosApplet = {
         description: "This action will post a new tweet on your account with linked image.",
         color: servicesColor['twitter'],
         params: {
-            tweet: "String"
+            text: "String"
         }
     },
     updateBio : {
@@ -57,7 +57,7 @@ var infosApplet = {
         description: "This action will update your bio.",
         color: servicesColor['twitter'],
         params: {
-            description: "String"
+            text: "String"
         }
     },
     addEveryDay : {
