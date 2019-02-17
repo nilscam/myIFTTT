@@ -136,11 +136,45 @@ function sendTweet(params) {
     });
 }
 
+function sendTweetImage(params) {
+    User.findOne({_id: params.id}).then((currentUser) => {
+        var client = new Twitter({
+            consumer_key: keys.twitter.consumer_key,
+            consumer_secret: keys.twitter.consumer_secret,
+            access_token_key: currentUser._services._twitter._token,
+            access_token_secret: currentUser._services._twitter._token_secret
+        });
+        client.post('statuses/update', {status: params.params.tweet}, function(error, tweet, response) {
+            if (error) {
+                console.log(error);
+            }
+        });
+    });
+}
+
+function updateBio(params) {
+    User.findOne({_id: params.id}).then((currentUser) => {
+        var client = new Twitter({
+            consumer_key: keys.twitter.consumer_key,
+            consumer_secret: keys.twitter.consumer_secret,
+            access_token_key: currentUser._services._twitter._token,
+            access_token_secret: currentUser._services._twitter._token_secret
+        });
+        client.post('account/update_profile', {description: params.params.description}, function(error, tweet, response) {
+            if (error) {
+                console.log(error);
+            }
+        });
+    });
+}
+
 module.exports = {
     checkNewTweet: checkNewTweet,
     checkNewMention: checkNewMention,
     checkNewTweetHashtag: checkNewTweetHashtag,
     checkNewFollower: checkNewFollower,
     checkNewLike: checkNewLike,
-    sendTweet: sendTweet
+    sendTweet: sendTweet,
+    sendTweetImage: sendTweetImage,
+    updateBio: updateBio,
 }

@@ -14,10 +14,23 @@ const keys = require('./config/keys');
 // ! Functions Triggers and Reactions
 const triggerHandler = require('./TriggerHandler.js').TriggerHandler;
 const twitterFunctions = require('./function/twitter/function')
+const dateAndTimeFunctions = require('./function/dateAndTime/function')
 
 exportFunctions = {
     checkNewTweet: twitterFunctions.checkNewTweet,
-    sendTweet: twitterFunctions.sendTweet
+    checkNewMention: twitterFunctions.checkNewMention,
+    checkNewTweetHashtag: twitterFunctions.checkNewTweetHashtag,
+    checkNewFollower: twitterFunctions.checkNewFollower,
+    checkNewLike: twitterFunctions.checkNewLike,
+    sendTweet: twitterFunctions.sendTweet,
+    sendTweetImage: twitterFunctions.sendTweetImage,
+    updateBio: twitterFunctions.updateBio,
+
+    addEveryDay : dateAndTimeFunctions.addEveryDay,
+    addEveryHour : dateAndTimeFunctions.addEveryHour,
+    addEveryDayOfTheWeek : dateAndTimeFunctions.addEveryDayOfTheWeek,
+    addEveryMonth : dateAndTimeFunctions.addEveryMonth,
+    addEveryYear : dateAndTimeFunctions.addEveryYear,
 };
 
 global.tg = new triggerHandler(exportFunctions);
