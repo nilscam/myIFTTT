@@ -24,6 +24,11 @@ const userSchema = new Schema({
         },
         _dateAndTime: {
             _triggers: [Schema.Types.Mixed]
+        },
+        _nasa: {
+            _last_title: { type: String, default: '0' },
+            _last_url: { type: String, default: '0' },
+            _triggers: [Schema.Types.Mixed]
         }
     }
 });

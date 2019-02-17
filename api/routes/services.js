@@ -77,6 +77,23 @@ router.get('/', checkAuth, (req, res) => {
                     },
                 ],
                 reactions: {}
+            },
+            {
+                nameService: "nasa",
+                displayName: "Space",
+                image: "https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjRvdyqiMPgAhUgA2MBHT9kAYEQjRx6BAgBEAU&url=https%3A%2F%2Fwww.miifotos.com%2Fim%25C3%25A1genes%2Fsvg-space-icon-c1.html&psig=AOvVaw2vc-BCKlqLVh16KR7-fIRX&ust=1550503045994801",
+                color: servicesColor['nasa'],
+                triggers: [
+                    {
+                        name: "newsOfTheDay",
+                        infos: infosApplet['newsOfTheDay'],
+                    },
+                    {
+                        name: "imageOfTheDay",
+                        infos: infosApplet['imageOfTheDay'],
+                    },
+                ],
+                reactions: {}
             }
         ]
     });

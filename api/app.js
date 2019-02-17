@@ -15,6 +15,7 @@ const keys = require('./config/keys');
 const triggerHandler = require('./TriggerHandler.js').TriggerHandler;
 const twitterFunctions = require('./function/twitter/function')
 const dateAndTimeFunctions = require('./function/dateAndTime/function')
+const nasaFunctions = require('./function/nasa/function')
 
 exportFunctions = {
     checkNewTweet: twitterFunctions.checkNewTweet,
@@ -31,6 +32,9 @@ exportFunctions = {
     addEveryDayOfTheWeek : dateAndTimeFunctions.addEveryDayOfTheWeek,
     addEveryMonth : dateAndTimeFunctions.addEveryMonth,
     addEveryYear : dateAndTimeFunctions.addEveryYear,
+
+    newsOfTheDay: nasaFunctions.newsOfTheDay,
+    imageOfTheDay: nasaFunctions.imageOfTheDay,
 };
 
 global.tg = new triggerHandler(exportFunctions);

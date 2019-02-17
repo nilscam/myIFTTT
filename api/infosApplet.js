@@ -1,6 +1,7 @@
 var servicesColor = {
     twitter: "1da1f2",
     dateAndTime: "95a5a6",
+    nasa: "2e294e",
 }
 
 var infosApplet = {
@@ -107,6 +108,18 @@ var infosApplet = {
             hour: "Hour",
             minute: "Minute"
         }
+    },
+    newsOfTheDay : {
+        title: "News of the day by NASA",
+        description: "This trigger fires every time NASA posts a news.",
+        color: servicesColor['nasa'],
+        params: {}
+    },
+    imageOfTheDay : {
+        title: "Image of the day by NASA",
+        description: "This trigger fires every time NASA posts a new picture.",
+        color: servicesColor['nasa'],
+        params: {}
     },
 }
 
