@@ -1,19 +1,44 @@
 const router = require('express').Router();
 const User = require('../models/user-model').User;
 const checkAuth = require('../middleware/check-auth');
+const infosApplet = require('../infosApplet');
 
 router.get('/', checkAuth, (req, res) => {
     console.log(req.userData);
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
         if (currentUser) {
-            servicesToAff = {
-                code: 200,
-                error: null,
-                data: currentUser._services,
-            };
-            res.send(JSON.stringify(servicesToAff, 0, 2));
+            var triggers = {};
+            for (var key in currentUser._services) {
+                if (!currentUser._services.hasOwnProperty(key) || key == '$init') continue;
+                var service = currentUser._services[key];
+                for (var i = 0; i < service._triggers.length; i++) {
+                    var tmp = service._triggers[i];
+                    if (tmp.eventReaction === 'Timer') {
+                        triggers[tmp.functionName] = tmp;
+                        triggers[tmp.functionName].infos = infosApplet[tmp.functionName];
+                    }
+                }
+            }
+            var applets = {};
+            var idxApplet = 0;
+            for (var key in currentUser._services) {
+                if (!currentUser._services.hasOwnProperty(key) || key == '$init') continue;
+                var service = currentUser._services[key];
+                for (var i = 0; i < service._triggers.length; i++) {
+                    var tmp = service._triggers[i];
+                    if (tmp.eventReaction != 'Timer') {
+                        var tmpObj = {
+                            trigger: triggers[tmp.eventReaction],
+                            reaction: tmp,
+                        }
+                        tmpObj.reaction.infos = infosApplet[tmp.functionName];
+                        applets[++idxApplet] = tmpObj;
+                    }
+                }
+            }
+            res.status(200).send(JSON.stringify(applets, 0, 2));  
         } else {
-            res.send({code: 500, error: "User not found"});
+            res.status(401).send({code: 401, error: "User not found"});
         }
 	});
 });
@@ -22,6 +47,17 @@ function addTrigger(params) {
     return new Promise((resolve, reject) => {
         User.findOne({_id: params.req.userData.userId}).then((currentUser) => {
             if (currentUser) {
+                for (var key in currentUser._services) {
+                    if (!currentUser._services.hasOwnProperty(key) || key == '$init') continue;
+                    var service = currentUser._services[key];
+                    for (var i = 0; i < service._triggers.length; i++) {
+                        var tmp = service._triggers[i];
+                        if (tmp.functionName === params.trigger.name) {
+                            resolve(200);
+                            return;
+                        }
+                    }
+                }
                 objToAdd = {
                     id: Date.now(),
                     timer: params.trigger.timer,

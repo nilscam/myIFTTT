@@ -1,9 +1,11 @@
 const router = require('express').Router();
+const Twitter = require('twitter');
 const User = require('../models/user-model').User;
 const keys = require('../config/keys');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const checkAuth = require('../middleware/check-auth');
 
 router.post('/signup', (req, res, next) => {
     User.findOne({username: req.body.username}).then((currentUser) => {
@@ -31,7 +33,7 @@ router.post('/signup', (req, res, next) => {
                               username: user.username,
                               userId: user._id,
                           }, keys.jwtSecret, {
-                              expiresIn: "10h"
+                              expiresIn: "10d"
                           });
                           res.status(201).json({
                               message: 'User created',
@@ -63,7 +65,7 @@ router.post('/login', (req, res, next) => {
                         username: currentUser.username,
                         userId: currentUser._id,
                     }, keys.jwtSecret, {
-                        expiresIn: "10h"
+                        expiresIn: "10d"
                     });
                     return res.status(200).json({
                         message: "Auth successful",
@@ -100,5 +102,33 @@ router.delete('/:userId', (req, res, next) => {
         })
       });
 })
+
+router.post('/twitter', checkAuth, (req, res) => {
+    User.findOne({_id: req.userData.userId}).then((currentUser) => {
+        if (currentUser) {
+            currentUser._services._twitter._token = req.body.token;
+            currentUser._services._twitter._token_secret = req.body.token_secret;
+            var client = new Twitter({
+                consumer_key: keys.twitter.consumer_key,
+                consumer_secret: keys.twitter.consumer_secret,
+                access_token_key: currentUser._services._twitter._token,
+                access_token_secret: currentUser._services._twitter._token_secret
+            });
+            client.get('account/verify_credentials', {}, function(error, profile, response) {
+                if (!error) {
+                    currentUser._services._twitter._id = profile.id_str;
+                    currentUser._services._twitter._username = profile.screen_name;
+                    currentUser._services._twitter._photo = profile.profile_image_url;
+                    currentUser.save();
+                    res.status(200).send({error: null});
+                } else {
+                    res.status(500).send({error: "User not found"});
+                }
+              });
+        } else {
+            res.status(500).send({error: "User not found"});
+        }
+	});
+});
 
 module.exports = router;

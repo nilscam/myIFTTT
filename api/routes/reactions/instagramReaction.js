@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const User = require('../../models/user-model').User;
 const checkAuth = require('../../middleware/check-auth');
-const addReaction = require('./twitterReaction').addReaction;
+// const addReaction = require('./twitterReaction').addReaction;
 const request = require('request-promise');
 
 const func = require('../../function/instagram/functions');
@@ -47,25 +47,25 @@ router.get('/checkNewPost', checkAuth, (req, res) => {
     });
 });
 
-router.post('/latestPicture/:triggerServiceName/:trigger', checkAuth, (req, res) => {
-    User.findOne({ _id: req.userData.userId }).then((currentUser) => {
-        if (currentUser) {
-            objToAdd = {
-                nameService: "instagram",
-                reaction: "latestPicture",
-                picture: req.body.picture ? req.body.picture : null,
-                functionName: "latestPicture"
-            };
-            if (addReaction(currentUser, req, objToAdd)) {
-                currentUser.save();
-                res.status(200).send({ code: 200, error: null, reactionAdd: objToAdd });
-            } else {
-                res.status(500).send({ code: 500, error: "No trigger for " + req.params.triggerServiceName + " available." });
-            }
-        } else {
-            res.status(500).send({ code: 500, error: "User not found" });
-        }
-    });
-});
+// router.post('/latestPicture/:triggerServiceName/:trigger', checkAuth, (req, res) => {
+//     User.findOne({ _id: req.userData.userId }).then((currentUser) => {
+//         if (currentUser) {
+//             objToAdd = {
+//                 nameService: "instagram",
+//                 reaction: "latestPicture",
+//                 picture: req.body.picture ? req.body.picture : null,
+//                 functionName: "latestPicture"
+//             };
+//             if (addReaction(currentUser, req, objToAdd)) {
+//                 currentUser.save();
+//                 res.status(200).send({ code: 200, error: null, reactionAdd: objToAdd });
+//             } else {
+//                 res.status(500).send({ code: 500, error: "No trigger for " + req.params.triggerServiceName + " available." });
+//             }
+//         } else {
+//             res.status(500).send({ code: 500, error: "User not found" });
+//         }
+//     });
+// });
 
 module.exports = router;

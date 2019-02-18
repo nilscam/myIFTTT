@@ -29,7 +29,7 @@ class TriggerHandler {
 
     static runFunction(functions, name, params) {
         if (functions[name]) {
-            console.log(name + " --- " + JSON.stringify(params, null, 2))
+            //console.log(name + " --- " + JSON.stringify(params, null, 2))
             functions[name](params);
         } else {
             console.log("Function ", name, " doesn't exist");
@@ -48,7 +48,7 @@ class TriggerHandler {
     }
 
 
-    sendEvent(userId, event) {
+    sendEvent(userId, event, params) {
         var functions = this.functions;
         User.findOne({_id: userId}).then((item) => {
             for (var key in item._services) {
@@ -56,9 +56,13 @@ class TriggerHandler {
                 var service = item._services[key];
                 for (var i = 0; i < service._triggers.length; i++) {
                     var tmp = service._triggers[i];
+                    var tmpParams = {
+                        funcParams: tmp.params,
+                        triggerParams: params
+                    };
                     if (tmp.eventReaction === event)
                         TriggerHandler
-                            .runFunction(functions, tmp.functionName, tmp.params)
+                            .runFunction(functions, tmp.functionName, tmpParams);
                 }
             }
         });
