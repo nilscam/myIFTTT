@@ -3,6 +3,10 @@ import axios from 'axios'
 class Api {
   constructor() {
     this.ApiURL = process.env.VUE_APP_API_URL + '/api'
+    let token = localStorage.getItem('token')
+    if (token)
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+
   }
 
   login(data) {
@@ -14,7 +18,7 @@ class Api {
   }
 
   setAuthorisationToken(token) {
-    axios.defaults.headers.common['Authorization'] = token
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
   }
 
   removeAuthorisationToken() {
@@ -22,13 +26,13 @@ class Api {
   }
 
   getServices() {
-    return axios.get(this.ApiURL + "/services");
+    return axios.get(this.ApiURL + "/services")
   }
 
 
 
   postNewApplet(trigger, reaction) {
-    return axios.post(this.ApiURL + "/applet", {trigger, reaction});
+    return axios.post(this.ApiURL + "/applet", {trigger, reaction}, {headers: {'content-type': 'application/json'}})
   }
 }
 

@@ -2,7 +2,7 @@
   <v-app>
 
     <!-- Desktop -->
-    <mq-layout mq="md+">
+    <!-- <mq-layout mq="md+"> -->
       <v-toolbar app>
 
         <v-toolbar-title class="headline text-uppercase">
@@ -29,13 +29,28 @@
       </v-toolbar>
 
       <v-content>
-        <transition name="fade">
-          <keep-alive>
-            <router-view/>
-          </keep-alive>
-        </transition>
+        <v-container fluid fill-height >
+                <v-layout
+                  justify-center
+                  align-center
+                >
+                  <v-flex text-xs-center fill-height>
+                      <v-card class="elevation-20" height='100%'>
+                      <v-toolbar dark color="primary">
+                        <v-toolbar-title>I want this to take up the whole space with slight padding</v-toolbar-title>
+                        <v-spacer></v-spacer>
+                      </v-toolbar>
+                      <v-card-text>
+
+                      </v-card-text>
+
+                    </v-card>
+                  </v-flex>
+                </v-layout>
+              </v-container>
       </v-content>
-    </mq-layout>
+
+    <!-- </mq-layout> -->
 
 
 
