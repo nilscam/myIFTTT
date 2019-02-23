@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const User = require('../models/user-model').User;
-const twitterRoutes = require('./triggers/twitterTriggers');
 const dateAndTimeRoutes = require('./triggers/dateAndTimeTriggers');
 const instagramRoutes = require('./triggers/instagramTriggers');
 const mailerRoutes = require('./triggers/mailerTriggers');
@@ -8,7 +7,6 @@ const facebookRoutes = require('./triggers/facebookTriggers');
 const office365Routes = require('./triggers/office365Triggers');
 const checkAuth = require('../middleware/check-auth');
 
-router.use('/twitter', twitterRoutes);
 router.use('/dateAndTime', dateAndTimeRoutes);
 router.use('/instagram', instagramRoutes);
 router.use('/mailer', mailerRoutes);
