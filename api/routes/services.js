@@ -10,7 +10,7 @@ router.get('/', checkAuth, (req, res) => {
             {
                 nameService: "twitter",
                 displayName: "Twitter",
-                image: "https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwjAgu2T1LbgAhVpAWMBHTOnD74QjRx6BAgBEAU&url=https%3A%2F%2Ffr.wikipedia.org%2Fwiki%2FTwitter&psig=AOvVaw3-AOR09OGJY2UoZimy2jLy&ust=1550076787304071",
+                image: "https://upload.wikimedia.org/wikipedia/fr/thumb/c/c8/Twitter_Bird.svg/langfr-280px-Twitter_Bird.svg.png",
                 color: servicesColor['twitter'],
                 triggers: [
                     {
@@ -52,7 +52,7 @@ router.get('/', checkAuth, (req, res) => {
             {
                 nameService: "dateAndTime",
                 displayName: "Date & Time",
-                image: "https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiO5YzH27bgAhUN1hoKHUXsAnoQjRx6BAgBEAU&url=http%3A%2F%2Ffreeiconshop.com%2Ficon%2Fclock-icon-flat%2F&psig=AOvVaw0A7nBA5NLOEe6udVhZJpIM&ust=1550078763614896",
+                image: "https://cdn0.iconfinder.com/data/icons/time-management/512/xxx038-512.png",
                 color: servicesColor['dateAndTime'],
                 triggers: [
                     {
@@ -81,7 +81,7 @@ router.get('/', checkAuth, (req, res) => {
             {
                 nameService: "nasa",
                 displayName: "Space",
-                image: "https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjRvdyqiMPgAhUgA2MBHT9kAYEQjRx6BAgBEAU&url=https%3A%2F%2Fwww.miifotos.com%2Fim%25C3%25A1genes%2Fsvg-space-icon-c1.html&psig=AOvVaw2vc-BCKlqLVh16KR7-fIRX&ust=1550503045994801",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1200px-NASA_logo.svg.png",
                 color: servicesColor['nasa'],
                 triggers: [
                     {
@@ -91,6 +91,31 @@ router.get('/', checkAuth, (req, res) => {
                     {
                         name: "imageOfTheDay",
                         infos: infosApplet['imageOfTheDay'],
+                    },
+                ],
+                reactions: {}
+            },
+            {
+                nameService: "weather",
+                displayName: "Weather",
+                image: "https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Weather-512.png",
+                color: servicesColor['weather'],
+                triggers: [
+                    {
+                        name: "temperatureBelow",
+                        infos: infosApplet['temperatureBelow'],
+                    },
+                    {
+                        name: "temperatureAbove",
+                        infos: infosApplet['temperatureAbove'],
+                    },
+                    {
+                        name: "humidityLevelAbove",
+                        infos: infosApplet['humidityLevelAbove'],
+                    },
+                    {
+                        name: "currentConditionChangesTo",
+                        infos: infosApplet['currentConditionChangesTo'],
                     },
                 ],
                 reactions: {}
