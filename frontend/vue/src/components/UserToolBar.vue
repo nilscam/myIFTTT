@@ -39,43 +39,50 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-  data: () => ({
-    items: [
-      {
-        icon: 'note_add',
-        href: '#',
-        title: 'New Applet',
-        click: (e) => {
-          console.log(e);
+  data() {
+    return {
+      items: [
+        {
+          icon: 'note_add',
+          href: '#',
+          title: 'New Applet',
+          click: (e) => {
+            console.log(e);
+          }
+        },
+        {
+          icon: 'description',
+          href: '#',
+          title: 'Applets',
+          click: (e) => {
+            console.log(e);
+          }
+        },
+        {
+          icon: 'settings',
+          href: '#',
+          title: 'Settings',
+          click: (e) => {
+            console.log(e);
+          }
+        },
+        {
+          icon: 'power_settings_new',
+          href: '#',
+          title: 'Logout',
+          click: (e) => {
+            this.logout()
+          }
         }
-      },
-      {
-        icon: 'description',
-        href: '#',
-        title: 'Applets',
-        click: (e) => {
-          console.log(e);
-        }
-      },
-      {
-        icon: 'settings',
-        href: '#',
-        title: 'Settings',
-        click: (e) => {
-          console.log(e);
-        }
-      },
-      {
-        icon: 'power_settings_new',
-        href: '#',
-        title: 'Logout',
-        click: (e) => {
-          window.getApp.$emit('APP_LOGOUT');
-        }
-      }
-    ],
-  })
+      ],
+    }
+  },
+  methods: {
+    ...mapActions(['logout'])
+  }
 }
 </script>
 

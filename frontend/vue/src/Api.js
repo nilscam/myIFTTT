@@ -24,6 +24,12 @@ class Api {
   getServices() {
     return axios.get(this.ApiURL + "/services");
   }
+
+
+
+  postNewApplet(trigger, reaction) {
+    return axios.post(this.ApiURL + "/applet", {trigger, reaction});
+  }
 }
 
 export default new Api();

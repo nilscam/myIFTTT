@@ -104,7 +104,6 @@ export default {
       } else {
         this.transitionName = 'fade'
       }
-      console.log(this.transitionName);
     }
   },
   computed: {
