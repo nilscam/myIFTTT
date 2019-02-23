@@ -10,7 +10,7 @@ router.get('/', checkAuth, (req, res) => {
             {
                 nameService: "twitter",
                 displayName: "Twitter",
-                image: "https://upload.wikimedia.org/wikipedia/fr/thumb/c/c8/Twitter_Bird.svg/langfr-280px-Twitter_Bird.svg.png",
+                image: "http://localhost:8080/images/twitter.png",
                 color: servicesColor['twitter'],
                 triggers: [
                     {
@@ -52,7 +52,7 @@ router.get('/', checkAuth, (req, res) => {
             {
                 nameService: "dateAndTime",
                 displayName: "Date & Time",
-                image: "https://cdn0.iconfinder.com/data/icons/time-management/512/xxx038-512.png",
+                image: "http://localhost:8080/images/dateAndTime.png",
                 color: servicesColor['dateAndTime'],
                 triggers: [
                     {
@@ -81,7 +81,7 @@ router.get('/', checkAuth, (req, res) => {
             {
                 nameService: "nasa",
                 displayName: "Space",
-                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1200px-NASA_logo.svg.png",
+                image: "http://localhost:8080/images/nasa.png",
                 color: servicesColor['nasa'],
                 triggers: [
                     {
@@ -98,7 +98,7 @@ router.get('/', checkAuth, (req, res) => {
             {
                 nameService: "weather",
                 displayName: "Weather",
-                image: "https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Weather-512.png",
+                image: "http://localhost:8080/images/weather.png",
                 color: servicesColor['weather'],
                 triggers: [
                     {
