@@ -13,9 +13,10 @@ const keys = require('./config/keys');
 
 // ! Functions Triggers and Reactions
 const triggerHandler = require('./TriggerHandler.js').TriggerHandler;
-const twitterFunctions = require('./function/twitter/function')
-const dateAndTimeFunctions = require('./function/dateAndTime/function')
-const nasaFunctions = require('./function/nasa/function')
+const twitterFunctions = require('./function/twitter/function');
+const dateAndTimeFunctions = require('./function/dateAndTime/function');
+const nasaFunctions = require('./function/nasa/function');
+const weatherFunctions = require('./function/weather/function');
 
 exportFunctions = {
     checkNewTweet: twitterFunctions.checkNewTweet,
@@ -35,6 +36,11 @@ exportFunctions = {
 
     newsOfTheDay: nasaFunctions.newsOfTheDay,
     imageOfTheDay: nasaFunctions.imageOfTheDay,
+
+    temperatureBelow : weatherFunctions.temperatureBelow,
+    temperatureAbove : weatherFunctions.temperatureAbove,
+    humidityLevelAbove : weatherFunctions.humidityLevelAbove,
+    currentConditionChangesTo : weatherFunctions.currentConditionChangesTo,
 };
 
 global.tg = new triggerHandler(exportFunctions);
@@ -46,6 +52,7 @@ function launch_api(port) {
     app.use(bodyParser.urlencoded({ extended: false }))
     app.use(bodyParser.json())
 
+    app.use(express.static(__dirname + '/public'));
 
     // connect to mongodb
     mongoose.connect(keys.mongodb.dbURL, () => {

@@ -1,10 +1,9 @@
 const router = require('express').Router();
 const User = require('../models/user-model').User;
 const checkAuth = require('../middleware/check-auth');
-const infosApplet = require('../infosApplet');
+const infosApplet = require('../infosApplet').infosApplet;
 
 router.get('/', checkAuth, (req, res) => {
-    console.log(req.userData);
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
         if (currentUser) {
             var triggers = {};
@@ -16,6 +15,8 @@ router.get('/', checkAuth, (req, res) => {
                     if (tmp.eventReaction === 'Timer') {
                         triggers[tmp.functionName] = tmp;
                         triggers[tmp.functionName].infos = infosApplet[tmp.functionName];
+                        triggers[tmp.functionName].service = key.substr(1);
+                        infosApplet['newsOfTheDay']
                     }
                 }
             }
@@ -32,6 +33,7 @@ router.get('/', checkAuth, (req, res) => {
                             reaction: tmp,
                         }
                         tmpObj.reaction.infos = infosApplet[tmp.functionName];
+                        tmpObj.reaction.service = key.substr(1);
                         applets[++idxApplet] = tmpObj;
                     }
                 }
