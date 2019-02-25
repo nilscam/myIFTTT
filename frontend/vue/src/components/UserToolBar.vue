@@ -1,23 +1,5 @@
 <template>
 
-  <!-- <v-menu transition="slide-y-transition" bottom offset-y>
-
-    <v-chip slot="activator">
-      <v-avatar>
-        <img src="https://randomuser.me/api/portraits/men/35.jpg" alt="trevor">
-      </v-avatar>
-      Nils
-      <v-icon right>keyboard_arrow_down</v-icon>
-    </v-chip>
-
-    <v-list>
-      <v-list-tile v-for="(item, i) in items" :key="i" @click="">
-        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-      </v-list-tile>
-    </v-list>
-  </v-menu> -->
-
-
   <v-menu offset-y :nudge-bottom="10" left transition="scale-transition" origin="center center">
     <v-btn icon large flat slot="activator">
       <v-avatar size="30px">
@@ -49,24 +31,24 @@ export default {
           icon: 'note_add',
           href: '#',
           title: 'New Applet',
-          click: (e) => {
-            console.log(e);
+          click: () => {
+            this.$router.push({ name: 'newapplet' })
           }
         },
         {
           icon: 'description',
           href: '#',
           title: 'Applets',
-          click: (e) => {
-            console.log(e);
+          click: () => {
+            this.$router.push({ name: 'about' })
           }
         },
         {
           icon: 'settings',
           href: '#',
           title: 'Settings',
-          click: (e) => {
-            console.log(e);
+          click: () => {
+            this.$router.push({ name: 'about' })
           }
         },
         {

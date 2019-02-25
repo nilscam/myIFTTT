@@ -9,7 +9,7 @@
       d-flex
       class="service-icon"
     >
-      <v-card flat tile class="d-flex" color="transparent">
+      <v-card flat tile class="d-flex" color="transparent" :title="service">
 
         <v-img
           @click="emitClick(service)"
@@ -62,10 +62,6 @@ export default {
       ]
     }
   },
-  mounted() {
-    console.log(this.fakeServices);
-    console.log(this.computeServices);
-  },
   computed: {
     computeServices() {
       return this.fakeServices.concat(this.servicesNames)
@@ -78,7 +74,6 @@ export default {
       return Api.websiteURL + `/images/${service}.svg`
     },
     emitClick(service) {
-      console.log(this.fakeServices.indexOf(service));
       if (this.fakeServices.indexOf(service) < 0)
         this.$emit('serviceClicked', service)
     }

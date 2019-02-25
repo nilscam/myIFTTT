@@ -11,7 +11,7 @@
       md4
       d-flex
     >
-    <v-card flat tile class="d-flex" :color="'#' + trigger.infos.color" :class="isColorDark ? 'white--text' : 'black--text'">
+    <v-card flat tile class="d-flex" :color="'#' + trigger.infos.color" :class="{ 'white--text': isColorDark, 'black--text': !isColorDark, 'my-card': true }" @click="emitClick(trigger)">
       <v-card-title primary-title>
         <div class="headline">{{ trigger.infos.title }}</div>
         <span>{{ trigger.infos.description }}</span>
@@ -22,18 +22,12 @@
 </template>
 
 <script>
-import Api from '../Api'
-
 export default {
   props: {
     triggers: {
       type: Array,
       required: true
     }
-  },
-  mounted() {
-    console.log(this.triggers);
-
   },
   computed: {
     isColorDark() {
@@ -46,20 +40,15 @@ export default {
     }
   },
   methods: {
-    // getServiceLogo(service) {
-    //   if (this.fakeServices.indexOf(service) < 0)
-    //     return Api.websiteURL + `/images/${service}.png`
-    //   return Api.websiteURL + `/images/${service}.svg`
-    // },
-    // emitClick(service) {
-    //   console.log(this.fakeServices.indexOf(service));
-    //   if (this.fakeServices.indexOf(service) < 0)
-    //     this.$emit('serviceClicked', service)
-    // }
+    emitClick(trigger) {
+      this.$emit('triggerClicked', trigger.name)
+    }
   }
 }
 </script>
 
 <style scoped>
-
+.my-card {
+  cursor: pointer !important;
+}
 </style>

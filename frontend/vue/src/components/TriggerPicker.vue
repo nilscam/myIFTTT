@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-sm fluid class="icons-container">
     <icons-list v-if="service == undefined" :servicesNames="servicesNames" @serviceClicked="serviceSelected"/>
-    <trigger-list v-else :triggers="service.triggers"/>
+    <trigger-list v-else :triggers="service.triggers" @back="service = undefined" @triggerClicked="triggerSelected"/>
   </v-container>
 </template>
 
@@ -31,6 +31,9 @@ export default {
   methods: {
     serviceSelected(name) {
       this.service = this.services.find(x => x.nameService === name)
+    },
+    triggerSelected(name, params) {
+      console.log('trigger chosen: ' + name);
     }
   }
 }
