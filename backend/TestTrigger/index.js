@@ -9,7 +9,32 @@ var item = {
             _triggers: [
                 {
                     id: 1320,
-                    timer: "1000",
+                    timer: "5000",
+                    date : {
+                        day: "6",
+                        hour: "1",
+                        min: "39",
+                        sec: "0"
+                    },
+                    eventReaction: "Timer",
+                    functionName: "FctTest",
+                    params: {
+                        1: "42",
+                        2: {
+                            name: "LeNom",
+                            mdp: "LeMdp"
+                        }
+                    }
+                },
+                {
+                    id: 1321,
+                    timer: "5000",
+                    date : {
+                        day: "6",
+                        hour: "1",
+                        min: "11",
+                        sec: "0"
+                    },
                     eventReaction: "Timer",
                     functionName: "FctTest",
                     params: {
@@ -34,7 +59,13 @@ var item = {
             _triggers: [
                 {
                     id: 1125,
-                    timer: "2000",
+                    timer: "5000",
+                    date : {
+                        day: "6",
+                        hour: "1",
+                        min: "11",
+                        sec: "0"
+                    },
                     eventReaction: "Timer",
                     functionName: "FctTest2",
                     params: {
@@ -52,7 +83,7 @@ module = {
 };
 
 function FctTest(params) {
-    console.log("FctTest");
+    console.log(params.name);
 }
 
 function FctTest2(params) {
@@ -62,9 +93,22 @@ function FctTest2(params) {
 var tg = new TriggerHandler(module);
 
 
-tg.addTrigger(item._id, item._services._dateAndTime._triggers[0]);
 //tg.modifyTrigger(item._id, item._services._dateAndTime._triggers[0].id, item._services._twitter._triggers[0]);
 //tg.clearTrigger(item._id, item._services._dateAndTime._triggers[0]);
 //tg.showTimerList();
 
-tg.sendEvent(item._id, "sendTweet");
+//tg.sendEvent(item._id, "sendTweet");
+
+//tg.startEveryone(13, 23, 45,  32);
+//tg.addTrigger(item._id, item._services._twitter._triggers[0]);
+
+tg.startEveryone();
+
+/*
+tg.addTrigger(item._id, item._services._twitter._triggers[1]);
+tg.showDelayList();
+tg.showTimerList();
+tg.clearTrigger(item._id, item._services._twitter._triggers[0].id);
+tg.showDelayList();
+tg.showTimerList();
+*/
