@@ -3,15 +3,26 @@ const User = require('./models/user-model').User;
 class TriggerHandler {
     constructor(functions) {
         this.functions = functions;
+        this.delayList = [];
         this.timerList = [];
-        this.instance = this;
+    }
+
+    showDelayList() {
+        console.log("Delay List: ");
+        for (var i = 0; i < this.delayList.length; i++) {
+            console.log({userId: this.delayList[i].userId,
+                triggerId: this.delayList[i].triggerId});
+        }
+        console.log("End");
     }
 
     showTimerList() {
+        console.log("Timer List: ")
         for (var i = 0; i < this.timerList.length; i++) {
             console.log({userId: this.timerList[i].userId,
-            triggerId: this.timerList[i].triggerId});
+                triggerId: this.timerList[i].triggerId});
         }
+        console.log("End");
     }
 
     modifyTrigger(userId, oldTriggerId, newTrigger) {
@@ -20,11 +31,17 @@ class TriggerHandler {
     }
 
     clearTrigger(userId, triggerId) {
-        for (var i = 0; i < this.timerList.length; i++)
-            if (this.timerList[i].userId === userId && this.timerList[i].triggerId === triggerId) {
-                clearInterval(this.timerList[i].handler);
-                return this.timerList.splice(i, 1);
+        for (var i = 0; i < this.delayList.length; i++)
+            if (this.delayList[i].userId === userId && this.delayList[i].triggerId === triggerId) {
+                clearTimeout(this.delayList[i].handler);
+                this.delayList.splice(i, 1);
             }
+        for (var j = 0; j < this.timerList.length; j++) {
+            if (this.timerList[j].userId === userId && this.timerList[j].triggerId === triggerId) {
+                clearInterval(this.timerList[j].handler);
+                this.timerList.splice(j, 1);
+            }
+        }
     }
 
     static runFunction(functions, name, params) {
@@ -36,14 +53,29 @@ class TriggerHandler {
         }
     }
 
+    // addTrigger(userId, newTrigger) {
+    //     var handler = '';
+    //     var functions = this.functions;
+    //     if (newTrigger.eventReaction === "Timer") {
+    //         handler = setInterval(function () {
+    //           TriggerHandler.runFunction(functions, newTrigger.functionName, newTrigger.params)
+    //         }, newTrigger.timer);
+    //         this.timerList.push({userId: userId, triggerId: newTrigger.id, handler: handler});
+    //     }
+    // }
+
     addTrigger(userId, newTrigger) {
-        var handler = '';
+        var intHandler = '';
+        var timHandler = '';
         var functions = this.functions;
         if (newTrigger.eventReaction === "Timer") {
-            handler = setInterval(function () {
-              TriggerHandler.runFunction(functions, newTrigger.functionName, newTrigger.params)
-            }, newTrigger.timer);
-            this.timerList.push({userId: userId, triggerId: newTrigger.id, handler: handler});
+            timHandler = setTimeout(function () {
+                intHandler = setInterval(function () {
+                    TriggerHandler.runFunction(functions, newTrigger.functionName, newTrigger.params)
+                }, newTrigger.timer);
+            }, this.getTimeout(newTrigger.timer, newTrigger.date));
+            this.delayList.push({userId: userId, triggerId: newTrigger.id, handler: timHandler});
+            this.timerList.push({userId: userId, triggerId: newTrigger.id, handler: intHandler});
         }
     }
 
@@ -66,6 +98,40 @@ class TriggerHandler {
                 }
             }
         });
+    }
+
+    startEveryone(userId) {
+        User.findOne({_id: userId}).then((item) => {
+            for (var p in item._services) {
+                if (item._services.hasOwnProperty(p)) {
+                    for (var i = 0; i < item._services[p]._triggers.length; i++) {
+                        var trigger = item._services[p]._triggers[i];
+                        this.addTrigger(item._id, trigger);
+                    }
+                }
+            }
+        });
+     }
+
+     calcDate(day, hour, min, sec) {
+        var MILI = 1;
+        var SEC = MILI * 1000;
+        var MIN = SEC * 60;
+        var HOUR = MIN * 60;
+        var DAY = HOUR * 24;
+        return (DAY * day + HOUR * hour + MIN * min + sec * SEC)
+    }
+
+   getTimeout(timer, date) {
+       var now = new Date();
+        var nowSec = this.calcDate(now.getDay(), now.getHours(),
+            now.getMinutes(), now.getSeconds());
+        var timerSec = this.calcDate(date.day, date.hour, date.min, date.sec);
+        var diff = timerSec - nowSec;
+       if (diff < 0)
+            diff += 604800000;
+       diff -= Number(timer);
+       return diff;
     }
 }
 
