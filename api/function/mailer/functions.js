@@ -12,16 +12,17 @@ var transporter = nodemailer.createTransport({
 });
 
 var mailerFunc = {
-    sendMailer: function (req, serviceName, textMail) {
-        return User.findOne({ _id: req.userData.userId }).then((currentUser) => {
+    sendMailer: function(params) {
+        return User.findOne({ _id: params.id }).then((currentUser) => {
             //var mailUser = currentUser.mail;
             mailUser = 'boris.roussel@epitech.eu';
             var mailOption = {
                 from: keys.nodemailer.mail,
                 to: mailUser,
-                subject: 'services: ' + serviceName,
-                text: textMail,
+                subject: 'service: ' + params.funcParams.params.service,
+                text: 'Mailer: Something new in this service ! ' + params.funcParams.params.service,
             }
+            console.log(params);
             return (mailOption);
         }).then(function (mailOptions) {
             return new Promise(function (resolve, reject) {

@@ -2,6 +2,9 @@ var servicesColor = {
     twitter: "1da1f2",
     dateAndTime: "95a5a6",
     nasa: "2e294e",
+    intagram: "e84393",
+    facebook: "0984e3",
+    mailer: "fdcb6e",
 }
 
 var infosApplet = {
@@ -121,6 +124,20 @@ var infosApplet = {
         color: servicesColor['nasa'],
         params: {}
     },
+    sendMailer: {
+        title: "Post a mail",
+        description: "This trigger send mail when something was new.",
+        color: servicesColor['mailer'],
+        params: {
+            service: "",
+        }
+    },
+    checkLatestPicture: {
+        title: "New photo is post",
+        description:  "This trigger fires every time you post a new photo.",
+        color: servicesColor['intagram'],
+        params: {}
+    }
 }
 
 module.exports.infosApplet = infosApplet;

@@ -16,6 +16,8 @@ const triggerHandler = require('./TriggerHandler.js').TriggerHandler;
 const twitterFunctions = require('./function/twitter/function')
 const dateAndTimeFunctions = require('./function/dateAndTime/function')
 const nasaFunctions = require('./function/nasa/function')
+const instagramFunctions = require('./function/instagram/functions');
+const mailerFunctions = require('./function/mailer/functions');
 
 exportFunctions = {
     checkNewTweet: twitterFunctions.checkNewTweet,
@@ -35,6 +37,12 @@ exportFunctions = {
 
     newsOfTheDay: nasaFunctions.newsOfTheDay,
     imageOfTheDay: nasaFunctions.imageOfTheDay,
+
+    // Instagram
+    checkNewPost: instagramFunctions.checkNewPost,
+
+    // Mailer
+    sendMailer: mailerFunctions.sendMailer,
 };
 
 global.tg = new triggerHandler(exportFunctions);
