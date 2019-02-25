@@ -13,11 +13,18 @@ const keys = require('./config/keys');
 
 // ! Functions Triggers and Reactions
 const triggerHandler = require('./TriggerHandler.js').TriggerHandler;
+<<<<<<< HEAD
 const twitterFunctions = require('./function/twitter/function')
 const dateAndTimeFunctions = require('./function/dateAndTime/function')
 const nasaFunctions = require('./function/nasa/function')
 const instagramFunctions = require('./function/instagram/functions');
 const mailerFunctions = require('./function/mailer/functions');
+=======
+const twitterFunctions = require('./function/twitter/function');
+const dateAndTimeFunctions = require('./function/dateAndTime/function');
+const nasaFunctions = require('./function/nasa/function');
+const weatherFunctions = require('./function/weather/function');
+>>>>>>> 54167c3dc8693eca4d0c69272f81f7c5fe3357f8
 
 exportFunctions = {
     checkNewTweet: twitterFunctions.checkNewTweet,
@@ -38,11 +45,18 @@ exportFunctions = {
     newsOfTheDay: nasaFunctions.newsOfTheDay,
     imageOfTheDay: nasaFunctions.imageOfTheDay,
 
+<<<<<<< HEAD
     // Instagram
     checkNewPost: instagramFunctions.checkNewPost,
 
     // Mailer
     sendMailer: mailerFunctions.sendMailer,
+=======
+    temperatureBelow : weatherFunctions.temperatureBelow,
+    temperatureAbove : weatherFunctions.temperatureAbove,
+    humidityLevelAbove : weatherFunctions.humidityLevelAbove,
+    currentConditionChangesTo : weatherFunctions.currentConditionChangesTo,
+>>>>>>> 54167c3dc8693eca4d0c69272f81f7c5fe3357f8
 };
 
 global.tg = new triggerHandler(exportFunctions);
@@ -54,6 +68,7 @@ function launch_api(port) {
     app.use(bodyParser.urlencoded({ extended: false }))
     app.use(bodyParser.json())
 
+    app.use(express.static(__dirname + '/public'));
 
     // connect to mongodb
     mongoose.connect(keys.mongodb.dbURL, () => {

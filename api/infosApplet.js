@@ -5,6 +5,7 @@ var servicesColor = {
     intagram: "e84393",
     facebook: "0984e3",
     mailer: "fdcb6e",
+    weather: "2c3e50",
 }
 
 var infosApplet = {
@@ -137,7 +138,39 @@ var infosApplet = {
         description:  "This trigger fires every time you post a new photo.",
         color: servicesColor['intagram'],
         params: {}
-    }
+    },
+    temperatureBelow : {
+        title: "Current temperature drops below",
+        description: "This trigger fires whenever the temperature drops below the value you provide.",
+        color: servicesColor['weather'],
+        params: {
+            value: "Number",
+        }
+    },
+    temperatureAbove : {
+        title: "Current temperature rises above",
+        description: "This trigger fires whenever the temperature rises above the value you provide.",
+        color: servicesColor['weather'],
+        params: {
+            value: "Number",
+        }
+    },
+    humidityLevelAbove : {
+        title: "Current humidity level rises above",
+        description: "This trigger fires whenever the humidity level rises above the value you provide.",
+        color: servicesColor['weather'],
+        params: {
+            value: "Number",
+        }
+    },
+    currentConditionChangesTo : {
+        title: "Current condition changes to",
+        description: "This trigger fires whenever the current condition of the weather equal the value you provide.",
+        color: servicesColor['weather'],
+        params: {
+            text: "String",
+        }
+    },
 }
 
 module.exports.infosApplet = infosApplet;

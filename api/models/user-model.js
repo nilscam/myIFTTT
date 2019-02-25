@@ -39,6 +39,14 @@ const userSchema = new Schema({
         },
         _mailer: {
             _triggers: [Schema.Types.Mixed],
+        },
+        _weather: {
+            _last_tempBelowAct: { type: String, default: "0" },
+            _last_tempAboveAct: { type: String, default: "0" },
+            _last_humidityAboveAct: { type: String, default: "0" },
+            _last_condChangesAct: { type: String, default: "0" },
+            _location: { type: String, default: 'Marseille' },
+            _triggers: [Schema.Types.Mixed]
         }
     }
 });
