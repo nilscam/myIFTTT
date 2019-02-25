@@ -1,22 +1,14 @@
 <template>
-  <div>
-    <!-- <div v-if="loading === false">
-      <TriggerPicker v-if="makerStatus === 'trigger'" @triggerClicked="" :services="services"/>
-      <ReactionPicker v-else-if="makerStatus === 'reaction'" @reactionClicked="" :services="services"/>
-    </div> -->
-    <div class="loading-box">
-      <v-layout row wrap align-center>
-        <v-flex>
-          Hello I am center to vertically using "align-center".
-        </v-flex>
-      </v-layout>
-    </div>
-  </div>
+  <page-loader :loading="loading">
+    <TriggerPicker v-if="makerStatus === 'trigger'" @triggerClicked="" :services="services"/>
+    <ReactionPicker v-else-if="makerStatus === 'reaction'" @reactionClicked="" :services="services"/>
+    <v-btn v-else color="success">Create Applet</v-btn>
+  </page-loader>
 </template>
 
 <script>
 import Api from '../Api'
-import PulseLoader from 'vue-spinner/src/PulseLoader'
+import PageLoader from '../components/PageLoader'
 import TriggerPicker from '../components/TriggerPicker'
 import ReactionPicker from '../components/ReactionPicker'
 
@@ -24,7 +16,7 @@ export default {
   components: {
     TriggerPicker,
     ReactionPicker,
-    PulseLoader
+    PageLoader
   },
   data() {
     return {
@@ -36,7 +28,7 @@ export default {
     Api.getServices()
     .then(resp => {
       this.services = resp.data.services
-      // this.loading = false
+      this.loading = false
     })
     .catch(e => console.err(e))
     this.$store.dispatch('startNewApplet')
@@ -61,7 +53,7 @@ export default {
 </script>
 
 <style scoped>
-.loading-box {
-  height: 100% !important;
+.tata {
+  align-self: stretch;
 }
 </style>

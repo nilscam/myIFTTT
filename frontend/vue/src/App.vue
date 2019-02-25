@@ -29,7 +29,12 @@
       </v-toolbar>
 
       <v-content>
-        <v-container fluid fill-height >
+        <transition name="fade">
+          <keep-alive>
+            <router-view/>
+          </keep-alive>
+        </transition>
+        <!-- <v-container fluid fill-height >
                 <v-layout
                   justify-center
                   align-center
@@ -47,7 +52,7 @@
                     </v-card>
                   </v-flex>
                 </v-layout>
-              </v-container>
+              </v-container> -->
       </v-content>
 
     <!-- </mq-layout> -->
