@@ -37,6 +37,7 @@ router.get('/checkNewPost', checkAuth, (req, res) => {
                         currentUser._services._instagram._triggers.push(obj);
                         currentUser.save();
                         res.send(JSON.stringify({ Instagram: "OK" }));
+                        
                     } else {
                         obj.triggerOn = false;
                         res.send(JSON.stringify({ Instagram: "KO" }));

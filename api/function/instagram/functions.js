@@ -2,29 +2,19 @@ const User = require('../../models/user-model').User;
 const request = require('request-promise');
 
 var instaFunc = {
-    getLatestPicture: function (req) {
+    changeToLastPost: function(req) {
         return User.findOne({ _id: req.userData.userId }).then((currentUser) => {
             //var access_token = currentUser._services._instagram.access_token;
             var access_token = "8406347569.228cd00.e45432e27d804307b4a21425aec145db";
             var url = 'https://api.instagram.com/v1/users/self/media/recent/?count=1&access_token=' + access_token;
             return request(url).then(body => {
                 var result = JSON.parse(body);
-                var objToReturn = {
-                    type: "",
-                    link: "",
-                    location: null,
-                    attribution: null,
-                    downloadImage: "",
-                };
-                var obj = currentUser._services._instagram._triggers[0];
-                if (obj.latestPostId == result['data'][0].id) {
-                    objToReturn.type = result['data'][0].type;
-                    objToReturn.link = result['data'][0].link;
-                    objToReturn.location = result['data'][0].location;
-                    objToReturn.attribution = result['data'][0].attribution;
-                    objToReturn.downloadImage = result['data'][0].link + 'media/?size=m';
-                };
-                console.log(objToReturn);
+                if (result['data'][0].link) {
+                    currentUser._services._instagram._last_type = result['data'][0].type;
+                    currentUser._services._instagram._last_id = result['data'][0].id;
+                    currentUser._services._instagram._last_url = result['data'][0].link;
+                    currentUser.save();
+                }
                 return objToReturn;
             }).then(value => {
                 return value;
@@ -33,6 +23,36 @@ var instaFunc = {
             return value;
         });
     },
+    checkNewPost: function(params) {
+        User.findOne({ _id: params.id }).then((currentUser) => {
+            if (currentUser) {
+                //var access_token = currentUser._services._instagram.access_token;
+                var access_token = "8406347569.228cd00.e45432e27d804307b4a21425aec145db";
+                request({
+                    url: 'https://api.instagram.com/v1/users/self/media/recent/?count=1&access_token=' + access_token,
+                }, function (error, response, body) {
+                    if (error || response.statusCode !== 200) {
+                        res.send(JSON.stringify({ Instagram: "KO" }));
+                    } else {
+                        var result = JSON.parse(body);
+                        if (currentUser._services._instagram._last_id != result['data'][0].id) {
+                            currentUser._services._instagram._last_type = result['data'][0].type;
+                            currentUser._services._instagram._last_id = result['data'][0].id;
+                            currentUser._services._instagram._last_url = result['data'][0].link;
+                            currentUser.save();
+                            var paramToSend = {
+                                instagram: {
+                                    url: currentUser._services._instagram._last_url,
+                                    type: currentUser._services._instagram._last_type,
+                                }
+                            }
+                            tg.sendEvent(params.id, "checkNewPost", paramToSend);
+                        }
+                    };
+                })
+            };
+        });
+    }
 };
 
 module.exports = instaFunc;

@@ -46,7 +46,7 @@ router.get('/', checkAuth, (req, res) => {
                     {
                         name: "updateBio",
                         infos: infosApplet['updateBio'],
-                    }
+                    },
                 ]
             },
             {
@@ -96,6 +96,30 @@ router.get('/', checkAuth, (req, res) => {
                 reactions: {}
             },
             {
+                nameService: "instagram",
+                displayName: "Instagram",
+                image: "https://www.google.fr/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiBnNW0x8XgAhUjx4UKHVqBCXgQjRx6BAgBEAQ&url=https%3A%2F%2Ffr.wikipedia.org%2Fwiki%2FInstagram&psig=AOvVaw0oyOukoIok-sNezR9uUNlU&ust=1550588762202048",
+                color: servicesColor['intagram'],
+                triggers: [
+                    {
+                        name: "checkLatestPicture",
+                        infos: infosApplet['checkLatestPicture'],
+                    },
+                ],
+            },
+            {
+                nameService: "mailer",
+                displayName: "Mailer",
+                image: "https://www.google.fr/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwi9kqqry8XgAhUn2OAKHYPgCYcQjRx6BAgBEAQ&url=https%3A%2F%2Fcreativecommons.org%2Fwebsite-icons%2F&psig=AOvVaw0UruGx2FhC4jS1GSKpdVNd&ust=1550589811934276",
+                color: servicesColor['mailer'],
+                triggers: [
+                    {
+                        name: "sendMailer",
+                        infos: infosApplet['sendMailer'],
+                    },
+                ],
+            },
+            {
                 nameService: "weather",
                 displayName: "Weather",
                 image: "http://localhost:8080/images/weather.png",
@@ -119,7 +143,7 @@ router.get('/', checkAuth, (req, res) => {
                     },
                 ],
                 reactions: {}
-            }
+            },
         ]
     });
 });
