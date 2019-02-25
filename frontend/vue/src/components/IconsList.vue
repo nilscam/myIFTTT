@@ -44,9 +44,15 @@
 
 <script>
 export default {
+  props: {
+    servicesName: {
+      type: Array,
+      required: true
+    }
+  }
   data () {
     return {
-      services: [
+      fakeServices: [
         'facebook',
         'google-plus',
         'instagram',
@@ -56,7 +62,6 @@ export default {
         'rss',
         'skype',
         'telegram',
-        'twitter',
         'vine',
         'whatsapp',
         'yammer',
@@ -70,7 +75,9 @@ export default {
       return `http://127.0.0.1:3000/svg/${service}.svg`
     },
     emitClick(service) {
-      this.$emit('serviceClicked', service)
+      console.log(this.takeServices.indexOf(service));
+      if (this.takeServices.indexOf(service) < 0)
+        this.$emit('serviceClicked', service)
     }
   }
 }

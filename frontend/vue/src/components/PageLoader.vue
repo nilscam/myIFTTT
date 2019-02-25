@@ -1,10 +1,8 @@
 <template>
   <v-container fluid fill-height justify-center class="my-app-container">
-    <div v-if="loading === false">
-      <slot>
-        <!-- Page Content will go here -->
-      </slot>
-    </div>
+    <slot v-if="loading === false">
+      <!-- Page Content will go here -->
+    </slot>
     <pulse-loader v-else size="22px" class="center-loader"/>
   </v-container>
 </template>
