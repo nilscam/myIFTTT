@@ -1,16 +1,16 @@
 <template>
   <page-loader :loading="loading">
-    <TriggerPicker v-if="makerStatus === 'trigger'" @triggerClicked="" :services="services"/>
-    <ReactionPicker v-else-if="makerStatus === 'reaction'" @reactionClicked="" :services="services"/>
-    <v-btn v-else color="success">Create Applet</v-btn>
+    <TriggerPicker v-if="makerStatus === 'trigger'" @triggerSelected="pickTrigger" :services="services"/>
+    <ReactionPicker v-else-if="makerStatus === 'reaction'" @reactionSelected="pickReaction" :services="services"/>
+    <v-btn v-else color="success" @click="saveApplet">Create Applet</v-btn>
   </page-loader>
 </template>
 
 <script>
 import Api from '../Api'
 import PageLoader from '../components/PageLoader'
-import TriggerPicker from '../components/TriggerPicker'
-import ReactionPicker from '../components/ReactionPicker'
+import TriggerPicker from '../components/Applet/TriggerPicker'
+import ReactionPicker from '../components/Applet/ReactionPicker'
 
 export default {
   components: {
@@ -46,7 +46,9 @@ export default {
       this.$store.dispatch('selectReaction', reaction)
     },
     saveApplet() {
-
+      this.$store.dispatch('publishApplet')
+      .then(resp => console.log('success'))
+      .catch(e => console.log('failure'))
     }
   }
 }

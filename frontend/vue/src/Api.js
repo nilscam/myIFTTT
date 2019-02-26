@@ -30,6 +30,10 @@ class Api {
     return axios.get(this.ApiURL + "/services")
   }
 
+  getApplets() {
+    return axios.get(this.ApiURL + "/applet")
+  }
+
 
 
   postNewApplet(trigger, reaction) {

@@ -12,11 +12,11 @@ export default {
       state.status = 'trigger'
     },
     chooseTrigger(state, trigger) {
-      triggerSelected = trigger
+      state.triggerSelected = trigger
       state.status = 'reaction'
     },
     chooseReaction(state, reaction) {
-      reactionSelected = reaction
+      state.reactionSelected = reaction
       state.status = 'validation'
     },
     appletCreated(state) {
