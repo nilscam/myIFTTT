@@ -20,8 +20,8 @@ module.exports = {
     launch_client: function(port) {
         const app = express();
 
-        app.use(express.static(__dirname + '/../frontend/vue/dist/'));
-        app.use(express.static(__dirname + '/../frontend/vue/src/assets/'));
+        // app.use(express.static(__dirname + '/../frontend/vue/dist/'));
+        // app.use(express.static(__dirname + '/../frontend/vue/src/assets/'));
 
         app.use(cookieSession({
             maxAge: 24 * 60 * 60 * 1000,

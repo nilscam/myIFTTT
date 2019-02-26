@@ -12,7 +12,7 @@ function addEveryHour(params) {
 
 }
 function addEveryDayOfTheWeek(params) {
-
+    
 }
 function addEveryMonth(params) {
 
