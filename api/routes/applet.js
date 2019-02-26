@@ -70,6 +70,13 @@ function addTrigger(params) {
                         params: params.trigger.params
                     },
                 };
+                var now = new Date();
+                objToAdd.date = {
+                    day: params.trigger.params.day ? params.trigger.params.day : now.getDay(),
+                    hour: params.trigger.params.hour ? params.trigger.params.hour : now.getHours(),
+                    min: params.trigger.params.minute ? params.trigger.params.minute : now.getMinutes(),
+                    sec: now.getSeconds(),
+                }
                 if (currentUser._services.hasOwnProperty('_'+params.trigger.service) == false) {
                     reject(402);
                     return;

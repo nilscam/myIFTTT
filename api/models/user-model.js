@@ -20,6 +20,13 @@ const userSchema = new Schema({
             _triggers: [Schema.Types.Mixed]
         },
         _instagram: {
+            _id: Number,
+            _username: String,
+            _photo: String,
+            _token: String,
+            _last_type: { type: String, default: '0' },
+            _last_id: { type: String, default: '0' },
+            _last_url: { type: String, default: '0' },
             _triggers: [Schema.Types.Mixed]
         },
         _dateAndTime: {
@@ -29,6 +36,9 @@ const userSchema = new Schema({
             _last_title: { type: String, default: '0' },
             _last_url: { type: String, default: '0' },
             _triggers: [Schema.Types.Mixed]
+        },
+        _mailer: {
+            _triggers: [Schema.Types.Mixed],
         },
         _weather: {
             _last_tempBelowAct: { type: String, default: "0" },
