@@ -24,5 +24,12 @@ module.exports = {
 			APP_SCOPES: 'openid profile User.Read Mail.Read',
 			REDIRECT_URI: 'http://localhost:3000/authorize_user',
 		},
-
+		newYorkTimes: {
+			APP_ID: 'a4f467c3-9f1b-4bc2-b438-120e4eadec6d',
+			API_KEY: 'A5yjcKSp2Fd7d1tRFuHUkajzzROGEK2N',
+			APP_PASSWORD: 'wWqATbnBP0X67Ao1',
+		},
+		cryptocurrency: {
+			API_KEY: 'aff9313c-eb4f-43bd-8d2e-a1694bb82f8b'
+		}
 }

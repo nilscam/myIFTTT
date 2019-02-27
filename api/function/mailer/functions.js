@@ -2,6 +2,7 @@ const User = require('../../models/user-model').User;
 const request = require('request-promise');
 const nodemailer = require('nodemailer');
 const keys = require('../../config/keys');
+const sortParams = require('../sortParams').sortParams;
 
 var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -13,16 +14,24 @@ var transporter = nodemailer.createTransport({
 
 var mailerFunc = {
     sendMailer: function(params) {
+        // params
+        console.log(params);
+        params = sortParams(params);
+        console.log(params);
         return User.findOne({ _id: params.id }).then((currentUser) => {
             //var mailUser = currentUser.mail;
             mailUser = 'boris.roussel@epitech.eu';
+            if (params.title == undefined) {
+                var title = 'service: ' + params.triggerInfo
+            } else {
+                var title = 'service: ' + params.triggerInfo + ' - ' + params.title
+            }
             var mailOption = {
                 from: keys.nodemailer.mail,
                 to: mailUser,
-                subject: 'service: ' + params.funcParams.params.service,
-                text: 'Mailer: Something new in this service ! ' + params.funcParams.params.service,
+                subject: title,
+                text: 'Mailer: Something new in this service ! \n\n' + params.text,
             }
-            console.log(params);
             return (mailOption);
         }).then(function (mailOptions) {
             return new Promise(function (resolve, reject) {

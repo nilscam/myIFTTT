@@ -1,6 +1,8 @@
 const express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors')
+const request = require('request-promise');
+
 // Routes API
 const triggersRoutes = require('./routes/triggers');
 const reactionsRoutes = require('./routes/reactions');
@@ -13,18 +15,14 @@ const keys = require('./config/keys');
 
 // ! Functions Triggers and Reactions
 const triggerHandler = require('./TriggerHandler.js').TriggerHandler;
-<<<<<<< HEAD
-const twitterFunctions = require('./function/twitter/function')
-const dateAndTimeFunctions = require('./function/dateAndTime/function')
-const nasaFunctions = require('./function/nasa/function')
-const instagramFunctions = require('./function/instagram/functions');
-const mailerFunctions = require('./function/mailer/functions');
-=======
 const twitterFunctions = require('./function/twitter/function');
 const dateAndTimeFunctions = require('./function/dateAndTime/function');
 const nasaFunctions = require('./function/nasa/function');
+const instagramFunctions = require('./function/instagram/functions');
+const mailerFunctions = require('./function/mailer/functions');
 const weatherFunctions = require('./function/weather/function');
->>>>>>> 54167c3dc8693eca4d0c69272f81f7c5fe3357f8
+const newYorkTimesFunctions = require('./function/newYorkTimes/functions');
+const cryptocurrencyFunctions = require('./function/cryptocurrency/functions');
 
 exportFunctions = {
     checkNewTweet: twitterFunctions.checkNewTweet,
@@ -45,18 +43,23 @@ exportFunctions = {
     newsOfTheDay: nasaFunctions.newsOfTheDay,
     imageOfTheDay: nasaFunctions.imageOfTheDay,
 
-<<<<<<< HEAD
     // Instagram
     checkNewPost: instagramFunctions.checkNewPost,
 
     // Mailer
     sendMailer: mailerFunctions.sendMailer,
-=======
+    
+    // New York Times
+    checkLastNewYorkTimes: newYorkTimesFunctions.checkLastNewYorkTimes,
+    checkTopNewYorkTimes: newYorkTimesFunctions.checkTopNewYorkTimes,
+
+    // Cryptocurrency
+    checkValueCryptocurrency: cryptocurrencyFunctions.checkValueCryptocurrency,
+
     temperatureBelow : weatherFunctions.temperatureBelow,
     temperatureAbove : weatherFunctions.temperatureAbove,
     humidityLevelAbove : weatherFunctions.humidityLevelAbove,
     currentConditionChangesTo : weatherFunctions.currentConditionChangesTo,
->>>>>>> 54167c3dc8693eca4d0c69272f81f7c5fe3357f8
 };
 
 global.tg = new triggerHandler(exportFunctions);
@@ -73,6 +76,43 @@ function launch_api(port) {
     // connect to mongodb
     mongoose.connect(keys.mongodb.dbURL, () => {
         console.log('Connected to mongodb');
+    });
+
+    app.get('/test', (req, res) => {
+        var i = 0;
+        const requestOptions = {
+            method: 'GET',
+            uri: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest',
+            qs: {
+                start: 1,
+                limit: 5000,
+                convert: 'EUR'
+              },
+            headers: {
+              'X-CMC_PRO_API_KEY': keys.cryptocurrency.API_KEY
+            },
+            json: true,
+          };
+//        if (currentUser) {
+            request(requestOptions).then(response => {
+                var name = "Bitcoin";
+                var currentV = "4000";
+                var conver = 'EUR';
+                while (i <= 1000) {
+                    if (response.data[i].name == name) {
+                        var objTarget = response.data[i];
+                        i = 1001;
+                    }
+                    i += 1;
+                }
+                var first = Number(currentV);
+                var second = Number(objTarget.quote[conver].price);
+                res.send(objTarget);
+              }).catch((err) => {
+                console.log('API call error:', err.message);
+                res.send('ko')
+              });
+  //      };
     });
 
     // set up routes
