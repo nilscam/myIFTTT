@@ -6,13 +6,13 @@ const keys = require('../../config/keys');
 // ! HERE COMES OLIVIER
 
 function addEveryDay(params) {
-    
+    // 864 000 00
 }
 function addEveryHour(params) {
-
+    // 3600 000
 }
 function addEveryDayOfTheWeek(params) {
-    
+    // 604800000
 }
 function addEveryMonth(params) {
 

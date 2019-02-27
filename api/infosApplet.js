@@ -99,7 +99,7 @@ var infosApplet = {
         description: "This trigger fires every month on the day and time you specify.",
         color: servicesColor['dateAndTime'],
         params: {
-            Day: "Number",
+            day: "Number",
             hour: "Hour",
             minute: "Minute"
         }

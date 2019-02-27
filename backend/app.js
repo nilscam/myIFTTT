@@ -23,6 +23,10 @@ module.exports = {
         app.use(express.static(__dirname + '/../frontend/vue/dist/'));
         app.use(express.static(__dirname + '/../frontend/vue/src/assets/'));
 
+        app.set('view engine', 'ejs');
+        app.set('views', path.join(__dirname, '/../frontend/views'));
+        app.use(express.static(__dirname + '/../frontend/views/'));
+
         app.use(cookieSession({
             maxAge: 24 * 60 * 60 * 1000,
             keys: [keys.session.cookieKey]
@@ -45,6 +49,7 @@ module.exports = {
         // });
 
         app.get('/', function (req, res) {
+            // res.render('home', {user: req.user});
             res.sendFile(path.join(__dirname + "/../frontend/vue/dist/index.html"));
             // secretCode = "u5wk_XkNVPBLztwgW1ZhhhPe";
             // idClient = "163173170605-aea5m9jtdlp10dqplb4eq76vl5ru9t0h.apps.googleusercontent.com";

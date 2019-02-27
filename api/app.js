@@ -15,11 +15,12 @@ const keys = require('./config/keys');
 
 // ! Functions Triggers and Reactions
 const triggerHandler = require('./TriggerHandler.js').TriggerHandler;
+
+const instagramFunctions = require('./function/instagram/functions');
+const mailerFunctions = require('./function/mailer/functions');
 const twitterFunctions = require('./function/twitter/function');
 const dateAndTimeFunctions = require('./function/dateAndTime/function');
 const nasaFunctions = require('./function/nasa/function');
-const instagramFunctions = require('./function/instagram/functions');
-const mailerFunctions = require('./function/mailer/functions');
 const weatherFunctions = require('./function/weather/function');
 const newYorkTimesFunctions = require('./function/newYorkTimes/functions');
 const cryptocurrencyFunctions = require('./function/cryptocurrency/functions');
