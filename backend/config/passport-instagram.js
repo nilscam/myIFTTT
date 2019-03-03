@@ -1,6 +1,6 @@
 const passport = require('passport');
 const InstagramStrategy = require('passport-instagram');
-const keys = require('./insta-keys');
+const keys = require('./keys');
 
 passport.use(new InstagramStrategy({
     clientID: keys.instagramKey.clientID,

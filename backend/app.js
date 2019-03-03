@@ -7,13 +7,12 @@ const instaRoutes = require('./routes/insta-routes');
 const office365Routes = require('./routes/office365-routes');
 const facebookRoutes = require('./routes/facebook-routes');
 
-const passportSetup = require('./config/passport-setup');
+const passportSetupGoogle = require('./config/passport-google');
 const passportSetupInsta = require('./config/passport-instagram');
 const passportSetupOffice365 = require('./config/passport-office365');
 const passportSetupFacebook = require('./config/passport-facebook');
 const passportSetupTwitter = require('./config/passport-twitter');
 const keys = require('./config/keys');
-const cookieSession = require('cookie-session');
 const passport = require('passport');
 
 module.exports = {
@@ -23,18 +22,8 @@ module.exports = {
         // app.use(express.static(__dirname + '/../frontend/vue/dist/'));
         // app.use(express.static(__dirname + '/../frontend/vue/src/assets/'));
 
-        app.set('view engine', 'ejs');
-        app.set('views', path.join(__dirname, '/../frontend/views'));
-        app.use(express.static(__dirname + '/../frontend/views/'));
-
-        app.use(cookieSession({
-            maxAge: 24 * 60 * 60 * 1000,
-            keys: [keys.session.cookieKey]
-        }));
-
         // initialize passport
         app.use(passport.initialize());
-        app.use(passport.session());
 
         // set up routes
         app.use('/auth', authRoutes);

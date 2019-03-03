@@ -1,11 +1,11 @@
 const passport = require('passport');
 const AzureAdOAuth2Strategy = require('passport-azure-ad-oauth2');
-const keys = require('./office365-keys');
+const keys = require('./keys');
 
 passport.use(new AzureAdOAuth2Strategy({
-    clientID: keys.office365.APP_ID,
-    clientSecret: keys.office365.APP_PASSWORD,
-    callbackURL: keys.office365.REDIRECT_URI,
+    clientID: keys.office365.clientID,
+    clientSecret: keys.office365.clientSecret,
+    callbackURL: keys.office365.callbackURL,
   },
   function(accessToken, refreshToken, profile, done) {
     console.log('OFFICE365:')
