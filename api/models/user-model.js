@@ -3,6 +3,8 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
+    provider: String, // google - facebook - empty for user created via registration form
+    provider_id: String,
     username: String,
     password: String,
     _services: {

@@ -116,6 +116,13 @@ function launch_api(port) {
   //      };
     });
 
+    app.get('/login', function (req, res) {
+      res.send('login -> failure !')
+    })
+    app.get('/home', function (req, res) {
+      res.send('home -> success !')
+    })
+
     // set up routes
     app.use('/api/triggers', triggersRoutes);
     app.use('/api/reactions', reactionsRoutes);
@@ -124,6 +131,9 @@ function launch_api(port) {
     app.use('/api/applet', appletRoutes);
 
     app.use((req, res, next) => {
+        var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+
+        console.log(fullUrl);
         const error = new Error('Not found');
         error.status = 404;
         next(error);

@@ -1,21 +1,33 @@
 <template>
-  <div>
-    <Mobile v-if="$mq === 'xs' || $mq === 'sm'"/>
-    <Desktop v-else/>
-  </div>
+  <v-app>
+    <v-bottom-nav app :active.sync="bottomNav" :value="true" fixed color="white">
+      <v-btn color="teal" flat value="activity" to="about">
+        <span>Activity</span>
+        <v-icon>subject</v-icon>
+      </v-btn>
+      <v-btn color="teal" flat value="applets" to="applets">
+        <span>My Applets</span>
+        <v-icon>view_list</v-icon>
+      </v-btn>
+      <v-btn color="teal" flat value="profile" to="profile">
+        <span>Profile</span>
+        <v-icon>account_circle</v-icon>
+      </v-btn>
+    </v-bottom-nav>
+
+    <v-content>
+      <transition :name="transitionName" mode="out-in">
+        <keep-alive>
+          <router-view/>
+        </keep-alive>
+      </transition>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-import Mobile from './Mobile'
-import Desktop from './Desktop'
-import UserToolBar from './components/UserToolBar.vue'
-
 export default {
-  name: 'App',
-  components: {
-    Mobile,
-    Desktop
-  },
+  name: 'Mobile',
   data () {
     return {
       bottomNav: 'applets',
@@ -36,14 +48,6 @@ export default {
         this.transitionName = 'fade'
       }
     }
-  },
-  computed: {
-    isLogged() {
-      return this.$store.getters.isLoggedIn
-    },
-    username() {
-      return this.$store.getters.userName
-    }
   }
 }
 </script>
@@ -53,12 +57,6 @@ a {
   text-decoration: none;
 }
 
-.text-toolbar {
-  font-weight: 600;
-  color: rgb(60, 60, 60);
-  cursor: pointer;
-  font-size: 16px;
-}
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity .2s
