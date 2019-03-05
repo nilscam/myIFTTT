@@ -7,9 +7,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const checkAuth = require('../middleware/check-auth');
 const googleAuth = require('./auth/google-auth')
+const twitterAuth = require('./auth/twitter-auth')
 
 
 router.use('/google', googleAuth)
+router.use('/twitter', twitterAuth)
 
 router.post('/signup', (req, res, next) => {
     User.findOne({username: req.body.username, provider: false}).then((currentUser) => {
@@ -56,7 +58,7 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
-    User.findOne({username: req.body.username, provider: false}).then((currentUser) => {
+    User.findOne({username: req.body.username}).then((currentUser) => {
         if (currentUser) {
             bcrypt.compare(req.body.password, currentUser.password, (err, result) => {
                 if (err) {
@@ -107,7 +109,7 @@ router.delete('/:userId', (req, res, next) => {
       });
 })
 
-router.post('/twitter', checkAuth, (req, res) => {
+router.post('/twitterConnect', checkAuth, (req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
         if (currentUser) {
             currentUser._services._twitter._token = req.body.token;

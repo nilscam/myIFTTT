@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors')
 const passport = require('passport')
 const request = require('request-promise');
+const cookieSession = require('cookie-session');
 
 // Routes API
 const triggersRoutes = require('./routes/triggers');
@@ -73,11 +74,17 @@ function launch_api(port) {
     app.use(bodyParser.urlencoded({ extended: false }))
     app.use(bodyParser.json())
 
+    app.use(cookieSession({
+        maxAge: 24 * 60 * 60 * 1000,
+        keys: ["jfdskfjsdkjfk"]
+    }));
+    
+    // initialize passport
+    app.use(passport.initialize());
+    app.use(passport.session());
+
     passport.serializeUser((user, done) => done(null, user))
     passport.deserializeUser((user, done) => done(null, user))
-
-    app.use(passport.initialize())
-    app.use(passport.session())
 
     app.use(express.static(__dirname + '/public'));
 
