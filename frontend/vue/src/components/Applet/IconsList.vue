@@ -1,7 +1,8 @@
 <template>
   <v-layout row wrap>
+
     <v-flex
-      v-for="service in computeServices"
+      v-for="service in fakeServices"
       :key="service.id"
       xs4
       sm3
@@ -12,7 +13,6 @@
       <v-card flat tile class="d-flex" color="transparent" :title="service">
 
         <v-img
-          @click="emitClick(service)"
           :src="getServiceLogo(service)"
           aspect-ratio="1"
           class="transparent lighten-2 service-image"
@@ -30,6 +30,41 @@
 
       </v-card>
     </v-flex>
+
+
+    <v-flex
+      v-for="service in servicesDisplay"
+      :key="service.id"
+      xs4
+      sm3
+      md2
+      d-flex
+      class="service-icon"
+    >
+      <v-card flat tile class="d-flex" color="transparent" :title="service.name">
+
+        <v-img
+          @click="emitClick(service.name)"
+          :src="getServiceLogo(service.name)"
+          aspect-ratio="1"
+          class="service-image"
+          :style="{backgroundColor: '#' + service.color}"
+        >
+          <v-layout
+            slot="placeholder"
+            fill-height
+            align-center
+            justify-center
+            ma-0
+          >
+            <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+          </v-layout>
+        </v-img>
+
+      </v-card>
+    </v-flex>
+
+
   </v-layout>
 </template>
 
@@ -38,7 +73,7 @@ import Api from '../../Api'
 
 export default {
   props: {
-    servicesNames: {
+    servicesDisplay: {
       type: Array,
       required: true
     }
@@ -48,7 +83,6 @@ export default {
       fakeServices: [
         'facebook',
         'google-plus',
-        'instagram',
         'line',
         'linkedin',
         'pinterest',
@@ -60,11 +94,6 @@ export default {
         'yammer',
         'youtube',
       ]
-    }
-  },
-  computed: {
-    computeServices() {
-      return this.fakeServices.concat(this.servicesNames)
     }
   },
   methods: {
