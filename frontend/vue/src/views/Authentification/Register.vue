@@ -4,7 +4,7 @@
     <form @submit.prevent="register">
       <label for="name">Name</label>
       <div>
-          <input id="name" type="text" v-model="username" required autofocus>
+          <input id="email" type="text" v-model="email" required autofocus>
       </div>
 
       <label for="password">Password</label>
@@ -29,7 +29,7 @@
 export default {
   data() {
     return {
-      username : "",
+      email : "",
       password : "",
       password_confirmation : ""
     }
@@ -37,9 +37,9 @@ export default {
   methods: {
     register() {
       if (this.password == this.password_confirmation) {
-        let username = this.username
+        let email = this.email
         let password = this.password
-        this.$store.dispatch('register', { username, password })
+        this.$store.dispatch('register', { email, password })
         .then(() => this.$router.push('/'))
         .catch(err => console.log(err))
       }
