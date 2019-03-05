@@ -1,6 +1,6 @@
 <template>
   <!-- flat tile class="d-flex" :min-width="300" :max-width="600" :min-height="300" :max-height="600"  -->
-  <v-card class="my-card" min-height="200" :color="'#' + applet.infos.color" :class="{'white--text': isColorDark, 'black--text': !isColorDark, 'my-card': true }">
+  <v-card @click="$emit('click')" class="my-card" min-height="200" :color="'#' + applet.infos.color" :class="{'white--text': isColorDark, 'black--text': !isColorDark, 'my-card': true }">
     <v-card-title primary-title>
       <h2 class="custom-title">{{ applet.infos.title }}</h2>
     </v-card-title>
@@ -35,7 +35,6 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Montserrat:700');
 .my-card {
   border-radius: 13px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

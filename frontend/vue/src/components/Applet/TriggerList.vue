@@ -23,7 +23,7 @@
       d-flex
     >
 
-    <applet-card :applet="trigger"/>
+    <applet-card :applet="trigger" @click="emitClick(trigger)"/>
 
 
     </v-flex>
@@ -49,7 +49,8 @@ export default {
       return Api.websiteURL + `/images/${serviceName}.png`
     },
     emitClick(trigger) {
-      this.$emit('triggerClicked', trigger.name)
+      console.log('toto');
+      this.$emit('triggerClicked', trigger.name, {})
     }
   }
 }

@@ -25,9 +25,6 @@ export default {
       service: undefined
     }
   },
-  mounted() {
-    console.log(this.services);
-  },
   computed: {
     servicesDisplay() { return this.services.map(x => { return { name: x.nameService, color: x.color }}) }
   },
