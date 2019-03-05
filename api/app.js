@@ -1,6 +1,7 @@
 const express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors')
+const passport = require('passport')
 const request = require('request-promise');
 
 // Routes API
@@ -49,7 +50,7 @@ exportFunctions = {
 
     // Mailer
     sendMailer: mailerFunctions.sendMailer,
-    
+
     // New York Times
     checkLastNewYorkTimes: newYorkTimesFunctions.checkLastNewYorkTimes,
     checkTopNewYorkTimes: newYorkTimesFunctions.checkTopNewYorkTimes,
@@ -71,6 +72,12 @@ function launch_api(port) {
 
     app.use(bodyParser.urlencoded({ extended: false }))
     app.use(bodyParser.json())
+
+    passport.serializeUser((user, done) => done(null, user))
+    passport.deserializeUser((user, done) => done(null, user))
+
+    app.use(passport.initialize())
+    app.use(passport.session())
 
     app.use(express.static(__dirname + '/public'));
 

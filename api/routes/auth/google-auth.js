@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 passport.use(new GoogleStrategy({
     clientID: keys.clientID,
     clientSecret: keys.clientSecret,
-    callbackURL: 'http://localhost:8080/api/user/google/redirect'
+    callbackURL: '/api/user/google/redirect'
   },
   function(accessToken, refreshToken, profile, done) {
     // User.findOne({provider_id: profile.id, provider: 'google'}).then((currentUser) => {
