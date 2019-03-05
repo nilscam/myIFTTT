@@ -6,9 +6,7 @@
 
     <v-flex xs12 class="text-triggers">
       <v-layout align-center justify-center>
-        <!-- <div class="my-img-box"> -->
         <v-img :src="getServiceLogo(service.nameService)" aspect-ratio="1" max-height="50px" max-width="50px" :style="{backgroundColor: '#' + service.color}"></v-img>
-        <!-- </div> -->
         <h1 class="my-title">Choose Trigger</h1>
       </v-layout>
     </v-flex>
@@ -63,6 +61,7 @@ export default {
 }
 
 .my-title {
+  font-family: 'Montserrat', sans-serif !important;
   padding-left: 10px;
 }
 </style>
