@@ -14,10 +14,7 @@ var transporter = nodemailer.createTransport({
 
 var mailerFunc = {
     sendMailer: function(params) {
-        // params
-        console.log(params);
         params = sortParams(params);
-        console.log(params);
         return User.findOne({ _id: params.id }).then((currentUser) => {
             //var mailUser = currentUser.mail;
             mailUser = 'boris.roussel@epitech.eu';
@@ -42,7 +39,6 @@ var mailerFunc = {
                             resolve(false);
                         } else {
                             resolve(true);
-                            console.log('Email sent: ' + info.response);
                         }
                     });
                 } else {

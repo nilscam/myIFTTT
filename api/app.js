@@ -11,6 +11,7 @@ const reactionsRoutes = require('./routes/reactions');
 const userRoutes = require('./routes/user');
 const servicesRoutes = require('./routes/services');
 const appletRoutes = require('./routes/applet');
+const aboutJsonRoutes = require('./routes/jsonRoutes');
 
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
@@ -143,6 +144,7 @@ function launch_api(port) {
     app.use('/api/user', userRoutes);
     app.use('/api/services', servicesRoutes);
     app.use('/api/applet', appletRoutes);
+    app.use('/about.json', aboutJsonRoutes);
 
     app.use((req, res, next) => {
         var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
