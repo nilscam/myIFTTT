@@ -70,7 +70,7 @@ export default {
   methods: {
     getServiceLogo(service) {
       if (this.fakeServices.indexOf(service) < 0)
-        return Api.websiteURL + `/images/${service}.png`
+        return Api.websiteURL + `/images/${service}.png` //Todo la refaire pour les cards
       return Api.websiteURL + `/images/${service}.svg`
     },
     emitClick(service) {
