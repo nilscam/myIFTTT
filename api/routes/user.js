@@ -6,9 +6,13 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const checkAuth = require('../middleware/check-auth');
+const googleAuth = require('./auth/google-auth')
+
+
+router.use('/google', googleAuth)
 
 router.post('/signup', (req, res, next) => {
-    User.findOne({username: req.body.username}).then((currentUser) => {
+    User.findOne({username: req.body.username, provider: false}).then((currentUser) => {
         if (currentUser) {
             res.status(409).json({
                 message: 'Username already exist'
@@ -52,7 +56,7 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
-    User.findOne({username: req.body.username}).then((currentUser) => {
+    User.findOne({username: req.body.username, provider: false}).then((currentUser) => {
         if (currentUser) {
             bcrypt.compare(req.body.password, currentUser.password, (err, result) => {
                 if (err) {

@@ -1,89 +1,20 @@
 <template>
-  <v-app>
-
-    <!-- Desktop -->
-    <mq-layout mq="md+">
-      <v-toolbar app>
-
-        <v-toolbar-title class="headline text-uppercase">
-        <router-link :to="{ name: 'home' }">
-          <span>AREA</span>
-        </router-link>
-        </v-toolbar-title>
-        <v-spacer></v-spacer>
-
-        <div v-if="isLogged">
-          <UserToolBar/>
-        </div>
-
-        <div v-else>
-          <router-link :to="{ name: 'login' }">
-            <span class="text-toolbar">Sign In</span>
-          </router-link>
-
-          <router-link :to="{ name: 'register' }">
-            <v-btn color="info" round>Sign Up</v-btn>
-          </router-link>
-        </div>
-
-      </v-toolbar>
-
-      <v-content>
-        <transition name="fade">
-          <keep-alive>
-            <router-view/>
-          </keep-alive>
-        </transition>
-      </v-content>
-    </mq-layout>
-
-
-
-
-
-    <!-- Mobile -->
-    <mq-layout :mq="['xs', 'sm']">
-      <v-bottom-nav app :active.sync="bottomNav" :value="true" fixed color="white" v-if="$mq === 'sm' || $mq === 'xs'">
-        <v-btn color="teal" flat value="activity" to="/about">
-          <span>Activity</span>
-          <v-icon>subject</v-icon>
-        </v-btn>
-        <v-btn color="teal" flat value="applets" to="/services">
-          <span>My Applets</span>
-          <v-icon>view_list</v-icon>
-        </v-btn>
-        <v-btn color="teal" flat value="profile" to="/profile">
-          <span>Profile</span>
-          <v-icon>account_circle</v-icon>
-        </v-btn>
-      </v-bottom-nav>
-
-      <v-content>
-        <transition :name="transitionName" mode="out-in">
-          <keep-alive>
-            <router-view/>
-          </keep-alive>
-        </transition>
-      </v-content>
-    </mq-layout>
-
-
-
-
-
-
-
-
-  </v-app>
+  <div>
+    <Mobile v-if="$mq === 'xs' || $mq === 'sm'"/>
+    <Desktop v-else/>
+  </div>
 </template>
 
 <script>
+import Mobile from './Mobile'
+import Desktop from './Desktop'
 import UserToolBar from './components/UserToolBar.vue'
 
 export default {
   name: 'App',
   components: {
-    UserToolBar
+    Mobile,
+    Desktop
   },
   data () {
     return {
@@ -104,7 +35,6 @@ export default {
       } else {
         this.transitionName = 'fade'
       }
-      console.log(this.transitionName);
     }
   },
   computed: {
