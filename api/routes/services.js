@@ -76,7 +76,7 @@ router.get('/', checkAuth, (req, res) => {
                         infos: infosApplet['addEveryYear'],
                     },
                 ],
-                reactions: {}
+                reactions: [{}]
             },
             {
                 nameService: "nasa",
@@ -93,12 +93,12 @@ router.get('/', checkAuth, (req, res) => {
                         infos: infosApplet['imageOfTheDay'],
                     },
                 ],
-                reactions: {}
+                reactions: [{}]
             },
             {
                 nameService: "instagram",
                 displayName: "Instagram",
-                image: "https://www.google.fr/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiBnNW0x8XgAhUjx4UKHVqBCXgQjRx6BAgBEAQ&url=https%3A%2F%2Ffr.wikipedia.org%2Fwiki%2FInstagram&psig=AOvVaw0oyOukoIok-sNezR9uUNlU&ust=1550588762202048",
+                image: "http://localhost:8080/images/instagram.png",
                 color: servicesColor['intagram'],
                 triggers: [
                     {
@@ -106,18 +106,20 @@ router.get('/', checkAuth, (req, res) => {
                         infos: infosApplet['checkLatestPicture'],
                     },
                 ],
+                reactions: [{}]
             },
             {
                 nameService: "mailer",
                 displayName: "Mailer",
-                image: "https://www.google.fr/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwi9kqqry8XgAhUn2OAKHYPgCYcQjRx6BAgBEAQ&url=https%3A%2F%2Fcreativecommons.org%2Fwebsite-icons%2F&psig=AOvVaw0UruGx2FhC4jS1GSKpdVNd&ust=1550589811934276",
+                image: "http://localhost:8080/images/mailer.png",
                 color: servicesColor['mailer'],
-                triggers: [
+                triggers: [{}],
+                reactions: [
                     {
                         name: "sendMailer",
                         infos: infosApplet['sendMailer'],
                     },
-                ],
+                ]
             },
             {
                 nameService: "weather",
@@ -142,7 +144,20 @@ router.get('/', checkAuth, (req, res) => {
                         infos: infosApplet['currentConditionChangesTo'],
                     },
                 ],
-                reactions: {}
+                reactions: [{}]
+            },
+            {
+                nameService: "cryptocurrency",
+                displayName: "Cryptocurrency",
+                image: "http://localhost:8080/images/cryptocurrency.png",
+                color: servicesColor['cryptocurrency'],
+                triggers: [
+                    {
+                        name: "checkValueCryptocurrency",
+                        infos: infosApplet['checkValueCryptocurrency'],
+                    },
+                ],
+                reactions: [{}]
             },
         ]
     });

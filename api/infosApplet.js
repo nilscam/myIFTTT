@@ -187,9 +187,12 @@ var infosApplet = {
     },
     checkValueCryptocurrency: {
         title: "Check if value is more than target value",
-        description: "It's for people want to know if there crypto is more than target",
+        description: "It's for people want to know if there crypto is more than target value",
         color: servicesColor['cryptocurrency'],
-        params: {}
+        params: {
+            value: "String",
+            name: "String"
+        }
     }
 }
 
