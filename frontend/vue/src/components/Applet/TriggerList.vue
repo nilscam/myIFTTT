@@ -1,7 +1,7 @@
 <template>
   <v-layout row wrap>
     <v-flex xs12>
-      <v-btn color="white" round @click="$emit('back')">< Back</v-btn>
+      <v-btn color="white" round @click="$emit('back')">Back</v-btn>
     </v-flex>
 
     <v-flex xs12 class="text-triggers">
