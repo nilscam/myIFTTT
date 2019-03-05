@@ -3,7 +3,6 @@ var servicesColor = {
     dateAndTime: "95a5a6",
     nasa: "2e294e",
     intagram: "e84393",
-    facebook: "0984e3",
     mailer: "fdcb6e",
     weather: "2c3e50",
     newYorkTimes: "1e272e",
