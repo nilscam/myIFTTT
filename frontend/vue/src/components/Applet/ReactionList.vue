@@ -23,7 +23,7 @@
       d-flex
     >
 
-    <applet-card :applet="reaction" @click="emitClick(reaction)"/>
+    <event-card :applet="reaction" @click="emitClick(reaction)"/>
 
 
     </v-flex>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import AppletCard from './AppletCard'
+import EventCard from './EventCard'
 import Api from '../../Api'
 
 export default {
@@ -42,7 +42,7 @@ export default {
     }
   },
   components: {
-    AppletCard
+    EventCard
   },
   methods: {
     getServiceLogo(serviceName) {
