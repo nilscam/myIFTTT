@@ -40,7 +40,7 @@ export default {
           href: '#',
           title: 'Applets',
           click: () => {
-            this.$router.push({ name: 'about' })
+            this.$router.push({ name: 'applets' })
           }
         },
         {
