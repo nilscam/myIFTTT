@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    provider: String, // google - facebook - empty for user created via registration form
-    provider_id: String,
-    username: String,
+    provider: { type: String, default: "" }, // google - facebook - empty for user created via registration form
+    provider_id: { type: String, default: "" },
+    email: String,
     password: String,
     _services: {
         _twitter: {

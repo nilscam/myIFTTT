@@ -8,12 +8,14 @@ const jwt = require('jsonwebtoken');
 const request = require('request-promise')
 const checkAuth = require('../middleware/check-auth');
 const googleAuth = require('./auth/google-auth')
+const twitterAuth = require('./auth/twitter-auth')
 
 
 router.use('/google', googleAuth)
+router.use('/twitter', twitterAuth)
 
 router.post('/signup', (req, res, next) => {
-    User.findOne({username: req.body.username, provider: false}).then((currentUser) => {
+    User.findOne({email: req.body.email, provider: false}).then((currentUser) => {
         if (currentUser) {
             res.status(409).json({
                 message: 'Username already exist'
@@ -28,14 +30,14 @@ router.post('/signup', (req, res, next) => {
                 } else {
                     const user = new User({
                         _id: new mongoose.Types.ObjectId(),
-                        username: req.body.username,
+                        email: req.body.email,
                         password: hash
                     });
                     user
                       .save()
                       .then(result => {
                           const token = jwt.sign({
-                              username: user.username,
+                              email: user.email,
                               userId: user._id,
                           }, keys.jwtSecret, {
                               expiresIn: "10d"
@@ -57,7 +59,7 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
-    User.findOne({username: req.body.username, provider: false}).then((currentUser) => {
+    User.findOne({email: req.body.email, provider: ""}).then((currentUser) => {
         if (currentUser) {
             bcrypt.compare(req.body.password, currentUser.password, (err, result) => {
                 if (err) {
@@ -67,7 +69,7 @@ router.post('/login', (req, res, next) => {
                 }
                 if (result) {
                     const token = jwt.sign({
-                        username: currentUser.username,
+                        email: currentUser.email,
                         userId: currentUser._id,
                     }, keys.jwtSecret, {
                         expiresIn: "10d"
@@ -77,12 +79,12 @@ router.post('/login', (req, res, next) => {
                         token: token
                     })
                 }
-                return res.status(401).json({
+                return res.status(402).json({
                     message: "Auth failed"
                 })
             })
         } else {
-            return res.status(401).json({
+            return res.status(403).json({
                 message: "Auth failed"
             })
         }
@@ -108,7 +110,7 @@ router.delete('/:userId', (req, res, next) => {
       });
 })
 
-router.post('/twitter', checkAuth, (req, res) => {
+router.post('/twitterConnect', checkAuth, (req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
         if (currentUser) {
             currentUser._services._twitter._token = req.body.token;
