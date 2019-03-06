@@ -9,10 +9,12 @@ const request = require('request-promise')
 const checkAuth = require('../middleware/check-auth');
 const googleAuth = require('./auth/google-auth')
 const twitterAuth = require('./auth/twitter-auth')
+const instagramAuth = require('./auth/instagram-auth')
 
 
 router.use('/google', googleAuth)
 router.use('/twitter', twitterAuth)
+router.use('/instagram', instagramAuth)
 
 router.post('/signup', (req, res, next) => {
     User.findOne({email: req.body.email, provider: ""}).then((currentUser) => {
