@@ -40,13 +40,13 @@ export default {
           href: '#',
           title: 'Applets',
           click: () => {
-            this.$router.push({ name: 'about' })
+            this.$router.push({ name: 'applets' })
           }
         },
         {
-          icon: 'settings',
+          icon: 'account_circle',
           href: '#',
-          title: 'Settings',
+          title: 'Profile',
           click: () => {
             this.$router.push({ name: 'about' })
           }

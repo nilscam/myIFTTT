@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-sm fluid class="icons-container">
-    <icons-list v-if="service == undefined" :servicesNames="servicesNames" @serviceClicked="serviceSelected"/>
-    <trigger-list v-else :triggers="service.triggers" @back="service = undefined" @triggerClicked="triggerSelected"/>
+    <icons-list v-if="service == undefined" :servicesDisplay="servicesDisplay" @serviceClicked="serviceSelected"/>
+    <trigger-list v-else :service="service" @back="service = undefined" @triggerClicked="triggerSelected"/>
   </v-container>
 </template>
 
@@ -26,7 +26,7 @@ export default {
     }
   },
   computed: {
-    servicesNames() { return this.services.map(x => x.nameService) }
+    servicesDisplay() { return this.services.map(x => { return { name: x.nameService, color: x.color }}) }
   },
   methods: {
     serviceSelected(name) {

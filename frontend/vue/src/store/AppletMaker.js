@@ -2,25 +2,27 @@ import Api from '../Api'
 
 export default {
   state: {
-    // status = 'trigger, reaction, validation'
-    status: '',
+    isTrigger: false,
+    isReaction: false,
     triggerSelected: {},
     reactionSelected: {}
   },
   mutations: {
     createNewApplet(state) {
-      state.status = 'trigger'
+      state.isTrigger = false
+      state.isReaction = false
+      state.triggerSelected = {}
+      state.reactionSelected = {}
     },
     chooseTrigger(state, trigger) {
       state.triggerSelected = trigger
-      state.status = 'reaction'
+      state.isTrigger = true
     },
     chooseReaction(state, reaction) {
       state.reactionSelected = reaction
-      state.status = 'validation'
+      state.isReaction = true
     },
     appletCreated(state) {
-      state.status = ''
     }
   },
   actions: {
@@ -35,8 +37,10 @@ export default {
     },
     publishApplet({commit, state}) {
       return new Promise((resolve, reject) => {
+        console.log('publishing');
         Api.postNewApplet(state.triggerSelected, state.reactionSelected)
         .then(resp => {
+          console.log('tt');
           commit('appletCreated')
           resolve(resp)
         })
@@ -48,8 +52,9 @@ export default {
 
   },
   getters : {
-    getMakerStatus: state => state.status,
     getTriggerSelected: state => state.triggerSelected,
     getReactionSelected: state => state.reactionSelected,
+    isTriggerSelected: state => state.isTrigger,
+    isReactionSelected: state => state.isReaction
   }
 }
