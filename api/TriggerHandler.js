@@ -1,10 +1,12 @@
 const User = require('./models/user-model').User;
+var schedule = require('node-schedule');
 
 class TriggerHandler {
     constructor(functions) {
         this.functions = functions;
         this.delayList = [];
         this.timerList = [];
+        this.schedule = schedule;
     }
 
     showDelayList() {
@@ -38,7 +40,10 @@ class TriggerHandler {
             }
         for (var j = 0; j < this.timerList.length; j++) {
             if (this.timerList[j].userId === userId && this.timerList[j].triggerId === triggerId) {
-                clearInterval(this.timerList[j].handler);
+                if (this.timerList[j].type === "Normal")
+                    clearInterval(this.timerList[j].handler);
+                else
+                    this.timerList[j].handler.cancel();
                 this.timerList.splice(j, 1);
             }
         }
@@ -74,8 +79,38 @@ class TriggerHandler {
                     TriggerHandler.runFunction(functions, newTrigger.functionName, newTrigger.params)
                 }, newTrigger.timer);
             }, this.getTimeout(newTrigger.timer, newTrigger.date));
-            this.delayList.push({userId: userId, triggerId: newTrigger.id, handler: timHandler});
-            this.timerList.push({userId: userId, triggerId: newTrigger.id, handler: intHandler});
+            this.delayList.push({userId: userId, triggerId: newTrigger.id, handler: timHandler, type: "Normal"});
+            this.timerList.push({userId: userId, triggerId: newTrigger.id, handler: intHandler, type: "Normal"});
+        } else if (newTrigger.eventReaction === "MonthTimer" ||
+        newTrigger.eventReaction === "YearTimer") {
+            var rule = new schedule.RecurrenceRule();
+            rule.month = new Date().getMonth();
+            rule.year = new Date().getFullYear();
+            rule.minute = newTrigger.date.min;
+            rule.hour = newTrigger.date.hour;
+            rule.second = newTrigger.date.sec;
+            rule.dayOfWeek = newTrigger.date.day;
+            if (newTrigger.eventReaction === "MonthTimer") {
+                var schedule = this.schedule.scheduleJob(rule, function() {
+                    TriggerHandler.runFunction(functions, newTrigger.functionName, newTrigger.params);
+                    rule.month = Number(rule.month) + 1;
+                    if (rule.month === 12) {
+                        rule.month = 0;
+                        rule.year += 1;
+                    }
+                    console.log(rule);
+                    schedule.reschedule(rule)
+                });
+                this.timerList.push({userId: userId, triggerId: newTrigger.id, handler: schedule, type: "Month"});
+            } else if (newTrigger.eventReaction === "YearTimer") {
+                var schedule = this.schedule.scheduleJob(rule, function() {
+                    TriggerHandler.runFunction(functions, newTrigger.functionName, newTrigger.params);
+                    rule.year = Number(rule.year) + 1;
+                    console.log(rule);
+                    schedule.reschedule(rule);
+                });
+                this.timerList.push({userId: userId, triggerId: newTrigger.id, handler: schedule, type: "Year"});
+            }
         }
     }
 

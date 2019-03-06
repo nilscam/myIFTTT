@@ -13,15 +13,23 @@ module.exports = {
 		access_token_key: '501852948-U590JzV9q2IKTCMthytiimVRYfvNxGM88gYw6LAx',
 		access_token_secret: 'kxG6oGjoWE010wgor7mOZEa2zqtkr5Kjc0JB0rrWYXM4X'
 	},
-	jwtSecret: "werkfdzxcvbnm",
-	nodemailer: {
-		mail: 'areaproject13@gmail.com',
-		passMail: 'Epitechproject13'
-	},
-	office365: {
-		APP_ID: 'e8dc47f8-badc-4cf9-b8c2-fdcb81210e13',
-		APP_PASSWORD: 'czpRZVC021}!-khjfKBB04]',
-		APP_SCOPES: 'openid profile User.Read Mail.Read',
-		REDIRECT_URI: 'http://localhost:3000/authorize_user',
-	}
+		jwtSecret: "werkfdzxcvbnm",
+		nodemailer: {
+			mail: 'areaproject13@gmail.com',
+			passMail: 'Epitechproject13'	
+		},
+		office365: {
+			APP_ID: 'e8dc47f8-badc-4cf9-b8c2-fdcb81210e13',
+			APP_PASSWORD: 'czpRZVC021}!-khjfKBB04]',
+			APP_SCOPES: 'openid profile User.Read Mail.Read',
+			REDIRECT_URI: 'http://localhost:3000/authorize_user',
+		},
+		newYorkTimes: {
+			APP_ID: 'a4f467c3-9f1b-4bc2-b438-120e4eadec6d',
+			API_KEY: 'A5yjcKSp2Fd7d1tRFuHUkajzzROGEK2N',
+			APP_PASSWORD: 'wWqATbnBP0X67Ao1',
+		},
+		cryptocurrency: {
+			API_KEY: 'aff9313c-eb4f-43bd-8d2e-a1694bb82f8b'
+		}
 }

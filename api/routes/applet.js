@@ -77,6 +77,14 @@ function addTrigger(params) {
                     min: params.trigger.params.minute ? params.trigger.params.minute : now.getMinutes(),
                     sec: now.getSeconds(),
                 }
+                console.log(objToAdd.date);
+                if (objToAdd.functionName == "addEveryDay") {
+                    objToAdd.timer = 86400000;
+                } else if (objToAdd.functionName == "addEveryHour") {
+                    objToAdd.timer = 3600000;
+                } else if (objToAdd.functionName == "addEveryDayOfTheWeek") {
+                    objToAdd.timer = 604800000;
+                }
                 if (currentUser._services.hasOwnProperty('_'+params.trigger.service) == false) {
                     reject(402);
                     return;

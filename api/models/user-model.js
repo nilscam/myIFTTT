@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    provider: String, // google - facebook - empty for user created via registration form
-    provider_id: String,
-    username: String,
+    provider: { type: String, default: "" }, // google - facebook - empty for user created via registration form
+    provider_id: { type: String, default: "" },
+    email: String,
     password: String,
     _services: {
         _twitter: {
@@ -48,6 +48,24 @@ const userSchema = new Schema({
             _last_humidityAboveAct: { type: String, default: "0" },
             _last_condChangesAct: { type: String, default: "0" },
             _location: { type: String, default: 'Marseille' },
+            _triggers: [Schema.Types.Mixed]
+        },
+        _newYorkTimes: {
+            _section: { type: String, default: "0" },
+            _theme: { type: String, default: "0" },
+            _title: { type: String, default: "0" },
+            _byline: { type: String, default: "0" },
+            _item_type: { type: String, default: "0" },
+            _date: { type: String, default: "0" },
+            _description: { type: String, default: "0" },
+            _multimedia: { type: String, default: "0" },
+            _triggers: [Schema.Types.Mixed]
+        },
+        _cryptocurrency: {
+            _convert: { type: String, default: "0" },
+            _crypto_name: { type: String, default: "0" },            
+            _target_value: { type: String, default: "0" },
+            _current_value: { type: String, default: "0" },
             _triggers: [Schema.Types.Mixed]
         }
     }

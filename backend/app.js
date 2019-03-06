@@ -23,7 +23,7 @@ module.exports = {
         // app.use(express.static(__dirname + '/../frontend/vue/src/assets/'));
 
         // initialize passport
-        app.use(passport.initialize());
+        // app.use(passport.initialize());
 
         // set up routes
         app.use('/auth', authRoutes);

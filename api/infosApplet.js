@@ -6,6 +6,8 @@ var servicesColor = {
     facebook: "0984e3",
     mailer: "fdcb6e",
     weather: "2c3e50",
+    newYorkTimes: "1e272e",
+    cryptocurrency: "fbc531"
 }
 
 var infosApplet = {
@@ -130,7 +132,7 @@ var infosApplet = {
         description: "This trigger send mail when something was new.",
         color: servicesColor['mailer'],
         params: {
-            service: "",
+            text: "String"
         }
     },
     checkLatestPicture: {
@@ -171,7 +173,31 @@ var infosApplet = {
             text: "String",
         }
     },
+    checkLastNewYorkTimes : {
+        title: "New post from New York Times",
+        description: "Get the latest post of New York Times.",
+        color: servicesColor['newYorkTimes'],
+        params: {}
+    },
+    checkTopNewYorkTimes : {
+        title: "Check new top from New York Times",
+        description: "If a new Top is posted on the section",
+        color: servicesColor['newYorkTimes'],
+        params: {}
+    },
+    checkValueCryptocurrency: {
+        title: "Check if value is more than target value",
+        description: "It's for people want to know if there crypto is more than target value",
+        color: servicesColor['cryptocurrency'],
+        params: {
+            value: "String",
+            name: "String"
+        }
+    }
 }
 
+
+
 module.exports.infosApplet = infosApplet;
+
 module.exports.servicesColor = servicesColor;
