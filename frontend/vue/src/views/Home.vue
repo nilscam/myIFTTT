@@ -18,7 +18,7 @@
         <RobotCool/>
       </v-flex>
 
-      <v-flex xs2 align-self-center v-if="!Logged">
+      <v-flex xs2 align-self-center v-if="!isLogged">
         <v-btn color="white" round large to="/login">Login Now</v-btn>
       </v-flex>
 

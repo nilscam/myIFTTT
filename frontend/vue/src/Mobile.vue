@@ -34,6 +34,11 @@ export default {
       transitionName: 'fade' // for mobile only
     }
   },
+  computed: {
+    isLogged() {
+      return this.$store.getters.isLoggedIn
+    }
+  },
   watch: {
     '$route' (to, from) {
       const switchers = ['about', 'services', 'profile'];
