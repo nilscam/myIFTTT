@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-bottom-nav app :active.sync="bottomNav" :value="true" fixed color="white">
+    <v-bottom-nav app :active.sync="bottomNav" :value="true" fixed color="white" v-if="isLogged">
       <v-btn color="teal" flat value="activity" to="about">
         <span>Activity</span>
         <v-icon>subject</v-icon>
