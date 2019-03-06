@@ -9,11 +9,11 @@ const userSchema = new Schema({
     password: String,
     _services: {
         _twitter: {
-            _id: Number,
-            _username: String,
-            _photo: String,
-            _token: String,
-            _token_secret: String,
+            _id: { type: Number, default: 0 },
+            _username: { type: String, default: '0' },
+            _photo: { type: String, default: '0' },
+            _token: { type: String, default: '0' },
+            _token_secret: { type: String, default: '0' },
             _last_tweet: { type: String, default: '0' },
             _last_mention: { type: String, default: '0' },
             _last_tweet_hashtag: { type: String, default: '0' },

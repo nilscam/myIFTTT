@@ -5,17 +5,45 @@ const keys = require('../../config/keys');
 
 // ! HERE COMES OLIVIER
 
+function addEvent(params) {
+    var now = new Date();
+    var paramToSend = {
+        dateAndTime: {
+            day: now.getDay(),
+            hour: now.getHours(),
+            min: now.getMinutes(),
+            sec: now.getSeconds(),
+        }
+    }
+    tg.sendEvent(params.triggerParams.id, params.name, paramToSend);
+}
+
 function addEveryDay(params) {
     // 864 000 00
     console.log("ADD EVERY DAY")
+    var sendParam = {
+        triggerParams: params,
+        name: "addEveryDay"
+    }
+    addEvent(sendParam);
 }
 function addEveryHour(params) {
     // 3600 000
     console.log("ADD EVERY HOUR")
+    var sendParam = {
+        triggerParams: params,
+        name: "addEveryHour"
+    }
+    addEvent(sendParam);
 }
 function addEveryDayOfTheWeek(params) {
     // 604800000
     console.log("ADD EVERY WEEK")
+    var sendParam = {
+        triggerParams: params,
+        name: "addEveryDayOfTheWeek"
+    }
+    addEvent(sendParam);
 }
 function addEveryMonth(params) {
 

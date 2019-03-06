@@ -15,7 +15,7 @@ router.use('/google', googleAuth)
 router.use('/twitter', twitterAuth)
 
 router.post('/signup', (req, res, next) => {
-    User.findOne({email: req.body.email, provider: false}).then((currentUser) => {
+    User.findOne({email: req.body.email, provider: ""}).then((currentUser) => {
         if (currentUser) {
             res.status(409).json({
                 message: 'Username already exist'
@@ -94,6 +94,47 @@ router.post('/login', (req, res, next) => {
         })
     });
 })
+
+router.post('/update', checkAuth, (req, res) => {
+    User.findOne({_id: req.userData.userId}).then((currentUser) => {
+        if (currentUser) {
+            if (!req.body.email || !req.body.password) {
+                return res.status(500).send({error: "No email or password"});
+            }
+            bcrypt.hash(req.body.password, 10, (err, hash) => {
+                if (err) {
+                    return res.status(500).json({
+                        error: err
+                    })
+                } else {
+                    currentUser.email = req.body.email;
+                    currentUser.password = hash;
+                    currentUser
+                      .save()
+                      .then(result => {
+                          const token = jwt.sign({
+                              email: currentUser.email,
+                              userId: currentUser._id,
+                          }, keys.jwtSecret, {
+                              expiresIn: "10d"
+                          });
+                          return res.status(200).json({
+                              message: 'Update Info OK',
+                              token: token
+                          });
+                      })
+                      .catch(err => {
+                        return res.status(500).json({
+                            error: err
+                        })
+                      });
+                }
+            });
+        } else {
+            return res.status(500).send({error: "User not found"});
+        }
+    });
+});
 
 router.delete('/:userId', (req, res, next) => {
     User.remove({ _id: req.params.userId})
