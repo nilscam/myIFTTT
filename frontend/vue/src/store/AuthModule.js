@@ -7,6 +7,9 @@ export default {
     user : {}
   },
   mutations: {
+    setToken(state, token) {
+      state.token = token
+    },
     auth_request(state){
       state.status = 'loading'
     },
@@ -24,6 +27,10 @@ export default {
     }
   },
   actions: {
+    setToken({commit}, token) {
+      localStorage.setItem('token', token)
+      commit('setToken', token)
+    },
     login ({commit}, data) {
       return new Promise((resolve, reject) => {
         commit('auth_request')

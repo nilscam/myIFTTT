@@ -1,13 +1,6 @@
 <template>
   <div class="form">
-    <form class="login" @submit.prevent="login">
-      <h1>Sign in</h1>
-      <input required v-model="email" type="email" placeholder="Email"/>
-      <input required v-model="password" type="password" placeholder="Password"/>
-      <button type="submit">Login</button>
-    </form>
-
-    <a href="/api/user/google/auth">google </a>
+    google Success
   </div>
 
 </template>
@@ -19,6 +12,15 @@ export default {
       email: "",
       password: ""
     }
+  },
+  mounted() {
+    var token = this.$route.query.token
+    if (token) {
+      this.$store.dispatch('setToken', token)
+    }
+    console.log('pushing');
+    this.$router.push('/')
+    console.log('pushed');
   },
   methods: {
     login() {
