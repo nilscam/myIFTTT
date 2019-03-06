@@ -1,4 +1,5 @@
 import Api from '../Api'
+import router from '../router.js'
 
 export default {
   state: {
@@ -74,6 +75,7 @@ export default {
         commit('logout')
         localStorage.removeItem('token')
         Api.removeAuthorisationToken()
+        router.push({ name: 'home' })
         resolve()
       })
     }
