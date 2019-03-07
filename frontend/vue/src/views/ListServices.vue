@@ -13,11 +13,9 @@ export default {
     IconList
   },
   mounted() {
-    // Api.getServices()
-    // .then(resp => {
-    //   console.log(resp);
-    // })
-    // .catch(e => console.err(e))
+    Api.getServices().then(resp => {
+    console.log(resp);
+    }).catch(e => console.err(e))
   },
   methods: {
     goToService(serviceName) {
