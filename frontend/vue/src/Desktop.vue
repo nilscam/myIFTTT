@@ -10,7 +10,7 @@
 
 
       <v-toolbar-items  v-if="isLogged">
-        <router-link :to="{ name: 'about' }">
+        <router-link :to="{ name: 'applets' }">
           <v-layout justify-center align-center fill-height>
             <v-icon color="white" medium>apps</v-icon>
             <span class="text-toolbar">My Applets</span>
