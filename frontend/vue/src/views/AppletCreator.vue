@@ -1,29 +1,44 @@
 <template>
-  <page-loader :loading="loading">
-    <!-- <TriggerPicker v-if="makerStatus === 'trigger'" @triggerSelected="pickTrigger" :services="services"/>
-    <ReactionPicker v-else-if="makerStatus === 'reaction'" @reactionSelected="pickReaction" :services="services"/>
-    <v-btn v-else color="success" @click="saveApplet">Create Applet</v-btn> -->
+  <page-loader :loading="loading" class="my-page">
 
-    <v-layout column v-if="mode == 'menu'" class="my-layout">
+    <v-layout column v-if="mode == 'menu'">
       <v-flex xs2>
         <h1 class="my-title">New Applet</h1>
       </v-flex>
 
       <v-flex>
-        <v-layout row justify-center align-center>
+
+        <!-- Mobile -->
+        <v-layout row wrap v-if="$mq === 'xs' || $mq === 'sm'">
+          <v-flex xs12>
+            <v-layout row align-center justify-center>
+              <h1 class="my-line">if</h1>
+              <v-img :src="getLogoTrigger" aspect-ratio="1" max-width="100px" max-height="100px" @click="selectTrigger" class="my-holders" :style="{backgroundColor: '#' + bgTrigger}"></v-img>
+            </v-layout>
+          </v-flex>
+          <v-flex xs12>
+            <v-layout row align-center justify-center>
+              <h1 class="my-line">then</h1>
+              <v-img :src="getLogoReaction" aspect-ratio="1" max-width="100px" max-height="100px" @click="selectReaction" class="my-holders" :style="{backgroundColor: '#' + bgReaction}"></v-img>
+            </v-layout>
+          </v-flex>
+        </v-layout>
+
+        <!-- Desktop -->
+        <v-layout row justify-center align-center v-else>
           <h1 class="my-line">if</h1>
-          <!-- <div class="desc-app" :style="{backgroundColor: '#' + bgTrigger}" v-if="this.$store.getters.isTriggerSelected">{{findTriggerTitle(this.$store.getters.getTriggerSelected.service, this.$store.getters.getTriggerSelected.name)}}</div> -->
           <v-img :src="getLogoTrigger" aspect-ratio="1" max-width="100px" max-height="100px" @click="selectTrigger" class="my-holders" :style="{backgroundColor: '#' + bgTrigger}"></v-img>
           <h1 class="my-line">then</h1>
-          <!-- <div class="desc-app" :style="{backgroundColor: '#' + bgReaction}" v-if="this.$store.getters.isReactionSelected">{{findReactionTitle(this.$store.getters.getReactionSelected.service, this.$store.getters.getReactionSelected.name)}}</div> -->
           <v-img :src="getLogoReaction" aspect-ratio="1" max-width="100px" max-height="100px" @click="selectReaction" class="my-holders" :style="{backgroundColor: '#' + bgReaction}"></v-img>
         </v-layout>
       </v-flex>
 
-      <v-flex xs6 align-self-center>
+      <v-flex xs2 md6 align-self-center>
         <v-btn class="white--text" color="#0099ff" round depressed large ripple @click="saveApplet">Submit</v-btn>
       </v-flex>
     </v-layout>
+
+
 
     <TriggerPicker v-else-if="mode === 'trigger'" @triggerSelected="pickTrigger" :services="services"/>
     <ReactionPicker v-else-if="mode === 'reaction'" @reactionSelected="pickReaction" :services="services"/>
@@ -114,8 +129,9 @@ export default {
 </script>
 
 <style scoped>
-.my-layout {
-  font-family: 'Montserrat', sans-serif !important;
+.my-page {
+  background-color: white !important;
+  color: black !important;
 }
 
 .my-title {

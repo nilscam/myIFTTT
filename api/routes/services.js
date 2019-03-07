@@ -76,7 +76,7 @@ router.get('/', checkAuth, (req, res) => {
                         infos: infosApplet['addEveryYear'],
                     },
                 ],
-                reactions: [{}]
+                reactions: []
             },
             {
                 nameService: "nasa",
@@ -93,7 +93,7 @@ router.get('/', checkAuth, (req, res) => {
                         infos: infosApplet['imageOfTheDay'],
                     },
                 ],
-                reactions: [{}]
+                reactions: []
             },
             {
                 nameService: "instagram",
@@ -106,14 +106,14 @@ router.get('/', checkAuth, (req, res) => {
                         infos: infosApplet['checkLatestPicture'],
                     },
                 ],
-                reactions: [{}]
+                reactions: []
             },
             {
                 nameService: "mailer",
                 displayName: "Mailer",
                 image: "http://localhost:8080/images/mailer.png",
                 color: servicesColor['mailer'],
-                triggers: [{}],
+                triggers: [],
                 reactions: [
                     {
                         name: "sendMailer",
@@ -144,7 +144,7 @@ router.get('/', checkAuth, (req, res) => {
                         infos: infosApplet['currentConditionChangesTo'],
                     },
                 ],
-                reactions: [{}]
+                reactions: []
             },
             {
                 nameService: "newYorkTimes",
@@ -174,7 +174,7 @@ router.get('/', checkAuth, (req, res) => {
                         infos: infosApplet['checkValueCryptocurrency'],
                     },
                 ],
-                reactions: [{}]
+                reactions: []
             },
         ]
     });

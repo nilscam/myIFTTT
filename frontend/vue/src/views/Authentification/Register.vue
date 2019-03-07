@@ -1,27 +1,54 @@
 <template>
-  <div>
-    <h4>Register</h4>
-    <form @submit.prevent="register">
-      <label for="name">Name</label>
-      <div>
-          <input id="email" type="text" v-model="email" required autofocus>
-      </div>
+  <v-container fluid fill-height justify-center>
+    <v-layout column>
+      <v-flex xs2 md1 align-self-end>
+        <v-btn round color="warning" v-if="$mq === 'xs' || $mq === 'sm'" to="/login">Sign In</v-btn>
+      </v-flex>
+      <v-flex xs1 align-self-center>
+        <h2>Create Account</h2>
+      </v-flex>
+      <v-flex xs2 md1 align-self-center>
+        <input v-model="email" type="text" placeholder="Email" class="form-input"/>
+      </v-flex>
+      <v-flex xs2 md1 align-self-center>
+        <input v-model="password" type="password" placeholder="Password" class="form-input"/>
+      </v-flex>
+      <v-flex xs2 md1 align-self-center>
+        <input v-model="password_confirmation" type="password" placeholder="Password Confirmation" class="form-input"/>
+      </v-flex>
+      <v-flex xs2 align-self-center>
+        <v-layout column>
+          <v-btn @click="register" color="white" round>Register</v-btn>
+        </v-layout>
+      </v-flex>
 
-      <label for="password">Password</label>
-      <div>
-          <input id="password" type="password" v-model="password" required>
-      </div>
+      <v-flex xs2>
+        <v-layout row justify-center>
+          <div class="btn-google">
+            <a href="/api/user/google/auth">
+              <v-layout row align-center justify-start>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="G+" height="50" width="50">
+                <span class="login-google-text">Register with Google</span>
+              </v-layout>
+            </a>
+          </div>
+        </v-layout>
+      </v-flex>
+      <v-flex xs2>
+        <v-layout row justify-center>
+          <div class="btn-facebook">
+            <a href="/api/user/google/auth">
+              <v-layout row align-center justify-start>
+                <img src="http://www.transparentpng.com/download/facebook/facebook-login-logo-hd-png-21.png" alt="Fb" height="50" width="50">
+                <span class="login-facebook-text">Register with Facebook</span>
+              </v-layout>
+            </a>
+          </div>
+        </v-layout>
+      </v-flex>
+    </v-layout>
+  </v-container>
 
-      <label for="password-confirm">Confirm Password</label>
-      <div>
-          <input id="password-confirm" type="password" v-model="password_confirmation" required>
-      </div>
-
-      <div>
-          <button type="submit">Register</button>
-      </div>
-    </form>
-  </div>
 </template>
 
 
@@ -49,4 +76,35 @@ export default {
 </script>
 
 <style scoped>
+.form-input {
+  color: white;
+  border-radius:25px;
+  padding:15px 20px;
+  background:rgba(255,255,255,.2);
+}
+
+.btn-google {
+  background-color: white;
+  padding: 10px;
+  border-radius: 4px;
+}
+.login-google-text {
+  margin-left: 20px;
+  font-size: 20px;
+  font-family: 'Montserrat', sans-serif !important;
+  color: black;
+}
+
+.btn-facebook {
+  background-color: #3b5998;
+  padding: 10px;
+  border-radius: 4px;
+}
+.login-facebook-text {
+  margin-left: 20px;
+  font-size: 20px;
+  font-family: 'Montserrat', sans-serif !important;
+  color: white;
+}
+
 </style>

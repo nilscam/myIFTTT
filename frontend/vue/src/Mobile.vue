@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-bottom-nav app :active.sync="bottomNav" :value="true" fixed color="white">
+    <v-bottom-nav app :active.sync="bottomNav" :value="true" fixed color="white" v-if="isLogged">
       <v-btn color="teal" flat value="activity" to="about">
         <span>Activity</span>
         <v-icon>subject</v-icon>
@@ -32,6 +32,11 @@ export default {
     return {
       bottomNav: 'applets',
       transitionName: 'fade' // for mobile only
+    }
+  },
+  computed: {
+    isLogged() {
+      return this.$store.getters.isLoggedIn
     }
   },
   watch: {
