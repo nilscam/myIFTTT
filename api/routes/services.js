@@ -161,7 +161,7 @@ router.get('/', checkAuth, (req, res) => {
                         infos: infosApplet['checkTopNewYorkTimes'],
                     },
                 ],
-                reactions: [{}]
+                reactions: []
             },
             {
                 nameService: "cryptocurrency",
