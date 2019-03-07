@@ -17,9 +17,6 @@ export default {
       required: true
     }
   },
-  mounted() {
-    console.log(this.applet);
-  },
   computed: {
     isColorDark() {
       var rgb = parseInt(this.applet.infos.color, 16);   // convert rrggbb to decimal
