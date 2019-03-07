@@ -147,6 +147,23 @@ router.get('/', checkAuth, (req, res) => {
                 reactions: []
             },
             {
+                nameService: "newYorkTimes",
+                displayName: "New York Times",
+                image: "http://localhost:8080/images/newyorktimes.png",
+                color: servicesColor['newYorkTimes'],
+                triggers: [
+                    {
+                        name: "checkLastNewYorkTimes",
+                        infos: infosApplet['checkLastNewYorkTimes'],
+                    },
+                    {
+                        name: "checkTopNewYorkTimes",
+                        infos: infosApplet['checkTopNewYorkTimes'],
+                    },
+                ],
+                reactions: [{}]
+            },
+            {
                 nameService: "cryptocurrency",
                 displayName: "Cryptocurrency",
                 image: "http://localhost:8080/images/cryptocurrency.png",

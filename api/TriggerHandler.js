@@ -166,10 +166,10 @@ class TriggerHandler {
        if (diff < 0)
             diff += 604800000;
        diff -= Number(timer);
+       diff = 2000;
        return diff;
     }
 }
-
 
 module.exports = { TriggerHandler };
 
