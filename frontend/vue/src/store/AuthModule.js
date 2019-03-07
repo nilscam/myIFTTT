@@ -1,4 +1,5 @@
 import Api from '../Api'
+import router from '../router.js'
 
 export default {
   state: {
@@ -7,6 +8,9 @@ export default {
     user : {}
   },
   mutations: {
+    setToken(state, token) {
+      state.token = token
+    },
     auth_request(state){
       state.status = 'loading'
     },
@@ -24,6 +28,10 @@ export default {
     }
   },
   actions: {
+    setToken({commit}, token) {
+      localStorage.setItem('token', token)
+      commit('setToken', token)
+    },
     login ({commit}, data) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
@@ -67,6 +75,7 @@ export default {
         commit('logout')
         localStorage.removeItem('token')
         Api.removeAuthorisationToken()
+        router.push({ name: 'home' })
         resolve()
       })
     }

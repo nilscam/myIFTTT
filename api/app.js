@@ -1,6 +1,8 @@
 const express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors')
+var path = require('path');
+var history = require('connect-history-api-fallback');
 const passport = require('passport')
 const request = require('request-promise');
 const cookieSession = require('cookie-session');
@@ -70,6 +72,8 @@ global.tg = new triggerHandler(exportFunctions);
 
 function launch_api(port) {
     const app = express();
+
+
     app.use(cors())
 
     app.use(bodyParser.urlencoded({ extended: false }))
@@ -79,15 +83,29 @@ function launch_api(port) {
         maxAge: 24 * 60 * 60 * 1000,
         keys: ["jfdskfjsdkjfk"]
     }));
-    
+
     // initialize passport
     app.use(passport.initialize());
-    app.use(passport.session());
 
     passport.serializeUser((user, done) => done(null, user))
     passport.deserializeUser((user, done) => done(null, user))
 
+
+
+    app.use('/api/triggers', triggersRoutes);
+    app.use('/api/reactions', reactionsRoutes);
+    app.use('/api/user', userRoutes);
+    app.use('/api/services', servicesRoutes);
+    app.use('/api/applet', appletRoutes);
+    app.use('/about.json', aboutJsonRoutes);
+
+    app.use(history())
+
     app.use(express.static(__dirname + '/public'));
+    app.use(express.static(__dirname + '/../frontend/vue/dist/'));
+    app.use(express.static(__dirname + '/../frontend/vue/src/assets/'));
+
+
 
     // connect to mongodb
     mongoose.connect(keys.mongodb.dbURL, () => {
@@ -131,20 +149,11 @@ function launch_api(port) {
   //      };
     });
 
-    app.get('/login', function (req, res) {
-      res.send('login -> failure !')
-    })
-    app.get('/home', function (req, res) {
-      res.send('home -> success !')
-    })
-
+    // app.get('/google/success', function (req, res) {res.sendFile(path.join(__dirname + "/../frontend/vue/dist/index.html"));});
+    // app.get('/', function (req, res) {
+    //     res.sendFile(path.join(__dirname + "/../frontend/vue/dist/index.html"));
+    // });
     // set up routes
-    app.use('/api/triggers', triggersRoutes);
-    app.use('/api/reactions', reactionsRoutes);
-    app.use('/api/user', userRoutes);
-    app.use('/api/services', servicesRoutes);
-    app.use('/api/applet', appletRoutes);
-    app.use('/about.json', aboutJsonRoutes);
 
     app.use((req, res, next) => {
         var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
