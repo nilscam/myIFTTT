@@ -2,21 +2,21 @@
   <page-loader :loading="loading">
     <v-layout row wrap>
       <v-flex v-for="applet in applets" :key="applet.id" xs12 sm6 lg4 d-flex>
-        <applet-card :applet="applet" />
+        <ActionCard :applet="applet" />
       </v-flex>
     </v-layout>
   </page-loader>
 </template>
 
 <script>
-import AppletCard from '../components/Applet/AppletCard'
 import Api from '../Api'
 import PageLoader from '../components/PageLoader'
+import ActionCard from '../components/Applet/ActionCard'
 
 export default {
   components: {
     PageLoader,
-    AppletCard
+    ActionCard
   },
   data() {
     return {
@@ -27,9 +27,9 @@ export default {
   mounted() {
     Api.getApplets()
     .then(resp => {
-      console.log(resp);
       this.applets = resp.data
       this.loading = false
+      console.log(this.applets)
     })
     .catch(e => console.err(e))
   }
