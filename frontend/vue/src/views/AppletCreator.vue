@@ -73,7 +73,7 @@ export default {
       this.services = resp.data.services
       this.loading = false
     })
-    .catch(e => console.err(e))
+    .catch(e => console.error(e))
     this.$store.dispatch('startNewApplet')
   },
   computed: {
@@ -106,8 +106,8 @@ export default {
     saveApplet() {
       if (this.$store.getters.isTriggerSelected && this.$store.getters.isReactionSelected) {
         this.$store.dispatch('publishApplet')
-        .then(resp => console.log('success'))
-        .catch(e => console.log('failure'))
+        .then(resp => console.log(resp))
+        .catch(err => console.error(err))
       }
     },
     findInServices(name) {

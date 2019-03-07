@@ -8,7 +8,6 @@
 <script>
 import Mobile from './Mobile'
 import Desktop from './Desktop'
-import UserToolBar from './components/UserToolBar.vue'
 
 export default {
   name: 'App',

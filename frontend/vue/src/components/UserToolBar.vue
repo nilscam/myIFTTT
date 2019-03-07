@@ -55,7 +55,7 @@ export default {
           icon: 'power_settings_new',
           href: '#',
           title: 'Logout',
-          click: (e) => {
+          click: () => {
             this.logout()
           }
         }

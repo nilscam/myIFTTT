@@ -29,9 +29,8 @@ export default {
     .then(resp => {
       this.applets = resp.data
       this.loading = false
-      console.log(this.applets)
     })
-    .catch(e => console.err(e))
+    .catch(err => console.error(err))
   }
 }
 </script>

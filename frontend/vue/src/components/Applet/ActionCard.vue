@@ -37,10 +37,7 @@ export default {
     getLogoReaction(name) {
       return Api.websiteURL + `/images/${name}.png`
     }
-  },
-  mounted() {
-    console.log(this.applet);
-  },
+  }
 }
 </script>
 

@@ -18,9 +18,7 @@ export default {
     if (token) {
       this.$store.dispatch('setToken', token)
     }
-    console.log('pushing');
     this.$router.push('/')
-    console.log('pushed');
   },
   methods: {
     login() {
@@ -28,7 +26,7 @@ export default {
       let password = this.password
       this.$store.dispatch('login', { email, password })
       .then(() => this.$router.push('/'))
-      .catch(err => console.log(err))
+      .catch(err => console.error(err))
     }
   }
 }

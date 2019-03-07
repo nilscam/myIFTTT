@@ -23,8 +23,6 @@ let router = new Router({
     { path: '/newapplet', name: 'newapplet', component: () => import('./views/AppletCreator.vue'), meta: { requiresAuth: true } },
     { path: '/applets', name: 'applets', component: () => import('./views/UserApplets.vue'), meta: { requiresAuth: true } },
     { path: '/google/success', name: 'googlesuccess', component: GoogleSuccess }
-    // { path: '/services', name: 'services', component: () => import('./views/ListServices.vue'), meta: { requiresAuth: true } },
-    // { path: '/service/:serviceName', name: 'service', component: () => import('./views/Service.vue'), meta: { requiresAuth: true } }
   ]
 })
 

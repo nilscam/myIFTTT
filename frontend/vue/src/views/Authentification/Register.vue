@@ -68,7 +68,7 @@ export default {
         let password = this.password
         this.$store.dispatch('register', { email, password })
         .then(() => this.$router.push('/'))
-        .catch(err => console.log(err))
+        .catch(err => console.error(err))
       }
     }
   }
