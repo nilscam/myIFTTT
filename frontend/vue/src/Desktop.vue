@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-toolbar app flat color="#0099ff">
+    <v-toolbar app flat color="#0099ff" class="my-toolbar">
 
       <v-toolbar-title class="my-title headline text-uppercase white--text">
         <router-link :to="{ name: 'home' }">
@@ -39,7 +39,7 @@
         </router-link>
 
         <router-link :to="{ name: 'register' }">
-          <v-btn color="info" round>Sign Up</v-btn>
+          <v-btn color="info" round><span class="text-toolbar-v2">Sign Up</span></v-btn>
         </router-link>
       </div>
 
@@ -81,6 +81,10 @@ a {
   text-decoration: none;
 }
 
+.my-toolbar {
+  border-bottom: 1px solid white !important;
+}
+
 .my-title {
   padding-right: 50px;
   font-family: 'Montserrat', sans-serif !important;
@@ -98,12 +102,20 @@ a {
   cursor: pointer;
   font-size: 18px;
 }
+.text-toolbar-v2 {
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif !important;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-size: 18px;
+  text-transform: none;
+}
 
 .fade-enter-active, .fade-leave-active {
-  transition: opacity .2s
+  transition: opacity .2s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
-  opacity: 0
+  opacity: 0;
 }
 
 </style>

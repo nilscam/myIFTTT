@@ -3,7 +3,7 @@
     <v-layout column>
 
 
-      <v-flex xs2>
+      <v-flex xs2 md1>
       </v-flex>
 
       <v-flex xs1 align-self-center>
@@ -14,7 +14,7 @@
         <span>Automate Your Things</span>
       </v-flex>
 
-      <v-flex xs6 align-self-center>
+      <v-flex xs6 md8 align-self-center>
         <RobotCool/>
       </v-flex>
 
@@ -49,6 +49,7 @@ export default {
   background-color: #0099ff;
   color: white;
   font-family: 'Montserrat', sans-serif !important;
+  border-top: 1px solid white;
 }
 
 </style>
