@@ -4,7 +4,7 @@ const keys = require('../../config/keys');
 
 var newYorkTimeFunc = {
     checkLastNewYorkTimes: function (params) {
-        User.findOne({ _id: params.id }).then((currentUser) => {
+        User.findOne({ _id: params.params.id }).then((currentUser) => {
             if (currentUser) {
                 request({
                     url: 'https://api.nytimes.com/svc/news/v3/content/all/all.json?api-key=' + keys.newYorkTimes.API_KEY,
@@ -31,7 +31,7 @@ var newYorkTimeFunc = {
                                 currentUser._services._newYorkTimes._multimedia = result.results[0].multimedia[multi.length - 1].url;
                                 currentUser._services._newYorkTimes._date = result.results[0].published_date;
                                 currentUser.save();
-                                var paramToSend = {
+                                var paramsFromTrigger = {
                                     newYorkTimes: {
                                         section: currentUser._services._newYorkTimes._section,
                                         title: currentUser._services._newYorkTimes._title,
@@ -41,7 +41,8 @@ var newYorkTimeFunc = {
                                         multimedia: currentUser._services._newYorkTimes._multimedia,
                                     }
                                 }
-                                tg.sendEvent(params.id, "checkLastNewYorkTimes", paramToSend);
+                                params.paramsFromTrigger = paramsFromTrigger
+                                tg.sendEvent(params.params.id, "checkLastNewYorkTimes", params);
                             }
                         }
                     }
@@ -52,7 +53,7 @@ var newYorkTimeFunc = {
     //    The possible section value are: 
     //arts, automobiles, books, business, fashion, food, health, home, insider, magazine, movies, national, nyregion, obituaries, opinion, politics, realestate, science, sports, sundayreview, technology, theater, tmagazine, travel, upshot, and world.
     checkTopNewYorkTimes: function (params) {
-        User.findOne({ _id: params.id }).then((currentUser) => {
+        User.findOne({ _id: params.params.id }).then((currentUser) => {
             if (currentUser) {
                 request({
                     url: 'https://api.nytimes.com/svc/topstories/v2/' + currentUser._services._newYorkTimes._theme + '.json?api-key=' + keys.newYorkTimes.API_KEY,
@@ -78,7 +79,7 @@ var newYorkTimeFunc = {
                             currentUser._services._newYorkTimes._multimedia = result.results[0].multimedia[multi.length - 1].url;
                             currentUser._services._newYorkTimes._date = result.results[0].published_date;
                             currentUser.save();
-                            var paramToSend = {
+                            var paramsFromTrigger = {
                                 newYorkTimes: {
                                     section: currentUser._services._newYorkTimes._section,
                                     title: currentUser._services._newYorkTimes._title,
@@ -88,7 +89,8 @@ var newYorkTimeFunc = {
                                     multimedia: currentUser._services._newYorkTimes._multimedia,
                                 }
                             }
-                            tg.sendEvent(params.id, "checkTopNewYorkTimes", paramToSend);
+                            params.paramsFromTrigger = paramsFromTrigger
+                            tg.sendEvent(params.params.id, "checkTopNewYorkTimes", params);
                         }
                     }
                 })

@@ -7,28 +7,26 @@ const sortParams = require('../sortParams').sortParams;
 // ! Triggers
 
 function newsOfTheDay(params) {
-    User.findOne({_id: params.id}).then((currentUser) => {
+    console.log(params)
+    User.findOne({_id: params.params.id}).then((currentUser) => {
         request('https://api.nasa.gov/planetary/apod?api_key=' + keys.nasa.api_key, { json: true }, (err, res, body) => {
-            // if (currentUser._services._nasa._last_title == "0") {
-            //     currentUser._services._nasa._last_title = body.title;
-            //     currentUser.save();
-            // } else 
             if (currentUser._services._nasa._last_title != body.title) {
                 currentUser._services._nasa._last_title = body.title;
                 currentUser.save();
-                var paramToSend = {
+                var paramsFromTrigger = {
                     nasa: {
                         title: body.title,
                     }
                 }
-                tg.sendEvent(params.id, "newsOfTheDay", paramToSend);
+                params.paramsFromTrigger = paramsFromTrigger
+                tg.sendEvent(params.params.id, "newsOfTheDay", params);
             }
         });
     });
 }
 
 function imageOfTheDay(params) {
-    User.findOne({_id: params.id}).then((currentUser) => {
+    User.findOne({_id: params.params.id}).then((currentUser) => {
         request('https://api.nasa.gov/planetary/apod?api_key=' + keys.nasa.api_key, { json: true }, (err, res, body) => {
             if (currentUser._services._nasa._last_url == "0") {
                 currentUser._services._nasa._last_url = body.url;
@@ -36,12 +34,13 @@ function imageOfTheDay(params) {
             } else if (currentUser._services._nasa._last_url != body.url) {
                 currentUser._services._nasa._last_url = body.url;
                 currentUser.save();
-                var paramToSend = {
+                var paramsFromTrigger = {
                     nasa: {
                         image: body.url,
                     }
                 }
-                tg.sendEvent(params.id, "imageOfTheDay", paramToSend);
+                params.paramsFromTrigger = paramsFromTrigger
+                tg.sendEvent(params.params.id, "imageOfTheDay", params);
             }
         });
     });
