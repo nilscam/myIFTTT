@@ -36,7 +36,7 @@ router.get('/auth', checkAuth, function (req, res, next) {
 router.get('/redirect',
     passport.authorize('instagram'),
     function (req, res) {
-        res.redirect('/home');
+        res.redirect('/profile');
     }
 );
 

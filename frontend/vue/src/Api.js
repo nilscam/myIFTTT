@@ -18,6 +18,10 @@ class Api {
     return axios.post(this.ApiURL + "/user/signup", data);
   }
 
+  getUserInfos() {
+    return axios.get(this.ApiURL + "/user/checkProfile")
+  }
+
   setAuthorisationToken(token) {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
   }
@@ -25,6 +29,7 @@ class Api {
   removeAuthorisationToken() {
     delete axios.defaults.headers.common['Authorization']
   }
+
 
   getServices() {
     return axios.get(this.ApiURL + "/services")
