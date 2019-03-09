@@ -1,5 +1,4 @@
 function sortParams(params) {
-    console.log(JSON.stringify(params, null, 2))
     if (params.reaction.params.hasOwnProperty('text')) {
         if (params.paramsFromTrigger.hasOwnProperty('twitter')) {
             if (params.paramsFromTrigger.twitter.hasOwnProperty('tweet')) {

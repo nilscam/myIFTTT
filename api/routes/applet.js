@@ -39,6 +39,7 @@ function addTrigger(params) {
             if (currentUser) {
                 objToAdd = {
                     id: Date.now(),
+                    isActive: true,
                     timer: params.trigger.timer,
                     service: params.trigger.service,
                     eventReaction: params.trigger.eventReaction,
@@ -78,7 +79,7 @@ function addTrigger(params) {
                 }
                 currentUser._services['_'+params.trigger.service]._triggers.push(objToAdd);
                 currentUser.save();
-                tg.addTrigger(objToAdd._id, objToAdd);
+                tg.addTrigger(params.req.userData.userId, objToAdd);
                 resolve(200);
             } else {
                 reject(401);
@@ -110,6 +111,43 @@ router.post('/', checkAuth, (req, res) => {
     }, (err) => {
         res.status(err).send({code: err});  
     })
+});
+
+router.post('/activate', checkAuth, (req, res) => {
+    User.findOne({_id: req.userData.userId}).then((currentUser) => {
+        if (currentUser) {
+            var triggerId = req.body.triggerId;
+            var isActive = req.body.active;
+            console.log(req.body)
+            for (var key in currentUser._services) {
+                if (!currentUser._services.hasOwnProperty(key) || key == '$init') continue;
+                var service = currentUser._services[key];
+                for (var i = 0; i < service._triggers.length; i++) {
+                    var tmp = service._triggers[i];
+                    console.log(JSON.stringify(tmp, null, 2));
+                    if (tmp.id === triggerId) {
+                        if (isActive == tmp.isActive) {
+                            return res.status(201).send({code: 201, msg: "Useless Modification"});
+                        }
+                        currentUser._services[key]._triggers[i].isActive = isActive;
+                        currentUser.save();
+                        console.log("a");
+                        if (isActive) {
+                            console.log("b");
+                            tg.addTrigger(req.userData.userId, currentUser._services[key]._triggers[i]);
+                        } else {
+                            console.log("c");
+                            tg.clearTrigger(req.userData.userId, triggerId);
+                        }
+                        return res.status(200).send({code: 200});
+                    }
+                }
+            }
+            res.status(401).send({code: 402, error: "Unknown triggerId"});
+        } else {
+            res.status(401).send({code: 401, error: "User not found"});
+        }
+	});
 });
 
 module.exports = router;

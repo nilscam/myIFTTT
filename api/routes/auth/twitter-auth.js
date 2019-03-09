@@ -7,7 +7,7 @@ var router = express.Router();
 const keys = require('../../config/keys')
 const User = require('../../models/user-model').User;
 const mongoose = require('mongoose');
-const checkAuth = require('../../middleware/check-auth');
+const serviceAuth = require('../../middleware/services-auth');
 
 passport.use(
 	new TwitterStrategy({
@@ -32,7 +32,7 @@ passport.use(
         });
     }));
 
-router.get('/auth', checkAuth, function(req, res, next) {
+router.get('/auth', serviceAuth,function(req, res, next) {
     req.session.userId = req.userData.userId;
     next();
  }, passport.authorize('twitter'));

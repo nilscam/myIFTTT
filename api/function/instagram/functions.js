@@ -5,8 +5,7 @@ var instaFunc = {
     checkNewPost: function(params) {
         User.findOne({ _id: params.params.id }).then((currentUser) => {
             if (currentUser) {
-                //var access_token = currentUser._services._instagram.access_token;
-                var access_token = "8406347569.228cd00.e45432e27d804307b4a21425aec145db";
+                var access_token = currentUser._services._instagram._token;
                 request({
                     url: 'https://api.instagram.com/v1/users/self/media/recent/?count=1&access_token=' + access_token,
                 }, function (error, response, body) {
