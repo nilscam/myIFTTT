@@ -43,8 +43,12 @@ class TriggerHandler {
         for (var j = 0; j < this.timerList.length; j++) {
             console.log(this.timerList[j].userId+ " || " +userId + " && " + this.timerList[j].triggerId + " || " + triggerId)
             if (this.timerList[j].userId === userId && this.timerList[j].triggerId === triggerId) {
-                if (this.timerList[j].type === "Normal")
+                console.log(this.timerList[j].type)
+                console.log(JSON.stringify(this.timerList[j], null, 2))
+                if (this.timerList[j].type === "Normal") {
+                    console.log("In Cancel")
                     clearInterval(this.timerList[j].handler);
+                }
                 else
                     this.timerList[j].handler.cancel();
                 this.timerList.splice(j, 1);
