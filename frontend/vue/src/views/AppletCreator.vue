@@ -106,7 +106,12 @@ export default {
     saveApplet() {
       if (this.$store.getters.isTriggerSelected && this.$store.getters.isReactionSelected) {
         this.$store.dispatch('publishApplet')
-        .then(resp => console.log(resp))
+        .then(resp => {
+          if (resp.status == 200)
+            this.$router.push({ name: 'applets' })
+          else
+            this.$router.push({ name: 'InternError' })
+        })
         .catch(err => console.error(err))
       }
     },

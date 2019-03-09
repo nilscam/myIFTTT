@@ -1,13 +1,13 @@
 <template>
   <v-app>
     <v-bottom-nav app :active.sync="bottomNav" :value="true" fixed color="white" v-if="isLogged">
-      <v-btn color="teal" flat value="activity" to="about">
-        <span>Activity</span>
-        <v-icon>subject</v-icon>
-      </v-btn>
       <v-btn color="teal" flat value="applets" to="applets">
         <span>My Applets</span>
         <v-icon>view_list</v-icon>
+      </v-btn>
+      <v-btn color="teal" flat value="home" to="home">
+        <span>Home</span>
+        <v-icon>home</v-icon>
       </v-btn>
       <v-btn color="teal" flat value="profile" to="profile">
         <span>Profile</span>
@@ -30,7 +30,7 @@ export default {
   name: 'Mobile',
   data () {
     return {
-      bottomNav: 'applets',
+      bottomNav: 'home',
       transitionName: 'fade' // for mobile only
     }
   },
