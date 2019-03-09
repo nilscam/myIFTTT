@@ -16,7 +16,7 @@
             </div>
 
             <div class="btn-google" v-for="service in servicesConnections">
-              <a :href="`/api/user/${service.service}/auth`">
+              <a :href="`/api/user/${service.service}/auth?token=${$store.getters.getToken}`">
                 <v-layout row align-center justify-start>
                   <img :src="getLogo(service.service)" alt="G+" height="50" width="50" :style="{backgroundColor: '#' + service.color}">
                   <span class="login-google-text" v-if="service.isConnect">Connected to {{service.service}} with {{ service.username }}</span>
@@ -30,21 +30,6 @@
           </v-layout>
         </v-layout>
       </v-flex>
-
-      <!-- <div class="service-link" v-for="service in servicesConnections">
-        <v-layout row justify-center>
-          <div class="btn-google">
-            <a href="/api/user/google/auth">
-              <v-layout row align-center justify-start>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="G+" height="50" width="50">
-                <span class="login-google-text">Login with Google</span>
-                <span class="text-link">Link</span>
-              </v-layout>
-            </a>
-          </div>
-        </v-layout>
-      </div> -->
-
 
     </v-layout>
   </page-loader>
