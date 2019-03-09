@@ -15,8 +15,11 @@
       <span class="custom-description">{{ applet.reaction.infos.description }}</span>
     </v-card-text>
       <v-card-actions class="pa-3">
-        Rate this album
-        <v-spacer></v-spacer>
+        <v-switch
+          v-on:change="activate"
+          v-model="applet.trigger.isActive"
+          color="green"
+      ></v-switch>
       </v-card-actions>
   </v-card>
 </template>
@@ -30,7 +33,20 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      switch: this.applet.isActive
+    }
+  },
+  mounted() {
+  console.log(this.applet);
+  },
   methods: {
+    activate(e) {
+      postActivateApplet(triggerId, e)
+      .then(resp => {})
+      .catch(e => console.error(e))
+    },
     getLogoTrigger(name) {
       return  Api.websiteURL + `/images/${name}.png`
     },
@@ -67,5 +83,9 @@ export default {
   font-weight: 700;
   color:white;
   opacity: 0.80;
+}
+::ng-deep .accent--text {
+    color: red !important;
+    caret-color: red !important;
 }
 </style>

@@ -39,8 +39,9 @@ class Api {
     return axios.get(this.ApiURL + "/applet")
   }
 
-
-
+  postActivateApplet(triggerId, active) {
+    return axios.post(this.ApiURL + "/applet/activate", {triggerId, active});
+  }
   postNewApplet(trigger, reaction) {
     return axios.post(this.ApiURL + "/applet", {trigger, reaction}, {headers: {'content-type': 'application/json'}})
   }
