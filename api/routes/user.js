@@ -153,28 +153,28 @@ router.delete('/:userId', (req, res, next) => {
       });
 })
 
-router.post('/checkProfile', checkAuth, (req, res) => {
+router.get('/checkProfile', checkAuth, (req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
-        var authenticate = {
-            instagram: {
+        var authenticate = [
+            instagram = {
                 isConnect: false,
                 username: "",
                 color: "e84393",
             },
-            twitter: {
+            twitter = {
                 isConnect: false,
                 username: "",
                 color: "1da1f2",
-            }
-        }
+            }]
+
         if (currentUser) {
             if (currentUser._services._instagram._id != 0) {
-                authenticate.instagram.isConnect = true;
-                authenticate.instagram.username = currentUser._services._instagram._username;
+                authenticate[0].isConnect = true;
+                authenticate[0].username = currentUser._services._instagram._username;
             }
             if (currentUser._services._twitter._id != 0) {
-                authenticate.instagram.isConnect = true;
-                authenticate.instagram.username = currentUser._services._twitter._username;
+                authenticate[1].isConnect = true;
+                authenticate[1].username = currentUser._services._twitter._username;
             }
             res.status(200).json({ authenticate });
         } else {
