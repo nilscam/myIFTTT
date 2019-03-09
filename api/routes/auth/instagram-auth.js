@@ -14,7 +14,7 @@ passport.use(new InstagramStrategy({
     clientSecret: keys.instagramKey.clientSecret,
     callbackURL: keys.instagramKey.callBackUrl
 },
-    function (accessToken, refreshToken, profile, done) {
+    function (req, accessToken, refreshToken, profile, done) {
         User.findOne({ _id: req.session.userId }).then((currentUser) => {
             if (currentUser) {
                 currentUser._services._instagram._token = accessToken;
