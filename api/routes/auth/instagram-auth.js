@@ -8,6 +8,7 @@ const keys = require('../../config/keys')
 const User = require('../../models/user-model').User;
 const mongoose = require('mongoose');
 const checkAuth = require('../../middleware/check-auth');
+const serviceAuth = require('../../middleware/services-auth');
 
 passport.use(new InstagramStrategy({
     clientID: keys.instagramKey.clientID,
@@ -16,6 +17,7 @@ passport.use(new InstagramStrategy({
     passReqToCallback: true
 },
     function (req, accessToken, refreshToken, profile, done) {
+      console.log("OK")
         User.findOne({ _id: req.session.userId }).then((currentUser) => {
             if (currentUser) {
                 currentUser._services._instagram._token = accessToken;
@@ -28,7 +30,7 @@ passport.use(new InstagramStrategy({
         })
     }));
 
-router.get('/auth', checkAuth, function (req, res, next) {
+router.get('/auth', serviceAuth, function (req, res, next) {
     req.session.userId = req.userData.userId;
     next();
 }, passport.authorize('instagram'));
