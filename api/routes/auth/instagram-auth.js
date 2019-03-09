@@ -12,9 +12,10 @@ const checkAuth = require('../../middleware/check-auth');
 passport.use(new InstagramStrategy({
     clientID: keys.instagramKey.clientID,
     clientSecret: keys.instagramKey.clientSecret,
-    callbackURL: keys.instagramKey.callBackUrl
+    callbackURL: keys.instagramKey.callBackUrl,
+    passReqToCallback: true
 },
-    function (accessToken, refreshToken, profile, done) {
+    function (req, accessToken, refreshToken, profile, done) {
         User.findOne({ _id: req.session.userId }).then((currentUser) => {
             if (currentUser) {
                 currentUser._services._instagram._token = accessToken;
