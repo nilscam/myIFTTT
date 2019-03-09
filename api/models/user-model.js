@@ -22,10 +22,10 @@ const userSchema = new Schema({
             _triggers: [Schema.Types.Mixed]
         },
         _instagram: {
-            _id: Number,
-            _username: String,
-            _photo: String,
-            _token: String,
+            _id: { type: Number, default: 0 },
+            _username: { type: String, default: '0' },
+            _photo: { type: String, default: '0' },
+            _token: { type: String, default: '0' },
             _last_type: { type: String, default: '0' },
             _last_id: { type: String, default: '0' },
             _last_url: { type: String, default: '0' },

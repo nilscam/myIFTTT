@@ -4,9 +4,9 @@
       <v-flex>
         <v-layout row justify-center align-center>
           <h1 class="my-line">{{applet.trigger.service}}</h1>
-          <v-img :src="getLogoTrigger(applet.trigger.service)" aspect-ratio="1" max-width="50px" max-height="50px" class="my-holders"></v-img>
+          <v-img :src="getLogoTrigger(applet.trigger.service)" aspect-ratio="1" max-width="50px" max-height="50px"></v-img>
           <h1 class="my-line">{{applet.reaction.service}}</h1>
-          <v-img :src="getLogoReaction(applet.reaction.service)" aspect-ratio="1" max-width="50px" max-height="50px" class="my-holders"></v-img>
+          <v-img :src="getLogoReaction(applet.reaction.service)" aspect-ratio="1" max-width="50px" max-height="50px"></v-img>
         </v-layout>
       </v-flex>
     </v-card-title>

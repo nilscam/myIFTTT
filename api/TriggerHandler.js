@@ -49,10 +49,10 @@ class TriggerHandler {
         }
     }
 
-    static runFunction(functions, name, params) {
+    static runFunction(functions, name, trigger) {
         if (functions[name]) {
             //console.log(name + " --- " + JSON.stringify(params, null, 2))
-            functions[name](params);
+            functions[name](trigger);
         } else {
             console.log("Function ", name, " doesn't exist");
         }
@@ -76,7 +76,7 @@ class TriggerHandler {
         if (newTrigger.eventReaction === "Timer") {
             timHandler = setTimeout(function () {
                 intHandler = setInterval(function () {
-                    TriggerHandler.runFunction(functions, newTrigger.functionName, newTrigger.params)
+                    TriggerHandler.runFunction(functions, newTrigger.functionName, newTrigger)
                 }, newTrigger.timer);
             }, this.getTimeout(newTrigger.timer, newTrigger.date));
             this.delayList.push({userId: userId, triggerId: newTrigger.id, handler: timHandler, type: "Normal"});
@@ -92,7 +92,7 @@ class TriggerHandler {
             rule.dayOfWeek = newTrigger.date.day;
             if (newTrigger.eventReaction === "MonthTimer") {
                 var schedule = this.schedule.scheduleJob(rule, function() {
-                    TriggerHandler.runFunction(functions, newTrigger.functionName, newTrigger.params);
+                    TriggerHandler.runFunction(functions, newTrigger.functionName, newTrigger);
                     rule.month = Number(rule.month) + 1;
                     if (rule.month === 12) {
                         rule.month = 0;
@@ -104,7 +104,7 @@ class TriggerHandler {
                 this.timerList.push({userId: userId, triggerId: newTrigger.id, handler: schedule, type: "Month"});
             } else if (newTrigger.eventReaction === "YearTimer") {
                 var schedule = this.schedule.scheduleJob(rule, function() {
-                    TriggerHandler.runFunction(functions, newTrigger.functionName, newTrigger.params);
+                    TriggerHandler.runFunction(functions, newTrigger.functionName, newTrigger);
                     rule.year = Number(rule.year) + 1;
                     console.log(rule);
                     schedule.reschedule(rule);
@@ -117,22 +117,8 @@ class TriggerHandler {
 
     sendEvent(userId, event, params) {
         var functions = this.functions;
-        User.findOne({_id: userId}).then((item) => {
-            for (var key in item._services) {
-                if (!item._services.hasOwnProperty(key) || key == '$init') continue;
-                var service = item._services[key];
-                for (var i = 0; i < service._triggers.length; i++) {
-                    var tmp = service._triggers[i];
-                    var tmpParams = {
-                        funcParams: tmp.params,
-                        triggerParams: params
-                    };
-                    if (tmp.eventReaction === event)
-                        TriggerHandler
-                            .runFunction(functions, tmp.functionName, tmpParams);
-                }
-            }
-        });
+        TriggerHandler
+            .runFunction(functions, params.reaction.functionName, params);
     }
 
     startEveryone(userId) {

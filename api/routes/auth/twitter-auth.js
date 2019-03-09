@@ -40,7 +40,7 @@ router.get('/auth', checkAuth, function(req, res, next) {
 router.get('/redirect',
     passport.authorize('twitter'),
     function(req, res) {
-      res.redirect('/home');
+      res.redirect('/profile');
     }
 );
 

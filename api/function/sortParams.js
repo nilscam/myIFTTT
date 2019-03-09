@@ -1,40 +1,33 @@
 function sortParams(params) {
-    console.log(params)
-    var retObj = {
-        id: params.funcParams.id,
-        triggerInfo: Object.keys(params.triggerParams)[0]
-    };
-    console.log(params)
-    if (params.funcParams.params.hasOwnProperty('text')) {
-        retObj.text = params.funcParams.params.text;
-        if (params.triggerParams.hasOwnProperty('twitter')) {
-            if (params.triggerParams.twitter.hasOwnProperty('tweet')) {
-                retObj.text = retObj.text.replace("{tweet}", params.triggerParams.twitter.tweet.text);
+    console.log(JSON.stringify(params, null, 2))
+    if (params.reaction.params.hasOwnProperty('text')) {
+        if (params.paramsFromTrigger.hasOwnProperty('twitter')) {
+            if (params.paramsFromTrigger.twitter.hasOwnProperty('tweet')) {
+                params.reaction.params.text = params.reaction.params.text.replace("{tweet}", params.paramsFromTrigger.twitter.tweet.text);
             }
-        } else if (params.triggerParams.hasOwnProperty('nasa')) {
-            if (params.triggerParams.nasa.hasOwnProperty('title')) {
-                retObj.text = retObj.text.replace("{title}", params.triggerParams.nasa.title);
-            } else if (params.triggerParams.nasa.hasOwnProperty('image')) {
-                retObj.text = retObj.text.replace("{image}", params.triggerParams.nasa.image);
+        } else if (params.paramsFromTrigger.hasOwnProperty('nasa')) {
+            if (params.paramsFromTrigger.nasa.hasOwnProperty('title')) {
+                params.reaction.params.text = params.reaction.params.text.replace("{title}", params.paramsFromTrigger.nasa.title);
+            } else if (params.paramsFromTrigger.nasa.hasOwnProperty('image')) {
+                params.reaction.params.text = params.reaction.params.text.replace("{image}", params.paramsFromTrigger.nasa.image);
             }
-        } else if (params.triggerParams.hasOwnProperty('newYorkTimes')) {
-            if (params.triggerParams.newYorkTimes.hasOwnProperty('title')) {
-                retObj.title = params.triggerParams.newYorkTimes.title;
+        } else if (params.paramsFromTrigger.hasOwnProperty('newYorkTimes')) {
+            if (params.paramsFromTrigger.newYorkTimes.hasOwnProperty('title')) {
+                params.reaction.params.title = params.paramsFromTrigger.newYorkTimes.title;
             }
-            if (params.triggerParams.newYorkTimes.hasOwnProperty('description')) {
-                retObj.text = retObj.text.replace("{description}", params.triggerParams.newYorkTimes.description);
+            if (params.paramsFromTrigger.newYorkTimes.hasOwnProperty('description')) {
+                params.reaction.params.text = params.reaction.params.text.replace("{description}", params.paramsFromTrigger.newYorkTimes.description);
             }
-        } else if (params.triggerParams.hasOwnProperty('cryptocurrency')) {
-            if (params.triggerParams.cryptocurrency.hasOwnProperty('title')) {
-                retObj.title = params.triggerParams.cryptocurrency.title;
+        } else if (params.paramsFromTrigger.hasOwnProperty('cryptocurrency')) {
+            if (params.paramsFromTrigger.cryptocurrency.hasOwnProperty('title')) {
+                params.reaction.params.title = params.paramsFromTrigger.cryptocurrency.title;
             }
-            if (params.triggerParams.cryptocurrency.hasOwnProperty('description')) {
-                retObj.text = retObj.text.replace("{description}", params.triggerParams.cryptocurrency.description);
+            if (params.paramsFromTrigger.cryptocurrency.hasOwnProperty('description')) {
+                params.reaction.params.text = params.reaction.params.text.replace("{description}", params.paramsFromTrigger.cryptocurrency.description);
             }
         }
     }
-    console.log(retObj);
-    return (retObj);
+    return (params);
 }
 
 module.exports.sortParams = sortParams;

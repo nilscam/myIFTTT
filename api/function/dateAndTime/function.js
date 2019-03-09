@@ -7,7 +7,7 @@ const keys = require('../../config/keys');
 
 function addEvent(params) {
     var now = new Date();
-    var paramToSend = {
+    var paramsFromTrigger = {
         dateAndTime: {
             day: now.getDay(),
             hour: now.getHours(),
@@ -15,7 +15,8 @@ function addEvent(params) {
             sec: now.getSeconds(),
         }
     }
-    tg.sendEvent(params.triggerParams.id, params.name, paramToSend);
+    params.triggerParams.paramsFromTrigger = paramsFromTrigger
+    tg.sendEvent(params.triggerParams.params.id, params.name, params.triggerParams);
 }
 
 function addEveryDay(params) {
