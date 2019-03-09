@@ -33,12 +33,15 @@ class TriggerHandler {
     }
 
     clearTrigger(userId, triggerId) {
-        for (var i = 0; i < this.delayList.length; i++)
+        for (var i = 0; i < this.delayList.length; i++) {
+            console.log(this.delayList[i].userId+ " || " +userId + " && " + this.delayList[i].triggerId + " || " + triggerId)
             if (this.delayList[i].userId === userId && this.delayList[i].triggerId === triggerId) {
                 clearTimeout(this.delayList[i].handler);
                 this.delayList.splice(i, 1);
             }
+        }
         for (var j = 0; j < this.timerList.length; j++) {
+            console.log(this.timerList[j].userId+ " || " +userId + " && " + this.timerList[j].triggerId + " || " + triggerId)
             if (this.timerList[j].userId === userId && this.timerList[j].triggerId === triggerId) {
                 if (this.timerList[j].type === "Normal")
                     clearInterval(this.timerList[j].handler);
@@ -76,6 +79,7 @@ class TriggerHandler {
         if (newTrigger.eventReaction === "Timer") {
             timHandler = setTimeout(function () {
                 intHandler = setInterval(function () {
+                    console.log("OK");
                     TriggerHandler.runFunction(functions, newTrigger.functionName, newTrigger)
                 }, newTrigger.timer);
             }, this.getTimeout(newTrigger.timer, newTrigger.date));
