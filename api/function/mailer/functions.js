@@ -16,8 +16,7 @@ var mailerFunc = {
     sendMailer: function(params) {
         params = sortParams(params);
         return User.findOne({ _id: params.params.id }).then((currentUser) => {
-            //var mailUser = currentUser.mail;
-            mailUser = 'boris.roussel@epitech.eu';
+            var mailUser = currentUser.email;
             if (params.title == undefined) {
                 var title = 'service: ' + params.service
             } else {
