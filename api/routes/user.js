@@ -153,6 +153,36 @@ router.delete('/:userId', (req, res, next) => {
       });
 })
 
+router.post('/checkProfile', checkAuth, (req, res) => {
+    User.findOne({_id: req.userData.userId}).then((currentUser) => {
+        var authenticate = {
+            instagram: {
+                isConnect: false,
+                username: "",
+                color: "e84393",
+            },
+            twitter: {
+                isConnect: false,
+                username: "",
+                color: "1da1f2",
+            }
+        }
+        if (currentUser) {
+            if (currentUser._services._instagram._id != 0) {
+                authenticate.instagram.isConnect = true;
+                authenticate.instagram.username = currentUser._services._instagram._username;
+            }
+            if (currentUser._services._twitter._id != 0) {
+                authenticate.instagram.isConnect = true;
+                authenticate.instagram.username = currentUser._services._twitter._username;
+            }
+            res.status(200).json({ authenticate });
+        } else {
+            res.status(500).send({error: "User not found"});
+        }
+	});
+})
+
 router.post('/twitterConnect', checkAuth, (req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
         if (currentUser) {
@@ -181,7 +211,7 @@ router.post('/twitterConnect', checkAuth, (req, res) => {
 	});
 });
 
-router.post('/instagram', checkAuth, (req, res) => {
+router.post('/instagramConnect', checkAuth, (req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
         if (currentUser) {
             currentUser._services._instagram._token = req.body.token;
