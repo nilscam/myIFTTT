@@ -4,7 +4,7 @@ const keys = require('../../config/keys');
 
 var cryptocurrencyFunc = {
     checkValueCryptocurrency: function (params) {
-        User.findOne({ _id: params.id }).then((currentUser) => {
+        User.findOne({ _id: params.params.id }).then((currentUser) => {
             console.log(params);
             const requestOptions = {
                 method: 'GET',
@@ -20,8 +20,8 @@ var cryptocurrencyFunc = {
                 json: true,
             };
             if (currentUser._services._cryptocurrency._current_value == "0") {
-                currentUser._services._cryptocurrency._target_value = params.params.value;
-                currentUser._services._cryptocurrency._crypto_name = params.params.name;
+                currentUser._services._cryptocurrency._target_value = params.params.params.value;
+                currentUser._services._cryptocurrency._crypto_name = params.params.params.name;
                 currentUser._services._cryptocurrency._current_value = "empty";
                 currentUser._services._cryptocurrency._active = "0"
                 currentUser.save();
@@ -39,15 +39,16 @@ var cryptocurrencyFunc = {
                     currentUser.save();
                     var first = Number(currentUser._services._cryptocurrency._target_value);
                     var second = Number(currentUser._services._cryptocurrency._current_value);
-                    var paramToSend = {
+                    var paramsFromTrigger = {
                         cryptocurrency: {
                             title: currentUser._services._cryptocurrency._crypto_name,
                             description: 'Value of your Crypto is : ' + currentUser._services._cryptocurrency._current_value,
                         }
-                    };
+                    }
+                    params.paramsFromTrigger = paramsFromTrigger
                     if (second > first) {
                         currentUser._services._cryptocurrency._active = "1"
-                        tg.sendEvent(params.id, "checkValueCryptocurrency", paramToSend);
+                        tg.sendEvent(params.params.id, "checkValueCryptocurrency", params);
                     }
                 });
             }

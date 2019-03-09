@@ -15,19 +15,19 @@ var transporter = nodemailer.createTransport({
 var mailerFunc = {
     sendMailer: function(params) {
         params = sortParams(params);
-        return User.findOne({ _id: params.id }).then((currentUser) => {
+        return User.findOne({ _id: params.params.id }).then((currentUser) => {
             //var mailUser = currentUser.mail;
             mailUser = 'boris.roussel@epitech.eu';
             if (params.title == undefined) {
-                var title = 'service: ' + params.triggerInfo
+                var title = 'service: ' + params.service
             } else {
-                var title = 'service: ' + params.triggerInfo + ' - ' + params.title
+                var title = 'service: ' + params.service + ' - ' + params.title
             }
             var mailOption = {
                 from: keys.nodemailer.mail,
                 to: mailUser,
                 subject: title,
-                text: 'Mailer: Something new in this service ! \n\n' + params.text,
+                text: 'Mailer: Something new in this service ! \n\n' + params.reaction.params.text,
             }
             return (mailOption);
         }).then(function (mailOptions) {
