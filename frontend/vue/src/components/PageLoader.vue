@@ -3,7 +3,7 @@
     <slot v-if="loading === false">
       <!-- Page Content will go here -->
     </slot>
-    <pulse-loader v-else size="22px" class="center-loader"/>
+    <pulse-loader v-else size="22px" :color="loaderColor" class="center-loader"/>
   </v-container>
 </template>
 
@@ -16,6 +16,10 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    loaderColor: {
+      type: String,
+      default: '#5dc596'
     }
   },
   components: {
