@@ -15,12 +15,18 @@ var infosApplet = {
         description: "This trigger fires every time you post a new tweet.",
         color: servicesColor['twitter'],
         params: {},
+        content: [
+            "tweet",
+        ]
     },
     checkNewMention : {
         title: "New mention of you",
         description: "This trigger fires every time you are @mentioned in a tweet.",
         color: servicesColor['twitter'],
-        params: {}
+        params: {},
+        content: [
+            "tweet",
+        ]
     },
     checkNewTweetHashtag : {
         title: "New tweet by you with hashtag",
@@ -28,19 +34,26 @@ var infosApplet = {
         color: servicesColor['twitter'],
         params: {
             hashtag: "String"
-        }
+        },
+        content: [
+            "tweet",
+        ]
     },
     checkNewFollower : {
         title: "New follower",
         description: "This trigger fires every time a new user starts following you.",
         color: servicesColor['twitter'],
-        params: {}
+        params: {},
+        content: []
     },
     checkNewLike : {
         title: "New liked tweet by you",
         description: "This trigger fires every time you like a tweet.",
         color: servicesColor['twitter'],
-        params: {}
+        params: {},
+        content: [
+            "tweet",
+        ]
     },
     sendTweet : {
         title: "Post a tweet",
@@ -48,7 +61,8 @@ var infosApplet = {
         color: servicesColor['twitter'],
         params: {
             text: "String"
-        }
+        },
+        content: []
     },
     sendTweetImage : {
         title: "Post a tweet with image",
@@ -56,7 +70,8 @@ var infosApplet = {
         color: servicesColor['twitter'],
         params: {
             text: "String"
-        }
+        },
+        content: []
     },
     updateBio : {
         title: "Update bio",
@@ -64,7 +79,8 @@ var infosApplet = {
         color: servicesColor['twitter'],
         params: {
             text: "String"
-        }
+        },
+        content: []
     },
     addEveryDay : {
         title: "Every day at",
@@ -73,7 +89,12 @@ var infosApplet = {
         params: {
             hour: "Hour",
             minute: "Minute"
-        }
+        },
+        content: [
+            "day",
+            "hour",
+            "min"
+        ]
     },
     addEveryHour : {
         title: "Every hour at",
@@ -81,7 +102,12 @@ var infosApplet = {
         color: servicesColor['dateAndTime'],
         params: {
             minute: "Minute"
-        }
+        },
+        content: [
+            "day",
+            "hour",
+            "min"
+        ]
     },
     addEveryDayOfTheWeek : {
         title: "Every day of the week at",
@@ -91,7 +117,12 @@ var infosApplet = {
             day: "Day",
             hour: "Hour",
             minute: "Minute"
-        }
+        },
+        content: [
+            "day",
+            "hour",
+            "min"
+        ]
     },
     addEveryMonth : {
         title: "Every month on the",
@@ -101,7 +132,12 @@ var infosApplet = {
             day: "Number",
             hour: "Hour",
             minute: "Minute"
-        }
+        },
+        content: [
+            "day",
+            "hour",
+            "min"
+        ]
     },
     addEveryYear : {
         title: "Every year on",
@@ -112,19 +148,30 @@ var infosApplet = {
             day: "Number",
             hour: "Hour",
             minute: "Minute"
-        }
+        },
+        content: [
+            "day",
+            "hour",
+            "min"
+        ]
     },
     newsOfTheDay : {
         title: "News of the day by NASA",
         description: "This trigger fires every time NASA posts a news.",
         color: servicesColor['nasa'],
-        params: {}
+        params: {},
+        content: [
+            "title",
+        ]
     },
     imageOfTheDay : {
         title: "Image of the day by NASA",
         description: "This trigger fires every time NASA posts a new picture.",
         color: servicesColor['nasa'],
-        params: {}
+        params: {},
+        content: [
+            "image",
+        ]
     },
     sendMailer: {
         title: "Post a mail",
@@ -132,13 +179,17 @@ var infosApplet = {
         color: servicesColor['mailer'],
         params: {
             text: "String"
-        }
+        },
+        content: []
     },
     checkLatestPicture: {
         title: "New photo is post",
         description:  "This trigger fires every time you post a new photo.",
         color: servicesColor['intagram'],
-        params: {}
+        params: {},
+        content: [
+            "url",
+        ]
     },
     temperatureBelow : {
         title: "Current temperature drops below",
@@ -146,7 +197,10 @@ var infosApplet = {
         color: servicesColor['weather'],
         params: {
             value: "Number",
-        }
+        },
+        content: [
+            "value",
+        ]
     },
     temperatureAbove : {
         title: "Current temperature rises above",
@@ -154,7 +208,10 @@ var infosApplet = {
         color: servicesColor['weather'],
         params: {
             value: "Number",
-        }
+        },
+        content: [
+            "value",
+        ]
     },
     humidityLevelAbove : {
         title: "Current humidity level rises above",
@@ -162,7 +219,10 @@ var infosApplet = {
         color: servicesColor['weather'],
         params: {
             value: "Number",
-        }
+        },
+        content: [
+            "value",
+        ]
     },
     currentConditionChangesTo : {
         title: "Current condition changes to",
@@ -170,19 +230,30 @@ var infosApplet = {
         color: servicesColor['weather'],
         params: {
             text: "String",
-        }
+        },
+        content: [
+            "value",
+        ]
     },
     checkLastNewYorkTimes : {
         title: "New post from New York Times",
         description: "Get the latest post of New York Times.",
         color: servicesColor['newYorkTimes'],
-        params: {}
+        params: {},
+        content: [
+            "title",
+            "description",
+        ]
     },
     checkTopNewYorkTimes : {
         title: "Check new top from New York Times",
         description: "If a new Top is posted on the section",
         color: servicesColor['newYorkTimes'],
-        params: {}
+        params: {},
+        content: [
+            "title",
+            "description",
+        ]
     },
     checkValueCryptocurrency: {
         title: "Check if value is more than target value",
@@ -191,7 +262,11 @@ var infosApplet = {
         params: {
             value: "String",
             name: "String"
-        }
+        },
+        content: [
+            "title",
+            "description",
+        ]
     }
 }
 
