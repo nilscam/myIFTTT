@@ -90,9 +90,7 @@ function launch_api(port) {
 
     passport.serializeUser((user, done) => done(null, user))
     passport.deserializeUser((user, done) => done(null, user))
-
-
-
+    
     app.use('/api/triggers', triggersRoutes);
     app.use('/api/reactions', reactionsRoutes);
     app.use('/api/user', userRoutes);
