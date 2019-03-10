@@ -145,15 +145,24 @@ router.post('/update', checkAuth, (req, res) => {
 });
 
 router.delete('/', checkAuth, (req, res, next) => {
-    User.remove({ _id: req.userData.userId})
+    User.deleteOne({ _id: req.userData.userId})
       .exec()
       .then(result => {
-          res.status(200).json({
-              message: "User deleted"
-          });
+        Logger.deleteOne({ _id: req.userData.userId})
+        .exec()
+        .then(result => {
+            return res.status(200).json({
+                message: "User deleted"
+            });
+        })
+        .catch(err => {
+            return res.status(500).json({
+                error: err
+            })
+        });
       })
       .catch(err => {
-        res.status(500).json({
+        return res.status(500).json({
             error: err
         })
       });
