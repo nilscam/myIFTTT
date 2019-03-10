@@ -92,6 +92,10 @@ function addTrigger(params) {
 }
 
 router.post('/', checkAuth, (req, res) => {
+    if (req.body == undefined ||
+        req.body.trigger.timer == undefined) {
+            req.body.trigger.timer = 5000;
+        }
     var triggerP = addTrigger({
         req: req,
         res: res,
