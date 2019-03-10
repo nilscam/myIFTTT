@@ -75,12 +75,12 @@ function checkNewTweetHashtag(params) {
         client.get('statuses/user_timeline', {count: 2}, function(error, tweets, response) {
             if (!error) {
                 tweets.forEach(function(value) {
-                    if (value.indexOf(params.hashtag) > -1 && currentUser._services._twitter._last_tweet_hashtag != value.id_str) {
+                    if (value.text.indexOf(params.params.params.hashtag) > -1 && currentUser._services._twitter._last_tweet_hashtag != value.id_str) {
                         currentUser._services._twitter._last_tweet_hashtag = value.id_str;
                         currentUser.save();
                         var paramsFromTrigger = {
                             twitter: {
-                                tweet: tweets[0],
+                                tweet: value,
                             }
                         }
                         params.paramsFromTrigger = paramsFromTrigger
@@ -130,12 +130,16 @@ function checkNewLike(params) {
             access_token_secret: currentUser._services._twitter._token_secret
         });
         client.get('favorites/list', {count: 1}, function(error, tweets, response) {
+            console.log(error);
             if (!error) {
+                console.log(tweets)
+                console.log(tweets.length)
+                console.log(currentUser._services._twitter._last_like);
                 if (tweets.length > 0 && currentUser._services._twitter._last_like == "0") {
-                    currentUser._services._twitter._last_mention = tweets[0].id_str;
+                    currentUser._services._twitter._last_like = tweets[0].id_str;
                     currentUser.save();
                 } else if (tweets.length > 0 && currentUser._services._twitter._last_like != tweets[0].id_str) {
-                    currentUser._services._twitter._last_mention = tweets[0].id_str;
+                    currentUser._services._twitter._last_like = tweets[0].id_str;
                     currentUser.save();
                     var paramsFromTrigger = {
                         twitter: {
