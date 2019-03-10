@@ -40,8 +40,10 @@
 
 
 
-    <TriggerPicker v-else-if="mode === 'trigger'" @triggerSelected="pickTrigger" :services="services"/>
-    <ReactionPicker v-else-if="mode === 'reaction'" @reactionSelected="pickReaction" :services="services"/>
+    <EventPicker v-else-if="mode === 'trigger'" @eventSelected="pickTrigger" :services="services" eventType="triggers"/>
+    <EventPicker v-else-if="mode === 'reaction'" @eventSelected="pickReaction" :services="services" eventType="reactions"/>
+    <!-- <TriggerPicker v-else-if="mode === 'trigger'" @triggerSelected="pickTrigger" :services="services"/> -->
+    <!-- <ReactionPicker v-else-if="mode === 'reaction'" @reactionSelected="pickReaction" :services="services"/> -->
 
   </page-loader>
 </template>
@@ -51,11 +53,13 @@ import Api from '../Api'
 import PageLoader from '../components/PageLoader'
 import TriggerPicker from '../components/Applet/TriggerPicker'
 import ReactionPicker from '../components/Applet/ReactionPicker'
+import EventPicker from '../components/Applet/EventPicker'
 
 export default {
   components: {
     TriggerPicker,
     ReactionPicker,
+    EventPicker,
     PageLoader
   },
   data() {
