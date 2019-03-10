@@ -144,8 +144,8 @@ router.post('/update', checkAuth, (req, res) => {
     });
 });
 
-router.delete('/:userId', (req, res, next) => {
-    User.remove({ _id: req.params.userId})
+router.delete('/', checkAuth, (req, res, next) => {
+    User.remove({ _id: req.userData.userId})
       .exec()
       .then(result => {
           res.status(200).json({
@@ -187,6 +187,31 @@ router.get('/checkProfile', checkAuth, (req, res) => {
         } else {
             res.status(500).send({error: "User not found"});
         }
+	});
+})
+
+router.post('/unlink', checkAuth, (req, res) => {
+    User.findOne({_id: req.userData.userId}).then((currentUser) => {
+        if (req.body == undefined ||
+            req.body.service == undefined) {
+                return res.status(403).send({error: "Invalid Parameters"});
+            }
+        if (!currentUser) {
+            return res.status(500).send({error: "User not found"});
+        }
+        var service = req.body.service;
+        if (service == "twitter") {
+            currentUser._services._twitter._id = 0;
+            currentUser._services._twitter._token = "";
+            currentUser._services._twitter._token_secret = "";
+        } else if (service == "instagram") {
+            currentUser._services._instagram._id = 0;
+            currentUser._services._instagram._token = "";
+        } else {
+            return res.status(402).send({ error: "Invalid service name" });
+        }
+        currentUser.save();
+        return res.status(200).send({ code: 200 });
 	});
 })
 
