@@ -7,7 +7,6 @@ const sortParams = require('../sortParams').sortParams;
 // ! Triggers
 
 function newsOfTheDay(params) {
-    console.log(params)
     User.findOne({_id: params.params.id}).then((currentUser) => {
         request('https://api.nasa.gov/planetary/apod?api_key=' + keys.nasa.api_key, { json: true }, (err, res, body) => {
             if (currentUser._services._nasa._last_title != body.title) {

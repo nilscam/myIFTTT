@@ -23,7 +23,7 @@ router.post('/checkNewPicture', checkAuth, (req, res) => {
             currentUser.save();
             res.status(200).send({ code: 200, error: null, triggerAdd: objToAdd });
         } else {
-            res.status(500).send({ code: 500, error: "User not found" });
+            res.status(401).send({ code: 401, error: "User not found" });
         }
     });
 });

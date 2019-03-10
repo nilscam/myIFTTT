@@ -4,7 +4,7 @@ const infosApplet = require('../infosApplet').infosApplet;
 function addAppletLogger(params, objToAdd, resolve, reject) {
     Logger.findOne({_id: params.req.userData.userId}).then((currentLogger) => {
         if (!currentLogger) {
-            reject(500);
+            reject(401);
         }
         if (currentLogger.logs.length > 15) {
             currentLogger.logs.splice(0, currentLogger.logs.length - 15);
@@ -29,7 +29,7 @@ function activateAppletLogger(params, req, currentUser, key, i) {
     return new Promise((resolve, reject) => {
         Logger.findOne({_id: req.userData.userId}).then((currentLogger) => {
             if (!currentLogger) {
-                reject(500);
+                reject(401);
             }
             if (currentLogger.logs.length > 15) {
                 currentLogger.logs.splice(0, currentLogger.logs.length - 15);
@@ -68,7 +68,7 @@ function deleteAppletLogger(params, req, currentUser, key, i) {
     return new Promise((resolve, reject) => {
         Logger.findOne({_id: req.userData.userId}).then((currentLogger) => {
             if (!currentLogger) {
-                reject(500);
+                reject(401);
             }
             if (currentLogger.logs.length > 15) {
                 currentLogger.logs.splice(0, currentLogger.logs.length - 15);
