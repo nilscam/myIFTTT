@@ -22,10 +22,13 @@ router.get('/', checkAuth, (req, res) => {
                     tmp.eventReaction === 'YearTimer') {
                         tmpObj = {}
                         tmpObj.trigger = tmp;
-                        tmpObj.trigger.infos = infosApplet[tmp.functionName];
+                        tmpObj.trigger.infos = JSON.parse(JSON.stringify(infosApplet[tmp.functionName]));
                         tmpObj.reaction = tmp.reaction;
                         tmpObj.reaction.infos = infosApplet[tmp.reaction.functionName];
                         delete tmpObj.trigger['reaction']
+                        if (!tmpObj.trigger.isActive) {
+                            tmpObj.trigger.infos.color = "bdc3c7";
+                        }
                         applets[++idxApplet] = tmpObj;
                     }
                 }
