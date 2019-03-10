@@ -22,7 +22,8 @@ class TriggerHandler {
         console.log("Timer List: ")
         for (var i = 0; i < this.timerList.length; i++) {
             console.log({userId: this.timerList[i].userId,
-                triggerId: this.timerList[i].triggerId});
+                triggerId: this.timerList[i].triggerId,
+            handler: this.timerList[i].handler});
         }
         console.log("End");
     }
@@ -34,19 +35,14 @@ class TriggerHandler {
 
     clearTrigger(userId, triggerId) {
         for (var i = 0; i < this.delayList.length; i++) {
-            console.log(this.delayList[i].userId+ " || " +userId + " && " + this.delayList[i].triggerId + " || " + triggerId)
             if (this.delayList[i].userId === userId && this.delayList[i].triggerId === triggerId) {
                 clearTimeout(this.delayList[i].handler);
                 this.delayList.splice(i, 1);
             }
         }
         for (var j = 0; j < this.timerList.length; j++) {
-            console.log(this.timerList[j].userId+ " || " +userId + " && " + this.timerList[j].triggerId + " || " + triggerId)
             if (this.timerList[j].userId === userId && this.timerList[j].triggerId === triggerId) {
-                console.log(this.timerList[j].type)
-                console.log(JSON.stringify(this.timerList[j], null, 2))
                 if (this.timerList[j].type === "Normal") {
-                    console.log("In Cancel")
                     clearInterval(this.timerList[j].handler);
                 }
                 else
@@ -80,15 +76,16 @@ class TriggerHandler {
         var intHandler = '';
         var timHandler = '';
         var functions = this.functions;
+        var that = this
         if (newTrigger.eventReaction === "Timer") {
             timHandler = setTimeout(function () {
                 intHandler = setInterval(function () {
                     console.log("OK");
                     TriggerHandler.runFunction(functions, newTrigger.functionName, newTrigger)
                 }, newTrigger.timer);
+                that.timerList.push({userId: userId, triggerId: newTrigger.id, handler: intHandler, type: "Normal"});
             }, this.getTimeout(newTrigger.timer, newTrigger.date));
             this.delayList.push({userId: userId, triggerId: newTrigger.id, handler: timHandler, type: "Normal"});
-            this.timerList.push({userId: userId, triggerId: newTrigger.id, handler: intHandler, type: "Normal"});
         } else if (newTrigger.eventReaction === "MonthTimer" ||
         newTrigger.eventReaction === "YearTimer") {
             var rule = new schedule.RecurrenceRule();

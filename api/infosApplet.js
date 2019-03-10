@@ -14,7 +14,7 @@ var infosApplet = {
         title: "New tweet by you",
         description: "This trigger fires every time you post a new tweet.",
         color: servicesColor['twitter'],
-        params: {}
+        params: {},
     },
     checkNewMention : {
         title: "New mention of you",

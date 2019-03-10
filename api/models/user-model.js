@@ -63,8 +63,8 @@ const userSchema = new Schema({
         },
         _cryptocurrency: {
             _convert: { type: String, default: "0" },
-            _crypto_name: { type: String, default: "0" },            
-            _target_value: { type: String, default: "0" },
+            _crypto_name: { type: String, default: "Bitcoin" },            
+            _target_value: { type: Number, default: 0 },
             _current_value: { type: String, default: "0" },
             _triggers: [Schema.Types.Mixed]
         }

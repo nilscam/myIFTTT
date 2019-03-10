@@ -2,6 +2,7 @@ const User = require('../../models/user-model').User;
 const keys = require('../../config/keys');
 const Twitter = require('twitter');
 const sortParams = require('../sortParams').sortParams;
+const appletRanLogger = require('../logger').appletRanLogger;
 
 // ! Triggers
 
@@ -151,6 +152,13 @@ function checkNewLike(params) {
 
 // ! Reactions
 
+function resetCredentials(currentUser) {
+    currentUser._services._twitter._id = 0;
+    currentUser._services._twitter._token = "";
+    currentUser._services._twitter._token_secret = "";
+    currentUser.save();
+}
+
 function sendTweet(params) {
     params = sortParams(params);
     User.findOne({_id: params.params.id}).then((currentUser) => {
@@ -161,9 +169,15 @@ function sendTweet(params) {
             access_token_secret: currentUser._services._twitter._token_secret
         });
         client.post('statuses/update', {status: params.reaction.params.text}, function(error, tweet, response) {
+            var errorMessage = undefined;
             if (error) {
+                if (error[0].code == 89) {
+                    resetCredentials(currentUser);
+                }
                 console.log(error);
+                errorMessage = error[0].message;
             }
+            appletRanLogger(params, errorMessage);
         });
     });
 }
@@ -178,9 +192,15 @@ function sendTweetImage(params) {
             access_token_secret: currentUser._services._twitter._token_secret
         });
         client.post('statuses/update', {status: params.reaction.params.text}, function(error, tweet, response) {
+            var errorMessage = undefined;
             if (error) {
+                if (error[0].code == 89) {
+                    resetCredentials(currentUser);
+                }
                 console.log(error);
+                errorMessage = error[0].message;
             }
+            appletRanLogger(params, errorMessage);
         });
     });
 }
@@ -195,9 +215,15 @@ function updateBio(params) {
             access_token_secret: currentUser._services._twitter._token_secret
         });
         client.post('account/update_profile', {description: params.reaction.params.text}, function(error, tweet, response) {
+            var errorMessage = undefined;
             if (error) {
+                if (error[0].code == 89) {
+                    resetCredentials(currentUser);
+                }
                 console.log(error);
+                errorMessage = error[0].message;
             }
+            appletRanLogger(params, errorMessage);
         });
     });
 }

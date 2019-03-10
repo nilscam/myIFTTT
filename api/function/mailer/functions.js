@@ -3,6 +3,7 @@ const request = require('request-promise');
 const nodemailer = require('nodemailer');
 const keys = require('../../config/keys');
 const sortParams = require('../sortParams').sortParams;
+const appletRanLogger = require('../logger').appletRanLogger;
 
 var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -35,12 +36,15 @@ var mailerFunc = {
                     transporter.sendMail(mailOptions, function (error, info) {
                         if (error) {
                             console.log(error);
+                            appletRanLogger(params, "Can't send mail");
                             resolve(false);
                         } else {
+                            appletRanLogger(params, undefined);
                             resolve(true);
                         }
                     });
                 } else {
+                    appletRanLogger(params, "Can't send mail");
                     resolve(false);
                 }
             }).then(value => {

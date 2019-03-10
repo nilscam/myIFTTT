@@ -28,16 +28,21 @@ var cryptocurrencyFunc = {
             } else {
                 request(requestOptions).then(response => {
                     var i = 0;
+                    var valid = true;
                     while (i <= 1000) {
                         if (response.data[i].name == currentUser._services._cryptocurrency._crypto_name) {
                             var objTarget = response.data[i];
+                            valid = false;
                             i = 1001;
                         }
                         i += 1;
                     }
+                    if (valid == true) {
+                        var objTarget = response.data[0];
+                    }
                     currentUser._services._cryptocurrency._current_value = objTarget.quote['EUR'].price;
                     currentUser.save();
-                    var first = Number(currentUser._services._cryptocurrency._target_value);
+                    var first = currentUser._services._cryptocurrency._target_value;
                     var second = Number(currentUser._services._cryptocurrency._current_value);
                     var paramsFromTrigger = {
                         cryptocurrency: {
@@ -46,7 +51,7 @@ var cryptocurrencyFunc = {
                         }
                     }
                     params.paramsFromTrigger = paramsFromTrigger
-                    if (second > first) {
+                    if (second > first && currentUser._services._cryptocurrency._active == "0") {
                         currentUser._services._cryptocurrency._active = "1"
                         tg.sendEvent(params.params.id, "checkValueCryptocurrency", params);
                     }
