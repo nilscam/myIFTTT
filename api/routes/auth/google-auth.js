@@ -5,6 +5,7 @@ var router = express.Router();
 const authKeys = require('../../config/authKeys.js').google
 const keys = require('../../config/keys');
 const User = require('../../models/user-model').User;
+const Logger = require('../../models/logger-model').Logger;
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
@@ -60,8 +61,13 @@ router.get('/redirect', passport.authenticate('google', { failureRedirect: '/log
             }, keys.jwtSecret, {
                 expiresIn: "10d"
             });
-            console.log('success 2');
-            res.redirect('/google/success?token=' + token);
+            const logger = new Logger({
+                _id: user._id
+            })
+            logger.save().then(result => {
+                console.log('success 2');
+                res.redirect('/google/success?token=' + token);
+            })
             // res.status(201).json({
             //     message: 'User created',
             //     token: token
