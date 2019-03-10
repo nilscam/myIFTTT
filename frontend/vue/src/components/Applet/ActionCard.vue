@@ -1,5 +1,5 @@
 <template>
-  <v-card @click="$emit('click')" class="my-card" max-height="350" min-height="100" :color="'#' + (switcher ? applet.trigger.infos.color : 'BDC3C7')">
+  <v-card class="my-card" max-height="350" min-height="100" :color="'#' + (switcher ? applet.trigger.infos.color : 'BDC3C7')">
     <v-card-title primary-title>
       <v-flex>
         <v-layout row justify-center align-center>

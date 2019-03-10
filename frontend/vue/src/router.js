@@ -20,7 +20,7 @@ let router = new Router({
     { path: '/home', name: 'home', component: Home },
     { path: '/login', name: 'login', component: Login },
     { path: '/register', name: 'register', component: Register },
-    { path: '/about', name: 'about', component: () => import('./views/About.vue'), meta: { requiresAuth: true } },
+    { path: '/activity', name: 'activity', component: () => import('./views/About.vue'), meta: { requiresAuth: true } },
     { path: '/profile', name: 'profile', component: () => import('./views/Profile.vue'), meta: { requiresAuth: true } },
     { path: '/newapplet', name: 'newapplet', component: () => import('./views/AppletCreator.vue'), meta: { requiresAuth: true } },
     { path: '/applets', name: 'applets', component: () => import('./views/UserApplets.vue'), meta: { requiresAuth: true } },

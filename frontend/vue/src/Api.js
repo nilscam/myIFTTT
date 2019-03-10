@@ -39,6 +39,10 @@ class Api {
     return axios.get(this.ApiURL + "/applet")
   }
 
+  getActivitys() {
+    return axios.get(this.ApiURL + "/activity")
+  }
+
   postActivateApplet(triggerId, active) {
     return axios.post(this.ApiURL + "/applet/activate", {triggerId, active});
   }
