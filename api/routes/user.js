@@ -87,12 +87,12 @@ router.post('/login', (req, res, next) => {
                         token: token
                     })
                 }
-                return res.status(402).json({
+                return res.status(401).json({
                     message: "Auth failed"
                 })
             })
         } else {
-            return res.status(403).json({
+            return res.status(401).json({
                 message: "Auth failed"
             })
         }
@@ -107,7 +107,7 @@ router.post('/update', checkAuth, (req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
         if (currentUser) {
             if (!req.body.email || !req.body.password) {
-                return res.status(500).send({error: "No email or password"});
+                return res.status(401).send({error: "No email or password"});
             }
             bcrypt.hash(req.body.password, 10, (err, hash) => {
                 if (err) {
@@ -185,7 +185,7 @@ router.get('/checkProfile', checkAuth, (req, res) => {
             }
             res.status(200).json({ authenticate });
         } else {
-            res.status(500).send({error: "User not found"});
+            res.status(401).send({error: "User not found"});
         }
 	});
 })
@@ -194,10 +194,10 @@ router.post('/unlink', checkAuth, (req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
         if (req.body == undefined ||
             req.body.service == undefined) {
-                return res.status(403).send({error: "Invalid Parameters"});
+                return res.status(500).send({error: "Invalid Parameters"});
             }
         if (!currentUser) {
-            return res.status(500).send({error: "User not found"});
+            return res.status(401).send({error: "User not found"});
         }
         var service = req.body.service;
         if (service == "twitter") {
@@ -208,7 +208,7 @@ router.post('/unlink', checkAuth, (req, res) => {
             currentUser._services._instagram._id = 0;
             currentUser._services._instagram._token = "";
         } else {
-            return res.status(402).send({ error: "Invalid service name" });
+            return res.status(500).send({ error: "Invalid service name" });
         }
         currentUser.save();
         return res.status(200).send({ code: 200 });
@@ -234,11 +234,11 @@ router.post('/twitterConnect', checkAuth, (req, res) => {
                     currentUser.save();
                     res.status(200).send({error: null});
                 } else {
-                    res.status(500).send({error: "User not found"});
+                    res.status(422).send({error: "Bad credential"});
                 }
               });
         } else {
-            res.status(500).send({error: "User not found"});
+            res.status(401).send({error: "User not found"});
         }
 	});
 });
@@ -251,7 +251,7 @@ router.post('/instagramConnect', checkAuth, (req, res) => {
                 url: 'https://api.instagram.com/v1/users/self/?access_token=' + req.body.token,
             }, function (error, response, body) {
                 if (error || response.statusCode !== 200) {
-                    res.status(500).send({error: "Bad credential"});
+                    res.status(422).send({error: "Bad credential"});
                 } else {
                     currentUser._services._instagram._id = body.data.id;
                     currentUser._services._instagram._username = body.data.username;
@@ -261,7 +261,7 @@ router.post('/instagramConnect', checkAuth, (req, res) => {
                 };
             })
         } else {
-            res.status(500).send({error: "User not found"});
+            res.status(401).send({error: "User not found"});
         }
     });
 });

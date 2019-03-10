@@ -22,10 +22,13 @@ router.get('/', checkAuth, (req, res) => {
                     tmp.eventReaction === 'YearTimer') {
                         tmpObj = {}
                         tmpObj.trigger = tmp;
-                        tmpObj.trigger.infos = infosApplet[tmp.functionName];
+                        tmpObj.trigger.infos = JSON.parse(JSON.stringify(infosApplet[tmp.functionName]));
                         tmpObj.reaction = tmp.reaction;
                         tmpObj.reaction.infos = infosApplet[tmp.reaction.functionName];
                         delete tmpObj.trigger['reaction']
+                        if (!tmpObj.trigger.isActive) {
+                            tmpObj.trigger.infos.color = "bdc3c7";
+                        }
                         applets[++idxApplet] = tmpObj;
                     }
                 }
@@ -78,7 +81,7 @@ function addTrigger(params) {
                 }
                 if (currentUser._services.hasOwnProperty('_'+params.trigger.service) == false ||
                 currentUser._services.hasOwnProperty('_'+params.reaction.service) == false) {
-                    reject(402);
+                    reject(501);
                     return;
                 }
                 currentUser._services['_'+params.trigger.service]._triggers.push(objToAdd);
@@ -153,7 +156,7 @@ router.post('/activate', checkAuth, (req, res) => {
                 }
             }
             if (!foundTrigger) {
-                return res.status(402).send({code: 402, error: "Unknown triggerId"});
+                return res.status(500).send({code: 500, error: "Unknown triggerId"});
             }
         } else {
             return res.status(401).send({code: 401, error: "User not found"});
@@ -186,7 +189,7 @@ router.delete('/', checkAuth, (req, res) => {
                 }
             }
             if (!foundTrigger) {
-                return res.status(402).send({code: 402, error: "Unknown triggerId"});
+                return res.status(500).send({code: 500, error: "Unknown triggerId"});
             }
         } else {
             return res.status(401).send({code: 401, error: "User not found"});
