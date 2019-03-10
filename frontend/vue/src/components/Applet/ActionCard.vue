@@ -1,5 +1,5 @@
 <template>
-  <v-card @click="$emit('click')" class="my-card" max-height="350" min-height="100" :color="'#' + applet.trigger.infos.color">
+  <v-card @click="$emit('click')" class="my-card" max-height="350" min-height="100" :color="'#' + (switcher ? applet.trigger.infos.color : 'BDC3C7')">
     <v-card-title primary-title>
       <v-flex>
         <v-layout row justify-center align-center>
@@ -35,16 +35,13 @@ export default {
   },
   data() {
     return {
-      switch: this.applet.isActive
+      switcher: this.applet.trigger.isActive
     }
-  },
-  mounted() {
-  console.log(this.applet);
   },
   methods: {
     activate(e) {
       Api.postActivateApplet(this.applet.trigger.id, e)
-      .then(resp => {})
+      .then(resp => {this.switcher = !this.switcher})
       .catch(e => console.error(e))
     },
     getLogoTrigger(name) {
@@ -52,7 +49,7 @@ export default {
     },
     getLogoReaction(name) {
       return Api.websiteURL + `/images/${name}.png`
-    }
+    },
   }
 }
 </script>
