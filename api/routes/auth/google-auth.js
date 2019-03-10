@@ -68,10 +68,6 @@ router.get('/redirect', passport.authenticate('google', { failureRedirect: '/log
                 console.log('success 2');
                 res.redirect('/google/success?token=' + token);
             })
-            // res.status(201).json({
-            //     message: 'User created',
-            //     token: token
-            // });
         })
         .catch(err => {
           res.status(500).json({
