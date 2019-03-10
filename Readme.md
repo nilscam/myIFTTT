@@ -119,7 +119,3 @@ All services that are chosen by user are requested on the following route:
 > /services/{name of the service}
 
 Every service is update after Timer duration.
-
-## Made by
-- Chaillan Cyril
-- Alexandre Nascimento
