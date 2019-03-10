@@ -21,7 +21,7 @@ router.post('/addEveryDay', checkAuth, (req, res) => {
             currentUser.save();
             res.status(200).send({code: 200, error: null, triggerAdd: objToAdd});
         } else {
-            res.status(500).send({code: 500, error: "User not found"});
+            res.status(401).send({code: 401, error: "User not found"});
         }
 	});
 });
@@ -38,7 +38,7 @@ router.post('/addEveryHour', checkAuth, (req, res) => {
             currentUser.save();
             res.status(200).send({code: 200, error: null, triggerAdd: objToAdd});
         } else {
-            res.status(500).send({code: 500, error: "User not found"});
+            res.status(401).send({code: 401, error: "User not found"});
         }
 	});
 });
@@ -57,7 +57,7 @@ router.post('/addEveryDayOfTheWeek', checkAuth, (req, res) => {
             currentUser.save();
             res.status(200).send({code: 200, error: null, triggerAdd: objToAdd});
         } else {
-            res.status(500).send({code: 500, error: "User not found"});
+            res.status(401).send({code: 401, error: "User not found"});
         }
 	});
 });
@@ -76,7 +76,7 @@ router.post('/addEveryMonth', checkAuth, (req, res) => {
             currentUser.save();
             res.status(200).send({code: 200, error: null, triggerAdd: objToAdd});
         } else {
-            res.status(500).send({code: 500, error: "User not found"});
+            res.status(401).send({code: 401, error: "User not found"});
         }
 	});
 });
@@ -96,7 +96,7 @@ router.post('/addEveryYear', checkAuth, (req, res) => {
             currentUser.save();
             res.status(200).send({code: 200, error: null, triggerAdd: objToAdd});
         } else {
-            res.status(500).send({code: 500, error: "User not found"});
+            res.status(401).send({code: 401, error: "User not found"});
         }
 	});
 });
