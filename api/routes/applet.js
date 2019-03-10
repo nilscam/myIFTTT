@@ -4,6 +4,8 @@ const Logger = require('../models/logger-model').Logger;
 const checkAuth = require('../middleware/check-auth');
 const infosApplet = require('../infosApplet').infosApplet;
 const addAppletLogger = require('../function/logger').addAppletLogger;
+const activateAppletLogger = require('../function/logger').activateAppletLogger;
+const deleteAppletLogger = require('../function/logger').deleteAppletLogger;
 
 router.get('/', checkAuth, (req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
@@ -81,7 +83,7 @@ function addTrigger(params) {
                 }
                 currentUser._services['_'+params.trigger.service]._triggers.push(objToAdd);
                 currentUser.save();
-                addAppletLogger(params, resolve, reject);
+                addAppletLogger(params, objToAdd, resolve, reject);
             } else {
                 reject(401);
             }
@@ -117,7 +119,10 @@ router.post('/', checkAuth, (req, res) => {
 router.post('/activate', checkAuth, (req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
         if (currentUser) {
-            if (!req.body || !req.body.triggerId || !req.body.active) {
+            var foundTrigger = false;
+            if (req.body == undefined ||
+                req.body.triggerId == undefined ||
+                req.body.active == undefined) {
                 return res.status(403).send({code: 403, error: "Invalid parameters"});
             }
             var triggerId = req.body.triggerId;
@@ -128,21 +133,24 @@ router.post('/activate', checkAuth, (req, res) => {
                 for (var i = 0; i < service._triggers.length; i++) {
                     var tmp = service._triggers[i];
                     if (tmp.id === triggerId) {
+                        foundTrigger = true;
                         if (isActive == tmp.isActive) {
                             return res.status(201).send({code: 201, msg: "Useless Modification"});
                         }
                         currentUser._services[key]._triggers[i].isActive = isActive;
+                        currentUser.markModified("_services."+key+"._triggers");
                         currentUser.save();
-                        if (isActive) {
-                            tg.addTrigger(req.userData.userId, currentUser._services[key]._triggers[i]);
-                        } else {
-                            tg.clearTrigger(req.userData.userId, triggerId);
-                        }
-                        return res.status(200).send({code: 200});
+                        activateAppletLogger(currentUser._services[key]._triggers[i], req, currentUser, key, i).then((result) => {
+                            return res.status(result).send({code: result}); 
+                        }, (err) => {
+                            return res.status(err).send({code: err});
+                        })
                     }
                 }
             }
-            return res.status(402).send({code: 402, error: "Unknown triggerId"});
+            if (!foundTrigger) {
+                return res.status(402).send({code: 402, error: "Unknown triggerId"});
+            }
         } else {
             return res.status(401).send({code: 401, error: "User not found"});
         }
@@ -152,7 +160,9 @@ router.post('/activate', checkAuth, (req, res) => {
 router.delete('/', checkAuth, (req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
         if (currentUser) {
-            if (!req.body || !req.body.triggerId) {
+            var foundTrigger = false;
+            if (req.body == undefined ||
+                req.body.triggerId == undefined) {
                 return res.status(403).send({code: 403, error: "Invalid parameters"});
             }
             var triggerId = req.body.triggerId;
@@ -162,14 +172,18 @@ router.delete('/', checkAuth, (req, res) => {
                 for (var i = 0; i < service._triggers.length; i++) {
                     var tmp = service._triggers[i];
                     if (tmp.id === triggerId) {
-                        currentUser._services[key]._triggers.splice(i, 1);
-                        currentUser.save();
-                        tg.clearTrigger(req.userData.userId, triggerId);
-                        return res.status(200).send({code: 200});
+                        foundTrigger = true;
+                        deleteAppletLogger(currentUser._services[key]._triggers[i], req, currentUser, key, i).then((result) => {
+                            return res.status(200).send({code: 200});
+                        }, (err) => {
+                            return res.status(err).send({code: err});
+                        })
                     }
                 }
             }
-            return res.status(402).send({code: 402, error: "Unknown triggerId"});
+            if (!foundTrigger) {
+                return res.status(402).send({code: 402, error: "Unknown triggerId"});
+            }
         } else {
             return res.status(401).send({code: 401, error: "User not found"});
         }
