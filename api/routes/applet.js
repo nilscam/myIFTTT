@@ -26,9 +26,6 @@ router.get('/', checkAuth, (req, res) => {
                         tmpObj.reaction = tmp.reaction;
                         tmpObj.reaction.infos = infosApplet[tmp.reaction.functionName];
                         delete tmpObj.trigger['reaction']
-                        if (!tmpObj.trigger.isActive) {
-                            tmpObj.trigger.infos.color = "bdc3c7";
-                        }
                         applets[++idxApplet] = tmpObj;
                     }
                 }
