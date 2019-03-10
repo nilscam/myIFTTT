@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid fill-height justify-center class="my-home-container">
+  <v-container fluid fill-height justify-center>
     <v-layout column>
 
 
@@ -45,11 +45,4 @@ export default {
 </script>
 
 <style scoped>
-.my-home-container {
-  background-color: #0099ff;
-  color: white;
-  font-family: 'Montserrat', sans-serif !important;
-  border-top: 1px solid white;
-}
-
 </style>

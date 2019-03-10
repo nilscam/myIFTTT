@@ -1,11 +1,11 @@
 var servicesColor = {
     twitter: "1da1f2",
-    dateAndTime: "95a5a6",
+    dateAndTime: "e3655c",
     nasa: "2e294e",
     intagram: "e84393",
     mailer: "fdcb6e",
     weather: "2c3e50",
-    newYorkTimes: "1e272e",
+    newYorkTimes: "000000",
     cryptocurrency: "fbc531"
 }
 

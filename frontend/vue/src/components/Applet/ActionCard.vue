@@ -1,12 +1,12 @@
 <template>
-  <v-card @click="$emit('click')" class="my-card" max-height="350" min-height="100" :color="'#' + applet.reaction.infos.color">
+  <v-card @click="$emit('click')" class="my-card" max-height="350" min-height="100" :color="'#' + (switcher ? applet.trigger.infos.color : 'BDC3C7')">
     <v-card-title primary-title>
       <v-flex>
         <v-layout row justify-center align-center>
-          <h1 class="my-line">{{applet.trigger.service}}</h1>
-          <v-img :src="getLogoTrigger(applet.trigger.service)" aspect-ratio="1" max-width="50px" max-height="50px" class="my-holders"></v-img>
-          <h1 class="my-line">{{applet.reaction.service}}</h1>
-          <v-img :src="getLogoReaction(applet.reaction.service)" aspect-ratio="1" max-width="50px" max-height="50px" class="my-holders"></v-img>
+          <h1 class="custom-title">{{applet.trigger.service}}</h1>
+          <v-img :src="getLogoTrigger(applet.trigger.service)" aspect-ratio="1" max-width="50px" max-height="50px"></v-img>
+          <h1 class="custom-title">{{applet.reaction.service}}</h1>
+          <v-img :src="getLogoReaction(applet.reaction.service)" aspect-ratio="1" max-width="50px" max-height="50px"></v-img>
         </v-layout>
       </v-flex>
     </v-card-title>
@@ -15,8 +15,11 @@
       <span class="custom-description">{{ applet.reaction.infos.description }}</span>
     </v-card-text>
       <v-card-actions class="pa-3">
-        Rate this album
-        <v-spacer></v-spacer>
+        <v-switch
+          v-on:change="activate"
+          v-model="applet.trigger.isActive"
+          color="green"
+      ></v-switch>
       </v-card-actions>
   </v-card>
 </template>
@@ -30,17 +33,24 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      switcher: this.applet.trigger.isActive
+    }
+  },
   methods: {
+    activate(e) {
+      Api.postActivateApplet(this.applet.trigger.id, e)
+      .then(resp => {this.switcher = !this.switcher})
+      .catch(e => console.error(e))
+    },
     getLogoTrigger(name) {
       return  Api.websiteURL + `/images/${name}.png`
     },
     getLogoReaction(name) {
       return Api.websiteURL + `/images/${name}.png`
-    }
-  },
-  mounted() {
-    console.log(this.applet);
-  },
+    },
+  }
 }
 </script>
 
@@ -70,5 +80,9 @@ export default {
   font-weight: 700;
   color:white;
   opacity: 0.80;
+}
+::ng-deep .accent--text {
+    color: red !important;
+    caret-color: red !important;
 }
 </style>

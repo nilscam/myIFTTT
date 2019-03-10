@@ -17,20 +17,20 @@ passport.use(
 		passReqToCallback: true
 	},
 	function(req, token, tokenSecret, profile, cb) {
-        User.findOne({_id: req.session.userId}).then((currentUser) => {
-            if (currentUser) {
-                currentUser._services._twitter._token = token;
-                currentUser._services._twitter._token_secret = token_secret;
-                currentUser._services._twitter._id = profile.id_str;
-                currentUser._services._twitter._username = profile.screen_name;
-                currentUser._services._twitter._photo = profile.profile_image_url;
-                currentUser.save();
-                return cb(null, {});
-            } else {
-                return cb(null, {});
-            }
-        });
-    }));
+    User.findOne({_id: req.session.userId}).then((currentUser) => {
+      if (currentUser) {
+        currentUser._services._twitter._token = token;
+        currentUser._services._twitter._token_secret = tokenSecret;
+        currentUser._services._twitter._id = profile.id;
+        currentUser._services._twitter._username = profile.username;
+        currentUser._services._twitter._photo = profile.photos[0].value;
+        currentUser.save();
+        return cb(null, {});
+      } else {
+      	return cb(null, {});
+      }
+    });
+  }));
 
 router.get('/auth', serviceAuth,function(req, res, next) {
     req.session.userId = req.userData.userId;
@@ -40,7 +40,7 @@ router.get('/auth', serviceAuth,function(req, res, next) {
 router.get('/redirect',
     passport.authorize('twitter'),
     function(req, res) {
-      res.redirect('/home');
+      res.redirect('/profile');
     }
 );
 

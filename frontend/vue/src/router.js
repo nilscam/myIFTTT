@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from './store'
-import NotFound from './views/errors/NotFound.vue'
+import NotFound from './views/errors/NotFound'
+import InternError from './views/errors/InternError'
 import Home from './views/Home.vue'
 import Login from './views/Authentification/Login.vue'
 import Register from './views/Authentification/Register.vue'
@@ -14,6 +15,7 @@ let router = new Router({
   routes: [
     { path: '*', redirect: '/404' },
     { path: '/404', name: 'NotFound', component: NotFound },
+    { path: '/500', name: 'InternError', component: InternError },
     { path: '/', redirect: '/home' },
     { path: '/home', name: 'home', component: Home },
     { path: '/login', name: 'login', component: Login },
@@ -23,8 +25,6 @@ let router = new Router({
     { path: '/newapplet', name: 'newapplet', component: () => import('./views/AppletCreator.vue'), meta: { requiresAuth: true } },
     { path: '/applets', name: 'applets', component: () => import('./views/UserApplets.vue'), meta: { requiresAuth: true } },
     { path: '/google/success', name: 'googlesuccess', component: GoogleSuccess }
-    // { path: '/services', name: 'services', component: () => import('./views/ListServices.vue'), meta: { requiresAuth: true } },
-    // { path: '/service/:serviceName', name: 'service', component: () => import('./views/Service.vue'), meta: { requiresAuth: true } }
   ]
 })
 

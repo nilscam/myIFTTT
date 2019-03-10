@@ -1,5 +1,5 @@
 <template>
-  <page-loader :loading="loading">
+  <page-loader class="test" :loading="loading">
     <v-layout row wrap>
       <v-flex v-for="applet in applets" :key="applet.id" xs12 sm6 lg4 d-flex>
         <ActionCard :applet="applet" />
@@ -29,12 +29,15 @@ export default {
     .then(resp => {
       this.applets = resp.data
       this.loading = false
-      console.log(this.applets)
     })
-    .catch(e => console.err(e))
+    .catch(err => console.error(err))
   }
 }
 </script>
 
 <style scoped>
+.test {
+  background-color: white !important;
+  color: black !important;
+}
 </style>

@@ -22,7 +22,7 @@ export default {
       state.reactionSelected = reaction
       state.isReaction = true
     },
-    appletCreated(state) {
+    appletCreated() {
     }
   },
   actions: {
@@ -37,10 +37,8 @@ export default {
     },
     publishApplet({commit, state}) {
       return new Promise((resolve, reject) => {
-        console.log('publishing');
         Api.postNewApplet(state.triggerSelected, state.reactionSelected)
         .then(resp => {
-          console.log('tt');
           commit('appletCreated')
           resolve(resp)
         })

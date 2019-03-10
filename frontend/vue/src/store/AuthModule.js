@@ -71,11 +71,11 @@ export default {
       })
     },
     logout({commit}){
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         commit('logout')
         localStorage.removeItem('token')
         Api.removeAuthorisationToken()
-        router.push({ name: 'home' })
+        router.push({name: 'home'})
         resolve()
       })
     }
@@ -84,5 +84,6 @@ export default {
     isLoggedIn: state => !!state.token,
     authStatus: state => state.status,
     userName: state => state.user,
+    getToken: state => state.token
   }
 }
