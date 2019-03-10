@@ -19,7 +19,7 @@
 
         <div class="my-spacer"></div>
 
-        <router-link :to="{ name: 'about' }">
+        <router-link :to="{ name: 'activity' }">
           <v-layout justify-center align-center fill-height>
             <v-icon color="white" medium>subject</v-icon>
             <span class="text-toolbar">Activity</span>
