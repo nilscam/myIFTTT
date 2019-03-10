@@ -43,11 +43,11 @@
     <v-card-actions v-if="mode == 'edit'">
       <v-layout column>
         <v-flex align-self-center v-for="(paramValue, paramProperty) in getParams" :key="paramProperty" class="form-input">
-              <v-text-field v-if="paramValue == 'String'" v-model="params[paramProperty]" type="text" :label="paramProperty" dark></v-text-field>
-              <v-select v-else-if="paramValue == 'Day'" v-model="params[paramProperty]" :items="days" item-text="text" item-value="id" label="Day" dark></v-select>
-              <v-text-field v-else-if="paramValue == 'Hour'" type="number" :label="paramProperty" @change="updateParamNumber($event, paramProperty)" dark></v-text-field>
-              <v-text-field v-else-if="paramValue == 'Minute'" type="number" :label="paramProperty" @change="updateParamNumber($event, paramProperty)" dark></v-text-field>
-              <v-text-field v-else-if="paramValue == 'Number'" type="number" :label="paramProperty" @change="updateParamNumber($event, paramProperty)" dark></v-text-field>
+          <v-text-field v-if="paramValue == 'String'" v-model="params[paramProperty]" type="text" :label="paramProperty" dark></v-text-field>
+          <v-select v-else-if="paramValue == 'Day'" v-model="params[paramProperty]" :items="days" item-text="text" item-value="id" label="Day" dark></v-select>
+          <v-text-field v-else-if="paramValue == 'Hour'" type="number" :label="paramProperty" @change="updateParamNumber($event, paramProperty)" dark></v-text-field>
+          <v-text-field v-else-if="paramValue == 'Minute'" type="number" :label="paramProperty" @change="updateParamNumber($event, paramProperty)" dark></v-text-field>
+          <v-text-field v-else-if="paramValue == 'Number'" type="number" :label="paramProperty" @change="updateParamNumber($event, paramProperty)" dark></v-text-field>
         </v-flex>
         <v-flex align-self-center class="validate-section">
           <v-btn color="white" round large @click="validate">
