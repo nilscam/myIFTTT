@@ -6,6 +6,8 @@ const infosApplet = require('../infosApplet').infosApplet;
 const addAppletLogger = require('../function/logger').addAppletLogger;
 const activateAppletLogger = require('../function/logger').activateAppletLogger;
 const deleteAppletLogger = require('../function/logger').deleteAppletLogger;
+const validate = require('express-validation');
+const Joi = require('joi');
 
 router.get('/', checkAuth, (req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
@@ -22,13 +24,10 @@ router.get('/', checkAuth, (req, res) => {
                     tmp.eventReaction === 'YearTimer') {
                         tmpObj = {}
                         tmpObj.trigger = tmp;
-                        tmpObj.trigger.infos = JSON.parse(JSON.stringify(infosApplet[tmp.functionName]));
+                        tmpObj.trigger.infos = infosApplet[tmp.functionName];
                         tmpObj.reaction = tmp.reaction;
                         tmpObj.reaction.infos = infosApplet[tmp.reaction.functionName];
                         delete tmpObj.trigger['reaction']
-                        if (!tmpObj.trigger.isActive) {
-                            tmpObj.trigger.infos.color = "bdc3c7";
-                        }
                         applets[++idxApplet] = tmpObj;
                     }
                 }
@@ -94,7 +93,21 @@ function addTrigger(params) {
     })
 }
 
-router.post('/', checkAuth, (req, res) => {
+var payloadAddTrigger = {
+    body: {
+        trigger: Joi.object().keys({
+            service: Joi.string().required(),
+            name: Joi.string().required(),
+            params: Joi.object().required(),
+        }).required(),
+        reaction: Joi.object().keys({
+            service: Joi.string().required(),
+            name: Joi.string().required(),
+            params: Joi.object().required(),
+        }).required(),
+      }
+}
+router.post('/', checkAuth, validate(payloadAddTrigger), (req, res) => {
     if (req.body == undefined ||
         req.body.trigger.timer == undefined) {
             req.body.trigger.timer = 5000;
@@ -123,15 +136,16 @@ router.post('/', checkAuth, (req, res) => {
     })
 });
 
-router.post('/activate', checkAuth, (req, res) => {
+var payloadActivateTrigger = {
+    body: {
+        triggerId: Joi.number().required(),
+        active: Joi.bool().required(),
+      }
+}
+router.post('/activate', checkAuth, validate(payloadActivateTrigger) ,(req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
         if (currentUser) {
             var foundTrigger = false;
-            if (req.body == undefined ||
-                req.body.triggerId == undefined ||
-                req.body.active == undefined) {
-                return res.status(403).send({code: 403, error: "Invalid parameters"});
-            }
             var triggerId = req.body.triggerId;
             var isActive = req.body.active;
             for (var key in currentUser._services) {
@@ -164,14 +178,15 @@ router.post('/activate', checkAuth, (req, res) => {
 	});
 });
 
-router.delete('/', checkAuth, (req, res) => {
+var payloadDeleteTrigger = {
+    body: {
+        triggerId: Joi.number().required(),
+      }
+}
+router.delete('/', checkAuth, validate(payloadDeleteTrigger),(req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
         if (currentUser) {
             var foundTrigger = false;
-            if (req.body == undefined ||
-                req.body.triggerId == undefined) {
-                return res.status(403).send({code: 403, error: "Invalid parameters"});
-            }
             var triggerId = req.body.triggerId;
             for (var key in currentUser._services) {
                 if (!currentUser._services.hasOwnProperty(key) || key == '$init') continue;

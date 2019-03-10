@@ -11,13 +11,20 @@ const checkAuth = require('../middleware/check-auth');
 const googleAuth = require('./auth/google-auth')
 const twitterAuth = require('./auth/twitter-auth')
 const instagramAuth = require('./auth/instagram-auth')
-
+const validate = require('express-validation');
+const Joi = require('joi');
 
 router.use('/google', googleAuth)
 router.use('/twitter', twitterAuth)
 router.use('/instagram', instagramAuth)
 
-router.post('/signup', (req, res, next) => {
+var payloadLoginUser = {
+    body: {
+        email: Joi.string().required(),
+        password: Joi.string().required(),
+      }
+}
+router.post('/signup', validate(payloadLoginUser), (req, res, next) => {
     User.findOne({email: req.body.email, provider: ""}).then((currentUser) => {
         if (currentUser) {
             res.status(409).json({
@@ -66,7 +73,7 @@ router.post('/signup', (req, res, next) => {
     });
 });
 
-router.post('/login', (req, res, next) => {
+router.post('/login', validate(payloadLoginUser), (req, res, next) => {
     User.findOne({email: req.body.email, provider: ""}).then((currentUser) => {
         if (currentUser) {
             bcrypt.compare(req.body.password, currentUser.password, (err, result) => {
@@ -103,7 +110,8 @@ router.post('/login', (req, res, next) => {
     });
 })
 
-router.post('/update', checkAuth, (req, res) => {
+
+router.post('/update', checkAuth, validate(payloadLoginUser), (req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
         if (currentUser) {
             if (!req.body.email || !req.body.password) {
@@ -199,12 +207,13 @@ router.get('/checkProfile', checkAuth, (req, res) => {
 	});
 })
 
+var payloadUnlinkUser = {
+    body: {
+        service: Joi.string().required(),
+      }
+}
 router.post('/unlink', checkAuth, (req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
-        if (req.body == undefined ||
-            req.body.service == undefined) {
-                return res.status(500).send({error: "Invalid Parameters"});
-            }
         if (!currentUser) {
             return res.status(401).send({error: "User not found"});
         }
@@ -224,55 +233,55 @@ router.post('/unlink', checkAuth, (req, res) => {
 	});
 })
 
-router.post('/twitterConnect', checkAuth, (req, res) => {
-    User.findOne({_id: req.userData.userId}).then((currentUser) => {
-        if (currentUser) {
-            currentUser._services._twitter._token = req.body.token;
-            currentUser._services._twitter._token_secret = req.body.token_secret;
-            var client = new Twitter({
-                consumer_key: keys.twitter.consumer_key,
-                consumer_secret: keys.twitter.consumer_secret,
-                access_token_key: currentUser._services._twitter._token,
-                access_token_secret: currentUser._services._twitter._token_secret
-            });
-            client.get('account/verify_credentials', {}, function(error, profile, response) {
-                if (!error) {
-                    currentUser._services._twitter._id = profile.id_str;
-                    currentUser._services._twitter._username = profile.screen_name;
-                    currentUser._services._twitter._photo = profile.profile_image_url;
-                    currentUser.save();
-                    res.status(200).send({error: null});
-                } else {
-                    res.status(422).send({error: "Bad credential"});
-                }
-              });
-        } else {
-            res.status(401).send({error: "User not found"});
-        }
-	});
-});
+// router.post('/twitterConnect', checkAuth, (req, res) => {
+//     User.findOne({_id: req.userData.userId}).then((currentUser) => {
+//         if (currentUser) {
+//             currentUser._services._twitter._token = req.body.token;
+//             currentUser._services._twitter._token_secret = req.body.token_secret;
+//             var client = new Twitter({
+//                 consumer_key: keys.twitter.consumer_key,
+//                 consumer_secret: keys.twitter.consumer_secret,
+//                 access_token_key: currentUser._services._twitter._token,
+//                 access_token_secret: currentUser._services._twitter._token_secret
+//             });
+//             client.get('account/verify_credentials', {}, function(error, profile, response) {
+//                 if (!error) {
+//                     currentUser._services._twitter._id = profile.id_str;
+//                     currentUser._services._twitter._username = profile.screen_name;
+//                     currentUser._services._twitter._photo = profile.profile_image_url;
+//                     currentUser.save();
+//                     res.status(200).send({error: null});
+//                 } else {
+//                     res.status(422).send({error: "Bad credential"});
+//                 }
+//               });
+//         } else {
+//             res.status(401).send({error: "User not found"});
+//         }
+// 	});
+// });
 
-router.post('/instagramConnect', checkAuth, (req, res) => {
-    User.findOne({_id: req.userData.userId}).then((currentUser) => {
-        if (currentUser) {
-            currentUser._services._instagram._token = req.body.token;
-            request({
-                url: 'https://api.instagram.com/v1/users/self/?access_token=' + req.body.token,
-            }, function (error, response, body) {
-                if (error || response.statusCode !== 200) {
-                    res.status(422).send({error: "Bad credential"});
-                } else {
-                    currentUser._services._instagram._id = body.data.id;
-                    currentUser._services._instagram._username = body.data.username;
-                    currentUser._services._instagram._photo = body.data.profile_picture;
-                    currentUser.save();
-                    res.status(200).send({error: null});
-                };
-            })
-        } else {
-            res.status(401).send({error: "User not found"});
-        }
-    });
-});
+// router.post('/instagramConnect', checkAuth, (req, res) => {
+//     User.findOne({_id: req.userData.userId}).then((currentUser) => {
+//         if (currentUser) {
+//             currentUser._services._instagram._token = req.body.token;
+//             request({
+//                 url: 'https://api.instagram.com/v1/users/self/?access_token=' + req.body.token,
+//             }, function (error, response, body) {
+//                 if (error || response.statusCode !== 200) {
+//                     res.status(422).send({error: "Bad credential"});
+//                 } else {
+//                     currentUser._services._instagram._id = body.data.id;
+//                     currentUser._services._instagram._username = body.data.username;
+//                     currentUser._services._instagram._photo = body.data.profile_picture;
+//                     currentUser.save();
+//                     res.status(200).send({error: null});
+//                 };
+//             })
+//         } else {
+//             res.status(401).send({error: "User not found"});
+//         }
+//     });
+// });
 
 module.exports = router;
