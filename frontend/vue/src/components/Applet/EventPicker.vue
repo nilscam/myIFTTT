@@ -1,24 +1,28 @@
 <template>
   <v-container grid-list-sm fluid class="icons-container">
     <icons-list v-if="service == undefined" :servicesDisplay="servicesDisplay" @serviceClicked="serviceSelected"/>
-    <trigger-list v-else :service="service" @back="service = undefined" @triggerClicked="triggerSelected"/>
+    <event-list v-else :service="service" @back="service = undefined" @eventClicked="eventSelected" :eventType="eventType"/>
   </v-container>
 </template>
 
 <script>
 import IconsList from './IconsList'
-import TriggerList from './TriggerList'
+import EventList from './EventList'
 
 export default {
   props: {
     services: {
       type: Array,
       required: true
+    },
+    eventType: {
+      type: String,
+      required: true
     }
   },
   components: {
     IconsList,
-    TriggerList
+    EventList
   },
   data() {
     return {
@@ -32,9 +36,9 @@ export default {
     serviceSelected(name) {
       this.service = this.services.find(x => x.nameService === name)
     },
-    triggerSelected(name, params) {
-      let trigger = { service: this.service.nameService, name, params }
-      this.$emit('triggerSelected', trigger)
+    eventSelected(name, params) {
+      let event = { service: this.service.nameService, name, params }
+      this.$emit('eventSelected', event)
     }
   }
 }

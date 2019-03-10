@@ -17,17 +17,7 @@
           aspect-ratio="1"
           class="service-image"
           :style="{backgroundColor: '#' + service.color}"
-        >
-          <v-layout
-            slot="placeholder"
-            fill-height
-            align-center
-            justify-center
-            ma-0
-          >
-            <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-          </v-layout>
-        </v-img>
+        />
 
       </v-card>
     </v-flex>

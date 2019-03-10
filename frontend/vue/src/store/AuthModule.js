@@ -30,6 +30,7 @@ export default {
   actions: {
     setToken({commit}, token) {
       localStorage.setItem('token', token)
+      Api.setAuthorisationToken(token)
       commit('setToken', token)
     },
     login ({commit}, data) {

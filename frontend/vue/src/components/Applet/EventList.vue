@@ -4,21 +4,21 @@
       <v-btn color="white" round @click="clickBack">&lt; Back</v-btn>
     </v-flex>
 
-    <v-flex xs12 class="text-triggers">
+    <v-flex xs12 class="text-events">
       <v-layout align-center justify-center>
         <v-img :src="getServiceLogo(service.nameService)" aspect-ratio="1" max-height="50px" max-width="50px" :style="{backgroundColor: '#' + service.color}"></v-img>
-        <h1 class="my-title">Choose Trigger</h1>
+        <h1 class="my-title">Choose {{ eventType == 'triggers' ? 'Trigger' : 'Reaction' }}</h1>
       </v-layout>
     </v-flex>
 
 
-    <v-flex v-if="mode == 'select'" v-for="trigger in service.triggers" :key="trigger.id" xs12 sm6 md4 d-flex>
-      <event-card :applet="trigger" @click="triggerClicked(trigger)"/>
+    <v-flex v-if="mode == 'select'" v-for="event in service[eventType]" :key="event.id" xs12 sm6 md4 d-flex>
+      <event-card :applet="event" @click="eventClicked(event)"/>
     </v-flex>
 
     <v-flex v-if="mode == 'edit'">
       <v-layout align-center justify-center>
-        <event-card :applet="triggerSelected" @validate="validate" mode="edit"/>
+        <event-card :applet="eventSelected" @validate="validate" mode="edit"/>
       </v-layout>
     </v-flex>
   </v-layout>
@@ -33,6 +33,10 @@ export default {
     service: {
       type: Object,
       required: true
+    },
+    eventType: {
+      type: String,
+      required: true
     }
   },
   components: {
@@ -41,8 +45,13 @@ export default {
   data() {
     return {
       mode: 'select',
-      triggerSelected: null
+      eventSelected: null
     }
+  },
+  mounted() {
+    console.log(this.service)
+    console.log(this.eventType)
+    console.log(this.service[this.eventType])
   },
   methods: {
     getServiceLogo(serviceName) {
@@ -56,10 +65,10 @@ export default {
       }
     },
     validate(params) {
-      this.$emit('triggerClicked', this.triggerSelected.name, params)
+      this.$emit('eventClicked', this.eventSelected.name, params)
     },
-    triggerClicked(trigger) {
-      this.triggerSelected = trigger
+    eventClicked(e) {
+      this.eventSelected = e
       this.mode = 'edit'
     }
   }
@@ -67,7 +76,7 @@ export default {
 </script>
 
 <style scoped>
-.text-triggers {
+.text-events {
   padding-top: 20px !important;
   padding-bottom: 30px !important;
 }

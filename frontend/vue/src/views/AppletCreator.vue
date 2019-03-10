@@ -40,8 +40,8 @@
 
 
 
-    <TriggerPicker v-else-if="mode === 'trigger'" @triggerSelected="pickTrigger" :services="services"/>
-    <ReactionPicker v-else-if="mode === 'reaction'" @reactionSelected="pickReaction" :services="services"/>
+    <EventPicker v-else-if="mode === 'trigger'" @eventSelected="pickTrigger" :services="services" eventType="triggers"/>
+    <EventPicker v-else-if="mode === 'reaction'" @eventSelected="pickReaction" :services="services" eventType="reactions"/>
 
   </page-loader>
 </template>
@@ -49,13 +49,11 @@
 <script>
 import Api from '../Api'
 import PageLoader from '../components/PageLoader'
-import TriggerPicker from '../components/Applet/TriggerPicker'
-import ReactionPicker from '../components/Applet/ReactionPicker'
+import EventPicker from '../components/Applet/EventPicker'
 
 export default {
   components: {
-    TriggerPicker,
-    ReactionPicker,
+    EventPicker,
     PageLoader
   },
   data() {
@@ -119,16 +117,6 @@ export default {
       let service = this.services.find(x => x.nameService == name)
       return service.color
     }
-    // findTriggerTitle(serviceName, triggerName) {
-    //   let service = this.services.find(x => x.nameService == serviceName)
-    //   let trigger = service.triggers.find(x => x.name == triggerName)
-    //   return trigger.infos.title // description
-    // },
-    // findReactionTitle(serviceName, reactionName) {
-    //   let service = this.services.find(x => x.nameService == serviceName)
-    //   let reaction = service.reactions.find(x => x.name == reactionName)
-    //   return reaction.infos.title // description
-    // }
   }
 }
 </script>
