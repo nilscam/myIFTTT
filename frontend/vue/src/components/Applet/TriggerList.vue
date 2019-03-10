@@ -1,7 +1,7 @@
 <template>
   <v-layout row wrap>
     <v-flex xs12>
-      <v-btn color="white" round @click="$emit('back')">&lt; Back</v-btn>
+      <v-btn color="white" round @click="clickBack">&lt; Back</v-btn>
     </v-flex>
 
     <v-flex xs12 class="text-triggers">
@@ -12,18 +12,14 @@
     </v-flex>
 
 
-    <v-flex
-      v-for="trigger in service.triggers"
-      :key="trigger.id"
-      xs12
-      sm6
-      md4
-      d-flex
-    >
+    <v-flex v-if="mode == 'select'" v-for="trigger in service.triggers" :key="trigger.id" xs12 sm6 md4 d-flex>
+      <event-card :applet="trigger" @click="triggerClicked(trigger)"/>
+    </v-flex>
 
-    <event-card :applet="trigger" @click="emitClick(trigger)"/>
-
-
+    <v-flex v-if="mode == 'edit'">
+      <v-layout align-center justify-center>
+        <event-card :applet="triggerSelected" @validate="validate" mode="edit"/>
+      </v-layout>
     </v-flex>
   </v-layout>
 </template>
@@ -42,12 +38,29 @@ export default {
   components: {
     EventCard
   },
+  data() {
+    return {
+      mode: 'select',
+      triggerSelected: null
+    }
+  },
   methods: {
     getServiceLogo(serviceName) {
       return Api.websiteURL + `/images/${serviceName}.png`
     },
-    emitClick(trigger) {
-      this.$emit('triggerClicked', trigger.name, {})
+    clickBack() {
+      if (this.mode == 'select') {
+        this.$emit('back')
+      } else {
+        this.mode = 'select'
+      }
+    },
+    validate(params) {
+      this.$emit('triggerClicked', this.triggerSelected.name, params)
+    },
+    triggerClicked(trigger) {
+      this.triggerSelected = trigger
+      this.mode = 'edit'
     }
   }
 }
