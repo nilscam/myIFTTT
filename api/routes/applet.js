@@ -117,36 +117,61 @@ router.post('/', checkAuth, (req, res) => {
 router.post('/activate', checkAuth, (req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
         if (currentUser) {
+            if (!req.body || !req.body.triggerId || !req.body.active) {
+                return res.status(403).send({code: 403, error: "Invalid parameters"});
+            }
             var triggerId = req.body.triggerId;
             var isActive = req.body.active;
-            console.log(req.body)
             for (var key in currentUser._services) {
                 if (!currentUser._services.hasOwnProperty(key) || key == '$init') continue;
                 var service = currentUser._services[key];
                 for (var i = 0; i < service._triggers.length; i++) {
                     var tmp = service._triggers[i];
-                    console.log(JSON.stringify(tmp, null, 2));
                     if (tmp.id === triggerId) {
                         if (isActive == tmp.isActive) {
                             return res.status(201).send({code: 201, msg: "Useless Modification"});
                         }
                         currentUser._services[key]._triggers[i].isActive = isActive;
                         currentUser.save();
-                        console.log("a");
                         if (isActive) {
-                            console.log("b");
                             tg.addTrigger(req.userData.userId, currentUser._services[key]._triggers[i]);
                         } else {
-                            console.log("c");
                             tg.clearTrigger(req.userData.userId, triggerId);
                         }
                         return res.status(200).send({code: 200});
                     }
                 }
             }
-            res.status(401).send({code: 402, error: "Unknown triggerId"});
+            return res.status(402).send({code: 402, error: "Unknown triggerId"});
         } else {
-            res.status(401).send({code: 401, error: "User not found"});
+            return res.status(401).send({code: 401, error: "User not found"});
+        }
+	});
+});
+
+router.delete('/', checkAuth, (req, res) => {
+    User.findOne({_id: req.userData.userId}).then((currentUser) => {
+        if (currentUser) {
+            if (!req.body || !req.body.triggerId) {
+                return res.status(403).send({code: 403, error: "Invalid parameters"});
+            }
+            var triggerId = req.body.triggerId;
+            for (var key in currentUser._services) {
+                if (!currentUser._services.hasOwnProperty(key) || key == '$init') continue;
+                var service = currentUser._services[key];
+                for (var i = 0; i < service._triggers.length; i++) {
+                    var tmp = service._triggers[i];
+                    if (tmp.id === triggerId) {
+                        currentUser._services[key]._triggers.splice(i, 1);
+                        currentUser.save();
+                        tg.clearTrigger(req.userData.userId, triggerId);
+                        return res.status(200).send({code: 200});
+                    }
+                }
+            }
+            return res.status(402).send({code: 402, error: "Unknown triggerId"});
+        } else {
+            return res.status(401).send({code: 401, error: "User not found"});
         }
 	});
 });
