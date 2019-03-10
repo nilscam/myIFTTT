@@ -1,11 +1,11 @@
 <template>
-  <v-card @click="$emit('click')" class="my-card" max-height="350" min-height="100" :color="'#' + applet.reaction.infos.color">
+  <v-card @click="$emit('click')" class="my-card" max-height="350" min-height="100" :color="'#' + applet.trigger.infos.color">
     <v-card-title primary-title>
       <v-flex>
         <v-layout row justify-center align-center>
-          <h1 class="my-line">{{applet.trigger.service}}</h1>
+          <h1 class="custom-title">{{applet.trigger.service}}</h1>
           <v-img :src="getLogoTrigger(applet.trigger.service)" aspect-ratio="1" max-width="50px" max-height="50px"></v-img>
-          <h1 class="my-line">{{applet.reaction.service}}</h1>
+          <h1 class="custom-title">{{applet.reaction.service}}</h1>
           <v-img :src="getLogoReaction(applet.reaction.service)" aspect-ratio="1" max-width="50px" max-height="50px"></v-img>
         </v-layout>
       </v-flex>
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     activate(e) {
-      postActivateApplet(triggerId, e)
+      Api.postActivateApplet(this.applet.trigger.id, e)
       .then(resp => {})
       .catch(e => console.error(e))
     },
