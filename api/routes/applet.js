@@ -1,7 +1,9 @@
 const router = require('express').Router();
 const User = require('../models/user-model').User;
+const Logger = require('../models/logger-model').Logger;
 const checkAuth = require('../middleware/check-auth');
 const infosApplet = require('../infosApplet').infosApplet;
+const addAppletLogger = require('../function/logger').addAppletLogger;
 
 router.get('/', checkAuth, (req, res) => {
     User.findOne({_id: req.userData.userId}).then((currentUser) => {
@@ -79,8 +81,7 @@ function addTrigger(params) {
                 }
                 currentUser._services['_'+params.trigger.service]._triggers.push(objToAdd);
                 currentUser.save();
-                tg.addTrigger(params.req.userData.userId, objToAdd);
-                resolve(200);
+                addAppletLogger(params, resolve, reject);
             } else {
                 reject(401);
             }
