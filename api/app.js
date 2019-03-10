@@ -88,7 +88,7 @@ function launch_api(port) {
 
     passport.serializeUser((user, done) => done(null, user))
     passport.deserializeUser((user, done) => done(null, user))
-    
+
     app.use('/api/user', userRoutes);
     app.use('/api/services', servicesRoutes);
     app.use('/api/applet', appletRoutes);
@@ -98,8 +98,8 @@ function launch_api(port) {
     app.use(history())
 
     app.use(express.static(__dirname + '/public'));
-    app.use(express.static(__dirname + '/../frontend/vue/dist/'));
-    app.use(express.static(__dirname + '/../frontend/vue/src/assets/'));
+    app.use(express.static(__dirname + '/../frontend/dist/'));
+    app.use(express.static(__dirname + '/../frontend/src/assets/'));
 
 
 
