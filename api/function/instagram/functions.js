@@ -10,7 +10,7 @@ var instaFunc = {
                     url: 'https://api.instagram.com/v1/users/self/media/recent/?count=1&access_token=' + access_token,
                 }, function (error, response, body) {
                     if (error || response.statusCode !== 200) {
-                        res.send(JSON.stringify({ Instagram: "KO" }));
+                        return
                     } else {
                         var result = JSON.parse(body);
                         if (currentUser._services._instagram._last_id != result['data'][0].id) {
