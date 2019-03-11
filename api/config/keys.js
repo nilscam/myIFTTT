@@ -27,7 +27,7 @@ module.exports = {
 	instagramKey: {
 		clientID: '228cd009e7284b4ab7a8e6154d001340',
 		clientSecret: '4bc020f917d34b84a6378e45c4dd5f29',
-		callBackUrl: "http://localhost:8080/api/user/instagram/redirect"
+		callBackUrl: "/api/user/instagram/redirect"
 	},
 	newYorkTimes: {
 		APP_ID: 'a4f467c3-9f1b-4bc2-b438-120e4eadec6d',
