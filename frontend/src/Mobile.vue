@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-bottom-nav app :active.sync="bottomNav" :value="true" fixed color="white" v-if="isLogged">
+    <v-bottom-nav app :active.sync="bottomNav" :value="true" absolute color="white" v-if="isLogged">
       <v-btn color="teal" flat value="applets" to="applets">
         <span>My Applets</span>
         <v-icon>view_list</v-icon>
