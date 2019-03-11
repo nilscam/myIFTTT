@@ -102,8 +102,8 @@ router.get('/', checkAuth, (req, res) => {
                 color: servicesColor['intagram'],
                 triggers: [
                     {
-                        name: "checkLatestPicture",
-                        infos: infosApplet['checkLatestPicture'],
+                        name: "checkNewPost",
+                        infos: infosApplet['checkNewPost'],
                     },
                 ],
                 reactions: []

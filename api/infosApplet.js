@@ -182,7 +182,7 @@ var infosApplet = {
         },
         content: []
     },
-    checkLatestPicture: {
+    checkNewPost: {
         title: "New photo is post",
         description:  "This trigger fires every time you post a new photo.",
         color: servicesColor['intagram'],

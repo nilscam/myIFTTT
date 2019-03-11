@@ -102,8 +102,8 @@ var services =
             color: servicesColor['intagram'],
             triggers: [
                 {
-                    name: "checkLatestPicture",
-                    infos: infosApplet['checkLatestPicture'],
+                    name: "checkNewPost",
+                    infos: infosApplet['checkNewPost'],
                 },
             ],
             reactions: []
